@@ -41,8 +41,8 @@ Before deploying, ensure you have:
 
 3. **Configure Authentication**:
    - Select "API Key" authentication type
-   - Set header name: `Authorization`
-   - Set header value format: `Bearer {api_key}`
+   - Set header name: `api-token`
+   - Set header value format: `{api_token}`
    - Provide your LetsCloud API key
 
 4. **Test the Integration**:

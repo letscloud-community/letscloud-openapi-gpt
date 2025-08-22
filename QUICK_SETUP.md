@@ -18,7 +18,7 @@ The **LetsCloud Infrastructure Manager** is an AI assistant that helps you manag
 
 ### 3. Set Up Your Access
 ```
-"I need to set up my API key: Bearer YOUR_API_KEY_HERE"
+"I need to set up my API key: YOUR_API_TOKEN_HERE"
 ```
 
 ## 💬 Try These Commands

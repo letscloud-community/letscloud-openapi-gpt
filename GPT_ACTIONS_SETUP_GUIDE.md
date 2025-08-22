@@ -26,7 +26,7 @@ The **LetsCloud Infrastructure Manager** is a smart AI assistant that helps you 
 
 1. **Find the LetsCloud GPT** in the GPT Store
 2. **Start a conversation** with the GPT
-3. **Set up your API key** by saying: *"I need to set up my API key: Bearer YOUR_API_KEY"*
+3. **Set up your API key** by saying: *"I need to set up my API key: YOUR_API_TOKEN"*
 4. **Start managing your infrastructure!**
 
 ## 💬 Example Conversations
@@ -106,7 +106,7 @@ For detailed information about how your data is handled, see our [Privacy Policy
 ### "Authentication failed"
 - **Check your API key**: Make sure it's correct and complete
 - **Regenerate if needed**: Create a new API key in your LetsCloud dashboard
-- **Format**: Make sure you include "Bearer" before your API key
+- **Format**: Provide your API token without any prefix
 
 ### "Server not found"
 - **Check server ID**: Make sure the server exists in your account

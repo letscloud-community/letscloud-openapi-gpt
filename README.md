@@ -256,7 +256,7 @@ actions:
 
 **"Authentication failed"**
 - Check if your API key is correct
-- Make sure you included "Bearer" before your API key
+- Make sure you provide your API token without any prefix
 - Try regenerating your API key in your LetsCloud dashboard
 
 **"Server not found"**
