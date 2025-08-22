@@ -25,6 +25,9 @@ pip-delete-this-directory.txt
 *.swo
 *~
 
+# Creator instructions (internal use only)
+GPT_CREATOR_INSTRUCTIONS.md
+
 # OS generated files
 .DS_Store
 .DS_Store?

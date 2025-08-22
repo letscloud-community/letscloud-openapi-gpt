@@ -1,128 +1,72 @@
-# ⚡ Quick Setup - LetsCloud API in GPT Actions
+# ⚡ Quick Start - LetsCloud Infrastructure Manager
 
-## 🎯 Executive Summary
+## 🎯 What is this?
 
-**OpenAPI Specification URL:**
+The **LetsCloud Infrastructure Manager** is an AI assistant that helps you manage your cloud servers using simple, natural language commands. No technical knowledge required!
+
+## 🚀 Get Started in 3 Steps
+
+### 1. Get Your API Key
+- Go to [https://www.letscloud.io](https://www.letscloud.io)
+- Log into your account
+- Go to **API Settings** → **Generate New API Key**
+- Copy the key (you'll only see it once!)
+
+### 2. Find the GPT
+- Search for **"LetsCloud Infrastructure Manager"** in the GPT Store
+- Start a conversation with the GPT
+
+### 3. Set Up Your Access
 ```
-https://raw.githubusercontent.com/letscloud-community/letscloud-openapi-gpt/main/openapi.yaml
-```
-
-**Authentication Configuration:**
-```yaml
-Authentication Type: API Key
-Header Name: Authorization
-Header Value Format: Bearer {api_key}
-API Key: [your_letscloud_key]
-```
-
----
-
-## 📋 Essential Steps (5 minutes)
-
-### 1. Get API Key
-- Go to: https://www.letscloud.io
-- Dashboard → API Settings → Generate New API Key
-- Copy the key (format: `lc_1234567890abcdef...`)
-
-### 2. Configure GPT Actions
-- Go to: https://platform.openai.com
-- GPTs → Create/Edit → Configure
-- **Basic Info:**
-  - Name: `LetsCloud Infrastructure Manager`
-  - Description: `Manage cloud infrastructure on LetsCloud platform using natural language`
-  - Instructions: See detailed guide for complete instructions
-- **Actions:** Import from URL: paste the URL above
-
-### 3. Configure Authentication
-- Authentication Type: **API Key**
-- Header Name: **Authorization**
-- Header Value Format: **Bearer {api_key}**
-- API Key: **paste your key** (without "Bearer")
-
-### 4. Test
-```
-"List all my servers"
+"I need to set up my API key: Bearer YOUR_API_KEY_HERE"
 ```
 
----
+## 💬 Try These Commands
 
-## 🔧 Complete Configuration
-
-### OpenAPI Specification
-```yaml
-# URL for import
-https://raw.githubusercontent.com/letscloud-community/letscloud-openapi-gpt/main/openapi.yaml
-
-# API Base URL
-https://core.letscloud.io/api
-
-# Available actions: 21
-- Server Management: 7 actions
-- SSH Key Management: 4 actions
-- Snapshot Management: 5 actions
-- Resource Discovery: 4 actions
-- Account Information: 1 action
+### Check Your Servers
+```
+"Show me all my servers"
 ```
 
-### Authentication
-```yaml
-# Security scheme
-security:
-  - ApiKeyAuth: []
-
-# Configuration in GPT Actions
-Authentication Type: API Key
-Header Name: Authorization
-Header Value Format: Bearer {api_key}
-API Key: lc_1234567890abcdef1234567890abcdef12345678
+### Create a New Server
+```
+"Create a web server with Ubuntu 22.04"
 ```
 
----
-
-## 🧪 Quick Tests
-
-### Basic Test
+### Manage Your Account
 ```
-"Show me available server plans"
+"What's my account balance?"
 ```
 
-### Authentication Test
-```
-"List all my servers"
-```
+## 🔧 Common Tasks
 
-### Creation Test
-```
-"Create a test server with Ubuntu 22.04"
-```
+| What you want to do | What to say |
+|-------------------|-------------|
+| See all servers | *"List my servers"* |
+| Start a server | *"Start my web server"* |
+| Stop a server | *"Stop my database server"* |
+| Create backup | *"Backup my production server"* |
+| Check costs | *"Show my monthly costs"* |
+| Add SSH key | *"Add SSH key for my laptop"* |
 
----
+## 🔒 Security
 
-## ❌ Common Issues
+- ✅ **Your API key is private** - never shared
+- ✅ **All communications encrypted**
+- ✅ **You control all access**
+- ✅ **Can revoke access anytime**
 
-| Problem | Solution |
-|---------|----------|
-| "Authentication failed" | Verify API Key is correct |
-| "Action not found" | Reimport OpenAPI specification |
-| "Network error" | Check connectivity to letscloud.io |
-| "Rate limit exceeded" | Wait a few minutes |
+## 🛠️ Need Help?
 
----
+- **Support**: support@letscloud.io
+- **Documentation**: [https://www.letscloud.io/docs](https://www.letscloud.io/docs)
+- **Privacy Policy**: [Privacy Policy](https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html)
 
-## 📞 Quick Support
+## ✅ Ready?
 
-- **Complete Documentation**: [GPT_ACTIONS_SETUP_GUIDE.md](GPT_ACTIONS_SETUP_GUIDE.md)
-- **LetsCloud Support**: support@letscloud.io
-- **GitHub Issues**: [Report Issue](https://github.com/letscloud-community/letscloud-openapi-gpt/issues)
+1. Get your API key from LetsCloud
+2. Find the GPT in the store
+3. Set up your API key
+4. Start managing your infrastructure!
 
----
-
-## ✅ Verification Checklist
-
-- [ ] API Key obtained from LetsCloud
-- [ ] OpenAPI specification imported
-- [ ] Authentication configured
-- [ ] Basic test working
-- [ ] 21 actions available
-
-**🎉 Setup complete! You can now manage your infrastructure with natural language.**
+**That's it! 🎉**

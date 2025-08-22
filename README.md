@@ -1,106 +1,108 @@
-# LetsCloud API - OpenAPI Specification for GPT Actions
+# 🚀 LetsCloud Infrastructure Manager - AI Assistant
 
-[![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-green.svg)](https://swagger.io/specification/)
+[![OpenAI GPT](https://img.shields.io/badge/OpenAI%20GPT-Compatible-brightgreen.svg)](https://platform.openai.com/)
+[![LetsCloud](https://img.shields.io/badge/LetsCloud-Platform-red.svg)](https://www.letscloud.io)
+[![Privacy](https://img.shields.io/badge/Privacy-Secure-blue.svg)](https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GPT Actions](https://img.shields.io/badge/GPT%20Actions-Ready-orange.svg)](https://platform.openai.com/docs/actions)
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Available-lightgrey.svg)](https://pages.github.com/)
-[![LetsCloud](https://img.shields.io/badge/LetsCloud-API-red.svg)](https://www.letscloud.io)
 
 > **📝 Note**: All documentation in this repository is in English.
 
-This project provides a comprehensive OpenAPI 3.0 specification for the LetsCloud API, designed specifically for integration with GPT Actions. The specification covers all major cloud infrastructure management operations available through the [LetsCloud Go library](https://github.com/letscloud-community/letscloud-go).
+The **LetsCloud Infrastructure Manager** is an AI assistant that helps you manage your cloud servers and infrastructure using simple, natural language commands. No technical knowledge required!
 
-## 📋 Overview
+## 📋 What can you do?
 
-The LetsCloud API allows you to manage cloud infrastructure including:
-- **Server Management**: Create, delete, start, stop, and reboot servers
-- **SSH Key Management**: Add, list, and delete SSH keys
-- **Snapshot Management**: Create, restore, and delete server snapshots
-- **Resource Discovery**: List available plans, images, and locations
-- **Account Information**: Get account details and billing information
+With the **LetsCloud Infrastructure Manager**, you can:
 
-## 🚀 Quick Status
-
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
-[![Code Quality](https://img.shields.io/badge/code%20quality-A%2B-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
-[![Documentation](https://img.shields.io/badge/docs-complete-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
-[![Deployment](https://img.shields.io/badge/deployment-ready-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
+- ✅ **Create and manage servers** with simple commands
+- ✅ **Start, stop, and restart** your servers
+- ✅ **Monitor server status** and performance
+- ✅ **Manage SSH keys** for secure access
+- ✅ **Create backups** (snapshots) of your servers
+- ✅ **View account information** and costs
+- ✅ **Get cost optimization** recommendations
 
 ## 🚀 Quick Start
 
-### 1. Authentication
+1. **Get your API key** from your [LetsCloud dashboard](https://www.letscloud.io)
+2. **Find the GPT** in the GPT Store
+3. **Set up your API key** in the conversation
+4. **Start managing your infrastructure!**
 
-All API requests require authentication using your LetsCloud API key. You can provide the API key in two ways:
+**Example:**
+```
+You: "Show me all my servers"
+GPT: "Here are your servers: [list of your servers]"
+```
 
-- **Header Authentication**: Include `Authorization: Bearer YOUR_API_KEY` in your requests
-- **Environment Variable**: Set `LETSCLOUD_API_KEY=your_api_key` in your environment
+## 🎯 Features
 
-### 2. Base URLs
+- ✅ **21 different actions** for complete infrastructure management
+- ✅ **Natural language commands** - no technical knowledge needed
+- ✅ **Secure API key authentication** - your data stays private
+- ✅ **Real-time server management** - instant responses
+- ✅ **Cost monitoring** - track your spending
+- ✅ **Backup management** - protect your data
 
-- **Production**: `https://core.letscloud.io/api`
-- **Staging**: `https://core.letscloud.io/api`
+## 🔑 Authentication
 
-## 📚 API Endpoints
+To use the LetsCloud Infrastructure Manager, you need your **LetsCloud API key**:
+
+1. **Get your API key** from your [LetsCloud dashboard](https://www.letscloud.io)
+2. **Set it up** in the GPT conversation
+3. **Start managing** your infrastructure!
+
+**Your API key is:**
+- ✅ **Private and secure** - never shared with others
+- ✅ **Easy to manage** - can be revoked anytime
+- ✅ **Encrypted** - all communications are secure
+
+## 💬 What you can say
 
 ### Server Management
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/servers` | List all servers |
-| `POST` | `/servers` | Create a new server |
-| `GET` | `/servers/{server_id}` | Get server details |
-| `DELETE` | `/servers/{server_id}` | Delete a server |
-| `POST` | `/servers/{server_id}/start` | Start a server |
-| `POST` | `/servers/{server_id}/stop` | Shutdown a server |
-| `POST` | `/servers/{server_id}/reboot` | Reboot a server |
+| What you want to do | What to say |
+|-------------------|-------------|
+| See all servers | *"List my servers"* |
+| Create new server | *"Create a web server with Ubuntu"* |
+| Check server status | *"What's the status of my server?"* |
+| Start a server | *"Start my web server"* |
+| Stop a server | *"Stop my database server"* |
+| Restart server | *"Restart my application server"* |
+| Delete server | *"Delete my old test server"* |
 
 ### SSH Key Management
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/ssh-keys` | List all SSH keys |
-| `POST` | `/ssh-keys` | Create a new SSH key |
-| `GET` | `/ssh-keys/{key_id}` | Get SSH key details |
-| `DELETE` | `/ssh-keys/{key_id}` | Delete an SSH key |
+| What you want to do | What to say |
+|-------------------|-------------|
+| See all SSH keys | *"Show me my SSH keys"* |
+| Add new SSH key | *"Add SSH key for my laptop"* |
+| Check SSH key | *"What SSH keys do I have?"* |
+| Remove SSH key | *"Delete my old SSH key"* |
 
-### Snapshot Management
+### Backups and Snapshots
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/servers/{server_id}/snapshots` | List server snapshots |
-| `POST` | `/servers/{server_id}/snapshots` | Create a server snapshot |
-| `GET` | `/servers/{server_id}/snapshots/{snapshot_id}` | Get snapshot details |
-| `DELETE` | `/servers/{server_id}/snapshots/{snapshot_id}` | Delete a snapshot |
-| `POST` | `/servers/{server_id}/snapshots/{snapshot_id}/restore` | Restore server from snapshot |
+| What you want to do | What to say |
+|-------------------|-------------|
+| Create backup | *"Backup my production server"* |
+| See all backups | *"Show me my backups"* |
+| Restore from backup | *"Restore my server from backup"* |
+| Delete backup | *"Delete old backup"* |
 
-### Resource Discovery
+### Account and Costs
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/plans` | List available plans |
-| `GET` | `/images` | List available images |
-| `GET` | `/locations` | List available locations |
+| What you want to do | What to say |
+|-------------------|-------------|
+| Check balance | *"What's my account balance?"* |
+| See costs | *"Show my monthly costs"* |
+| Available plans | *"What server plans are available?"* |
+| Server locations | *"Where can I create servers?"* |
 
-### Account Information
+## 📖 Documentation
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/account` | Get account information |
-
-## 🔧 GPT Actions Integration
-
-[![GPT Actions Setup](https://img.shields.io/badge/GPT%20Actions-Setup%20Guide-blue.svg)](https://platform.openai.com/docs/actions)
-[![OpenAPI Import](https://img.shields.io/badge/OpenAPI-Import%20Ready-green.svg)](https://swagger.io/specification/)
-[![Authentication](https://img.shields.io/badge/Auth-API%20Key%20Ready-orange.svg)](https://platform.openai.com/docs/actions)
-
-### 📖 Complete Setup Guide
-
-**For detailed step-by-step instructions, see:**
-- **[GPT_ACTIONS_SETUP_GUIDE.md](GPT_ACTIONS_SETUP_GUIDE.md)** - Complete setup guide
-- **[QUICK_SETUP.md](QUICK_SETUP.md)** - Quick reference guide
-- **[docs/gpt-actions.html](docs/gpt-actions.html)** - Interactive web documentation
+**For detailed instructions, see:**
+- **[User Guide](GPT_ACTIONS_SETUP_GUIDE.md)** - Complete guide for users
+- **[Quick Start](QUICK_SETUP.md)** - Get started in 3 steps
+- **[Privacy Policy](https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html)** - How we protect your data
 
 ### Setting up GPT Actions
 
@@ -131,6 +133,19 @@ You are a cloud infrastructure management assistant for LetsCloud platform. Help
 - ❌ **Canvas**: Disable
 - ❌ **Image Generation**: Disable
 - ✅ **Code Interpreter**: Enable
+
+#### Privacy & Sharing Considerations
+
+**For Private GPTs (Recommended):**
+- No privacy policy required
+- Use your own API key
+- Full control over access
+
+**For Public GPTs:**
+- Privacy policy URL required
+- Each user must provide their own API key
+- Users need to configure authentication individually
+- **Privacy Policy URL**: `https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html`
 
 #### Step 2: Import OpenAPI Specification
    
