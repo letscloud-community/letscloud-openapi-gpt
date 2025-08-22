@@ -38,7 +38,7 @@ security:
   - ApiKeyAuth: []
 
 paths:
-  /servers:
+  /api/servers:
     get:
       summary: List all servers
       description: Retrieve a list of all servers in your account with pagination support
@@ -57,14 +57,14 @@ paths:
           example: 1
         - name: per_page
           in: query
-          description: Number of servers per page (default: 10, max: 50)
+          description: Number of servers per page (default: 5, max: 20)
           required: false
           schema:
             type: integer
             minimum: 1
-            maximum: 50
-            default: 10
-          example: 10
+            maximum: 20
+            default: 5
+          example: 5
         - name: status
           in: query
           description: Filter servers by status (running, stopped, etc.)
@@ -75,7 +75,7 @@ paths:
           example: "running"
       responses:
         '200':
-          description: List of servers retrieved successfully (limited to 50 servers per page)
+          description: List of servers retrieved successfully (limited to 20 servers per page)
           content:
             application/json:
               schema:
@@ -90,7 +90,7 @@ paths:
                     properties:
                       servers:
                         type: array
-                        maxItems: 50
+                        maxItems: 20
                         items:
                           $ref: '#/components/schemas/Server'
                       total:
@@ -174,7 +174,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}:
+  /api/servers/{server_id}:
     get:
       summary: Get server details
       description: Retrieve detailed information about a specific server
@@ -227,7 +227,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/start:
+  /api/servers/{server_id}/start:
     post:
       summary: Start a server
       description: Start a server that is currently stopped
@@ -258,7 +258,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/stop:
+  /api/servers/{server_id}/stop:
     post:
       summary: Shutdown a server
       description: Shutdown a server that is currently running
@@ -289,7 +289,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/reboot:
+  /api/servers/{server_id}/reboot:
     post:
       summary: Reboot a server
       description: Reboot a server that is currently running
@@ -320,7 +320,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /ssh-keys:
+  /api/ssh-keys:
     get:
       summary: List all SSH keys
       description: Retrieve a list of all SSH keys in your account with pagination support
@@ -417,7 +417,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /ssh-keys/{key_id}:
+  /api/ssh-keys/{key_id}:
     get:
       summary: Get SSH key details
       description: Retrieve detailed information about a specific SSH key
@@ -470,7 +470,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/snapshots:
+  /api/servers/{server_id}/snapshots:
     get:
       summary: List server snapshots
       description: Retrieve a list of all snapshots for a specific server
@@ -554,7 +554,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/snapshots/{snapshot_id}:
+  /api/servers/{server_id}/snapshots/{snapshot_id}:
     get:
       summary: Get snapshot details
       description: Retrieve detailed information about a specific snapshot
@@ -621,7 +621,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/snapshots/{snapshot_id}/restore:
+  /api/servers/{server_id}/snapshots/{snapshot_id}/restore:
     post:
       summary: Restore server from snapshot
       description: Restore a server from a snapshot
@@ -659,7 +659,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /plans:
+  /api/plans:
     get:
       summary: List available plans
       description: Retrieve a list of all available server plans
@@ -686,7 +686,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /images:
+  /api/images:
     get:
       summary: List available images
       description: Retrieve a list of all available OS images
@@ -713,7 +713,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /locations:
+  /api/locations:
     get:
       summary: List available locations
       description: Retrieve a list of all available server locations
@@ -740,7 +740,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /account:
+  /api/account:
     get:
       summary: Get account information
       description: Retrieve your LetsCloud account information (profile)
@@ -801,36 +801,23 @@ components:
           type: string
           description: Public IP address of the server
           example: "192.168.1.100"
-        private_ip:
+        plan_slug:
           type: string
-          description: Private IP address of the server
-          example: "10.0.0.100"
-        plan:
-          $ref: '#/components/schemas/Plan'
-        image:
-          $ref: '#/components/schemas/Image'
-        location:
-          $ref: '#/components/schemas/Location'
+          description: Plan identifier
+          example: "basic-1gb"
+        image_slug:
+          type: string
+          description: Image identifier
+          example: "ubuntu-22-04"
+        location_slug:
+          type: string
+          description: Location identifier
+          example: "nyc1"
         created_at:
           type: string
           format: date-time
           description: Server creation timestamp
           example: "2024-01-15T10:30:00Z"
-        updated_at:
-          type: string
-          format: date-time
-          description: Last update timestamp
-          example: "2024-01-15T10:30:00Z"
-        ssh_keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHKey'
-          description: SSH keys associated with the server
-        snapshots:
-          type: array
-          items:
-            $ref: '#/components/schemas/Snapshot'
-          description: Snapshots associated with the server
 
     Plan:
       type: object

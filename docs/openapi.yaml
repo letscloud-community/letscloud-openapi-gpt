@@ -38,7 +38,7 @@ security:
   - ApiKeyAuth: []
 
 paths:
-  /servers:
+  /api/servers:
     get:
       summary: List all servers
       description: Retrieve a list of all servers in your account with pagination support
@@ -167,7 +167,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}:
+  /api/servers/{server_id}:
     get:
       summary: Get server details
       description: Retrieve detailed information about a specific server
@@ -220,7 +220,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/start:
+  /api/servers/{server_id}/start:
     post:
       summary: Start a server
       description: Start a server that is currently stopped
@@ -251,7 +251,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/stop:
+  /api/servers/{server_id}/stop:
     post:
       summary: Shutdown a server
       description: Shutdown a server that is currently running
@@ -282,7 +282,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/reboot:
+  /api/servers/{server_id}/reboot:
     post:
       summary: Reboot a server
       description: Reboot a server that is currently running
@@ -313,7 +313,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /ssh-keys:
+  /api/ssh-keys:
     get:
       summary: List all SSH keys
       description: Retrieve a list of all SSH keys in your account
@@ -380,7 +380,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /ssh-keys/{key_id}:
+  /api/ssh-keys/{key_id}:
     get:
       summary: Get SSH key details
       description: Retrieve detailed information about a specific SSH key
@@ -433,7 +433,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/snapshots:
+  /api/servers/{server_id}/snapshots:
     get:
       summary: List server snapshots
       description: Retrieve a list of all snapshots for a specific server
@@ -517,7 +517,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/snapshots/{snapshot_id}:
+  /api/servers/{server_id}/snapshots/{snapshot_id}:
     get:
       summary: Get snapshot details
       description: Retrieve detailed information about a specific snapshot
@@ -584,7 +584,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /servers/{server_id}/snapshots/{snapshot_id}/restore:
+  /api/servers/{server_id}/snapshots/{snapshot_id}/restore:
     post:
       summary: Restore server from snapshot
       description: Restore a server from a snapshot
@@ -622,7 +622,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /plans:
+  /api/plans:
     get:
       summary: List available plans
       description: Retrieve a list of all available server plans
@@ -649,7 +649,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /images:
+  /api/images:
     get:
       summary: List available images
       description: Retrieve a list of all available OS images
@@ -676,7 +676,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /locations:
+  /api/locations:
     get:
       summary: List available locations
       description: Retrieve a list of all available server locations
@@ -703,7 +703,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /account:
+  /api/account:
     get:
       summary: Get account information
       description: Retrieve your LetsCloud account information
