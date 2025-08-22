@@ -96,16 +96,80 @@ All API requests require authentication using your LetsCloud API key. You can pr
 ### Setting up GPT Actions
 
 1. **Import the OpenAPI Specification**:
-   - Use the `openapi.yaml` file in this repository
-   - The specification is optimized for GPT Actions with clear operation IDs and descriptions
+   
+   **Option A: Direct URL Import (Recommended)**
+   ```yaml
+   # In your GPT Actions configuration, use this URL:
+   https://raw.githubusercontent.com/letscloud-community/letscloud-openapi-gpt/main/openapi.yaml
+   ```
+   
+   **Option B: Local File Import**
+   - Download the `openapi.yaml` file from this repository
+   - Upload it directly to your GPT Actions configuration
+   - File path: `./openapi.yaml`
+   
+   **Option C: GitHub Repository Import**
+   - Repository: `letscloud-community/letscloud-openapi-gpt`
+   - Branch: `main`
+   - File: `openapi.yaml`
+   
+   **Specification Features:**
+   - ✅ Optimized for GPT Actions with clear operation IDs
+   - ✅ 21 endpoints with descriptive names
+   - ✅ Comprehensive parameter validation
+   - ✅ Detailed error responses
+   - ✅ Authentication scheme configured
+   - ✅ Production-ready API endpoints
 
 2. **Configure Authentication**:
-   - Set up your LetsCloud API key in your GPT Actions configuration
-   - Use the `ApiKeyAuth` security scheme
+   
+   **API Key Setup:**
+   ```yaml
+   # Security scheme: ApiKeyAuth
+   # Header name: Authorization
+   # Value format: Bearer YOUR_API_KEY
+   ```
+   
+   **Environment Variable:**
+   ```bash
+   LETSCLOUD_API_KEY=your_api_key_here
+   ```
+   
+   **Get Your API Key:**
+   1. Log in to your LetsCloud account at https://www.letscloud.io
+   2. Go to API Settings in your dashboard
+   3. Generate a new API key
+   4. Copy the key and keep it secure
 
 3. **Available Actions**:
-   - All endpoints are mapped to GPT Actions with descriptive names
-   - Each action includes proper parameter validation and error handling
+   
+   **Server Management (7 actions):**
+   - `listServers` - List all servers
+   - `createServer` - Create new server
+   - `getServer` - Get server details
+   - `deleteServer` - Delete server
+   - `startServer` - Start server
+   - `shutdownServer` - Stop server
+   - `rebootServer` - Reboot server
+   
+   **SSH Key Management (4 actions):**
+   - `listSSHKeys` - List SSH keys
+   - `createSSHKey` - Add new SSH key
+   - `getSSHKey` - Get SSH key details
+   - `deleteSSHKey` - Remove SSH key
+   
+   **Snapshot Management (5 actions):**
+   - `listSnapshots` - List server snapshots
+   - `createSnapshot` - Create backup snapshot
+   - `getSnapshot` - Get snapshot details
+   - `deleteSnapshot` - Delete snapshot
+   - `restoreSnapshot` - Restore from snapshot
+   
+   **Resource Discovery (4 actions):**
+   - `listPlans` - Available server plans
+   - `listImages` - Available OS images
+   - `listLocations` - Available locations
+   - `getAccountInfo` - Account information
 
 ### Example GPT Actions Usage
 
@@ -124,6 +188,33 @@ actions:
     description: "Manage SSH keys for server access"
     operation_id: listSSHKeys
 ```
+
+### 🔧 Troubleshooting & Tips
+
+**Common Issues:**
+
+1. **Authentication Errors:**
+   - Ensure your API key is valid and active
+   - Check that the Authorization header format is correct: `Bearer YOUR_API_KEY`
+   - Verify your API key has the necessary permissions
+
+2. **Import Issues:**
+   - If the direct URL doesn't work, try downloading the file locally
+   - Ensure you're using the latest version from the main branch
+   - Check that your GPT Actions platform supports OpenAPI 3.0
+
+3. **Action Not Found:**
+   - Verify the operation IDs match exactly (case-sensitive)
+   - Check that all 21 actions are properly imported
+   - Restart your GPT Actions configuration if needed
+
+**Best Practices:**
+
+- ✅ Test with simple actions first (like `listServers`)
+- ✅ Use descriptive natural language commands
+- ✅ Keep your API key secure and rotate regularly
+- ✅ Monitor your API usage to avoid rate limits
+- ✅ Use the latest version of the specification
 
 ## 🚀 Deployment Options
 
