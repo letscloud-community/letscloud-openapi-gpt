@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://letscloud-community.github.io/letscloud-openapi-gpt/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

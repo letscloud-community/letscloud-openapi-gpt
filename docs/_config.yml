@@ -1,0 +1,59 @@
+# Jekyll configuration for GitHub Pages
+# This file configures the GitHub Pages site for better SEO and functionality
+
+# Site settings
+title: "LetsCloud API Documentation"
+description: "Complete cloud infrastructure management API for LetsCloud platform with GPT Actions integration"
+url: "https://letscloud-community.github.io"
+baseurl: "/letscloud-openapi-gpt"
+
+# Author information
+author:
+  name: "LetsCloud Community"
+  email: "support@letscloud.io"
+  url: "https://www.letscloud.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Include files
+include:
+  - _pages
+  - _posts
+  - _drafts
+
+# SEO settings
+lang: en_US
+locale: en_US

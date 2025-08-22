@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Actions Integration - LetsCloud API</title>
+    <meta name="description" content="Learn how to integrate LetsCloud API with GPT Actions for AI-powered cloud management">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .nav {
+            background: #f8f9fa;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+        
+        .footer a {
+            color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div>
+                <a href="index.html">API Documentation</a>
+                <a href="gpt-actions.html">GPT Actions</a>
+                <a href="https://github.com/letscloud-community/letscloud-openapi-gpt">GitHub</a>
+            </div>
+            <div>
+                <a href="https://www.letscloud.io">LetsCloud</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🤖 GPT Actions Integration</h1>
+        <p>Transform your cloud management with AI-powered automation</p>
+    </div>
+
+    <div class="container">
+        <!-- Overview Section -->
+        <div class="section">
+            <h2>What are GPT Actions?</h2>
+            <div class="card">
+                <p>GPT Actions allow you to connect ChatGPT and other AI assistants directly to your LetsCloud infrastructure. Instead of writing complex scripts or using command-line tools, you can simply <strong>talk to your AI assistant</strong> to manage your cloud resources.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">💬</div>
+                        <h3>Natural Language</h3>
+                        <p>Use plain English to manage your infrastructure</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Setup</h3>
+                        <p>No coding required - just import and go</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🧠</div>
+                        <h3>AI Intelligence</h3>
+                        <p>Get smart suggestions and optimizations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Setup Section -->
+        <div class="section">
+            <h2>🚀 Quick Setup Guide</h2>
+            
+            <div class="card">
+                <h3>Step 1: Get Your API Key</h3>
+                <p>First, you'll need your LetsCloud API key:</p>
+                <ol>
+                    <li>Log into your <a href="https://www.letscloud.io">LetsCloud account</a></li>
+                    <li>Navigate to API settings</li>
+                    <li>Generate a new API key or copy your existing one</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>Step 2: Configure GPT Actions</h3>
+                <p>In your ChatGPT or OpenAI platform:</p>
+                <ol>
+                    <li>Go to GPT Actions configuration</li>
+                    <li>Click "Add Action"</li>
+                    <li>Import the OpenAPI specification from this repository</li>
+                    <li>Configure authentication with your API key</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3>Step 3: Start Using</h3>
+                <p>Now you can use natural language commands like:</p>
+                <ul>
+                    <li>"Create a new web server with Ubuntu 22.04"</li>
+                    <li>"List all my servers and their status"</li>
+                    <li>"Create a backup snapshot of my production server"</li>
+                    <li>"Optimize my infrastructure costs"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Examples Section -->
+        <div class="section">
+            <h2>💡 Example Conversations</h2>
+            
+            <div class="card">
+                <h3>Server Management</h3>
+                <div class="code-block">
+<strong>You:</strong> "I need a new server for my web application"
+
+<strong>ChatGPT:</strong> "I'll help you create a server for your web application. Let me check the available options and create the best configuration for you."
+
+<strong>You:</strong> "Make it in São Paulo with Ubuntu 22.04"
+
+<strong>ChatGPT:</strong> "Perfect! I'll create a server in São Paulo with Ubuntu 22.04. This will give you low latency for South American users. Server created successfully!"
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Infrastructure Monitoring</h3>
+                <div class="code-block">
+<strong>You:</strong> "Check the status of all my servers"
+
+<strong>ChatGPT:</strong> "I'll check the status of all your servers. Here's what I found:
+• Web Server (São Paulo): Running ✅
+• Database Server (São Paulo): Running ✅
+• Backup Server (São Paulo): Stopped ⚠️
+
+Would you like me to start the backup server?"
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Cost Optimization</h3>
+                <div class="code-block">
+<strong>You:</strong> "Analyze my server usage and suggest cost savings"
+
+<strong>ChatGPT:</strong> "I've analyzed your infrastructure and found several optimization opportunities:
+• 3 servers are running 24/7 but only used during business hours
+• You could save $45/month by stopping unused servers at night
+• Consider upgrading the database server for better performance
+
+Would you like me to implement these changes?"
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="section">
+            <h2>✨ Key Features</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Server Management</h3>
+                    <p>Create, start, stop, and manage servers with simple commands</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔑</div>
+                    <h3>SSH Key Management</h3>
+                    <p>Securely manage SSH keys for server access</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📸</div>
+                    <h3>Snapshot Management</h3>
+                    <p>Create and restore server backups automatically</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Deployment</h3>
+                    <p>Deploy servers worldwide with optimal locations</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <h3>Cost Optimization</h3>
+                    <p>Get AI-powered suggestions for cost savings</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>Resource Discovery</h3>
+                    <p>Find the best plans and configurations for your needs</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="section">
+            <h2>🚀 Get Started Today</h2>
+            <div class="card" style="text-align: center;">
+                <h3>Ready to transform your cloud management?</h3>
+                <p>Join thousands of developers who are already using AI-powered cloud management.</p>
+                <a href="index.html" class="btn">View API Documentation</a>
+                <a href="https://github.com/letscloud-community/letscloud-openapi-gpt" class="btn btn-secondary">Get the Code</a>
+                <a href="https://www.letscloud.io" class="btn btn-secondary">Visit LetsCloud</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 LetsCloud. All rights reserved.</p>
+        <p>For support, visit <a href="https://developers.letscloud.io">developers.letscloud.io</a></p>
+    </div>
+</body>
+</html>

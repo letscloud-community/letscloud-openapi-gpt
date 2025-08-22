@@ -151,6 +151,32 @@
             text-decoration: none;
         }
         
+        .nav {
+            background: #f8f9fa;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -159,10 +185,29 @@
             .header p {
                 font-size: 1em;
             }
+            
+            .nav .container {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div>
+                <a href="index.html">API Documentation</a>
+                <a href="gpt-actions.html">GPT Actions</a>
+                <a href="https://github.com/letscloud-community/letscloud-openapi-gpt">GitHub</a>
+            </div>
+            <div>
+                <a href="https://www.letscloud.io">LetsCloud</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Custom Header -->
     <div class="header">
         <h1>LetsCloud API</h1>
