@@ -33,8 +33,6 @@ info:
 servers:
   - url: https://core.letscloud.io/api
     description: Production API server
-  - url: https://core.letscloud.io/api
-    description: Staging API server
 
 security:
   - ApiKeyAuth: []

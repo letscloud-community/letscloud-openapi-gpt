@@ -5,13 +5,23 @@ This document provides an overview of the project structure and the purpose of e
 ## 📁 Root Directory
 
 ```
-letscloud-openapi-gpt-actions/
+letscloud-openapi-gpt/
 ├── openapi.yaml                 # Main OpenAPI 3.0 specification
 ├── README.md                    # Project documentation and usage guide
 ├── LICENSE                      # MIT License
 ├── DEPLOYMENT.md               # Deployment and publishing guide
 ├── PROJECT_STRUCTURE.md        # This file - project structure overview
 ├── gpt-actions-config.yaml     # GPT Actions configuration examples
+├── .gitignore                  # Git ignore rules
+├── assets/                     # Static assets and images
+│   └── LetsCloud_logo.png      # LetsCloud logo image
+├── docs/                       # Web documentation
+│   ├── index.html              # Main API documentation page
+│   ├── gpt-actions.html        # GPT Actions documentation page
+│   ├── openapi.yaml            # OpenAPI spec for web docs
+│   ├── robots.txt              # SEO configuration
+│   ├── sitemap.xml             # Site map for search engines
+│   └── _config.yml             # Documentation configuration
 └── examples/                   # Code examples and implementations
     ├── usage-examples.py       # Python client implementation
     └── requirements.txt        # Python dependencies
@@ -69,6 +79,54 @@ letscloud-openapi-gpt-actions/
   - Performance optimization tips
 - **Target Audience**: System administrators, DevOps teams
 
+### Assets Directory
+
+#### `assets/LetsCloud_logo.png`
+- **Purpose**: LetsCloud brand logo for web documentation
+- **Usage**: Displayed in the footer of the API documentation pages
+- **Format**: PNG image with transparent background
+- **Size**: Optimized for web display
+
+### Web Documentation Directory
+
+#### `docs/index.html`
+- **Purpose**: Main API documentation page with Swagger UI
+- **Content**: 
+  - Interactive API documentation
+  - Swagger UI integration
+  - Custom branding and styling
+  - Navigation to other pages
+- **Features**: 
+  - Real-time API testing
+  - Authentication setup
+  - Request/response examples
+  - Mobile responsive design
+
+#### `docs/gpt-actions.html`
+- **Purpose**: GPT Actions specific documentation page
+- **Content**: 
+  - GPT Actions integration guide
+  - Configuration examples
+  - Best practices
+  - Troubleshooting tips
+
+#### `docs/openapi.yaml`
+- **Purpose**: OpenAPI specification for web documentation
+- **Content**: Identical to root openapi.yaml for web access
+- **Usage**: Served by web documentation pages
+
+#### `docs/robots.txt`
+- **Purpose**: SEO configuration for search engines
+- **Content**: Crawling rules and sitemap reference
+
+#### `docs/sitemap.xml`
+- **Purpose**: XML sitemap for search engine indexing
+- **Content**: List of all documentation pages
+
+#### `docs/_config.yml`
+- **Purpose**: Configuration file for documentation generation
+- **Content**: Site settings and metadata
+
 ### Examples Directory
 
 #### `examples/usage-examples.py`
@@ -98,8 +156,7 @@ openapi.yaml
 │   ├── Contact information
 │   └── License details
 ├── Servers
-│   ├── Production API
-│   └── Staging API
+│   └── Production API
 ├── Security
 │   └── API Key authentication
 ├── Paths
