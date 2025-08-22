@@ -13,7 +13,7 @@ from typing import Dict, List, Optional
 class LetsCloudAPI:
     """LetsCloud API client based on the OpenAPI specification"""
     
-    def __init__(self, api_key: str = None, base_url: str = "https://core.letscloud.io/api"):
+    def __init__(self, api_key: str = None, base_url: str = "https://api.letscloud.io"):
         """
         Initialize the LetsCloud API client
         

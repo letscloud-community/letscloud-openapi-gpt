@@ -7,7 +7,7 @@ The LetsCould API allows you to manage your cloud resources programmatically. Al
 ## Base URL
 
 ```
-https://core.letscloud.io/api
+https://api.letscloud.io
 ```
 
 ## Versioning
@@ -119,7 +119,7 @@ Content-Type: application/json
 
 **Example Request:**
 ```bash
-curl --location 'https://core.letscloud.io/api/snapshots/status/your-image-slug-here' \
+curl --location 'https://api.letscloud.io/snapshots/status/your-image-slug-here' \
 --header 'api-token: your-token-here' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json'
@@ -151,7 +151,7 @@ label: Your new label
 
 **Example Request:**
 ```bash
-curl --location --request PUT 'https://core.letscloud.io/api/snapshots/your-snapshot-slug' \
+curl --location --request PUT 'https://api.letscloud.io/snapshots/your-snapshot-slug' \
 --header 'api-token: your-token-here' \
 --header 'Content-Type: application/json' \
 --form 'label="Your new label"'
@@ -187,7 +187,7 @@ _method: DELETE
 
 **Example Request:**
 ```bash
-curl --location --request DELETE 'https://core.letscloud.io/api/snapshots/your-snapshot-slug' \
+curl --location --request DELETE 'https://api.letscloud.io/snapshots/your-snapshot-slug' \
 --header 'api-token: your-token-here'
 ```
 

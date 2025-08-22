@@ -15,9 +15,9 @@ auth:
 
 # API Base URLs
 servers:
-  - url: "https://core.letscloud.io/api"
+  - url: "https://api.letscloud.io"
     description: "Production API"
-  - url: "https://core.letscloud.io/api"
+  - url: "https://api.letscloud.io"
     description: "Staging API"
 
 # Available Actions Configuration
