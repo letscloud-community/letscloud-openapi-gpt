@@ -39,8 +39,8 @@ paths:
           schema:
             type: integer
             minimum: 1
-            maximum: 5
-            default: 3
+            maximum: 20
+            default: 5
       responses:
         '200':
           description: List of servers retrieved successfully
@@ -57,7 +57,7 @@ paths:
                     properties:
                       servers:
                         type: array
-                        maxItems: 5
+                        maxItems: 20
                         items:
                           $ref: '#/components/schemas/Server'
                       total:
@@ -116,6 +116,9 @@ components:
         label:
           type: string
           example: "My Web Server"
+        hostname:
+          type: string
+          example: "webserver-01"
         status:
           type: string
           enum:
@@ -138,6 +141,10 @@ components:
         location_slug:
           type: string
           example: "nyc1"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
 
     Account:
       type: object
