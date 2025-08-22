@@ -103,9 +103,9 @@ class LetsCloudAPI:
         return self._make_request('GET', f'/locations/{location_slug}/images')
 
     # Account Information Methods
-    def get_account_info(self) -> Dict:
-        """Get account information"""
-        return self._make_request('GET', '/account')
+    def get_profile_info(self) -> Dict:
+        """Get profile information"""
+        return self._make_request('GET', '/profile')
 
 
 def main():
@@ -121,11 +121,11 @@ def main():
         return
 
     try:
-        # Example 1: Get account information
-        print("\n📋 Getting account information...")
-        account = client.get_account_info()
-        print(f"Account: {account.get('name', 'N/A')} ({account.get('email', 'N/A')})")
-        print(f"Balance: ${account.get('balance', 0):.2f} {account.get('currency', 'USD')}")
+        # Example 1: Get profile information
+        print("\n📋 Getting profile information...")
+        profile = client.get_profile_info()
+        print(f"Profile: {profile.get('name', 'N/A')} ({profile.get('email', 'N/A')})")
+        print(f"Balance: {profile.get('currency', '$')}{profile.get('balance', '0.00')}")
 
         # Example 2: Discover available resources
         print("\n🔍 Discovering available resources...")

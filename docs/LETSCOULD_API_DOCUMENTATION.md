@@ -454,6 +454,39 @@ curl --location --request DELETE 'https://api.letscloud.io/sshkeys' \
 }
 ```
 
+### Account
+
+#### Get Profile Information
+
+Retrieve information about your current profile.
+
+**Endpoint:** `GET /profile`
+
+**Headers:**
+```
+api-token: your-token-here
+```
+
+**Example Request:**
+```bash
+curl --location 'https://api.letscloud.io/profile' \
+--header 'api-token: your-token-here'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "name": "John Smith",
+    "company_name": "LetsCloud Company",
+    "email": "john.smith@letscloud.io",
+    "currency": "$",
+    "balance": "100.00"
+  }
+}
+```
+
 ## Getting Started
 
 1. **Obtain an API Token**: You'll need to generate an API token from your LetsCould dashboard.

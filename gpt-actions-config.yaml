@@ -111,9 +111,9 @@ actions:
       - "location_slug"
 
   # Account Information Actions
-  - name: "get_account_info"
-    description: "Get your LetsCould account information"
-    operation_id: "getAccountProfile"
+  - name: "get_profile_info"
+    description: "Get your LetsCould profile information"
+    operation_id: "getProfileInfo"
     category: "Account Information"
 
 # Parameter Templates

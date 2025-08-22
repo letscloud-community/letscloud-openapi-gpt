@@ -523,16 +523,16 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 
-  /account:
+  /profile:
     get:
-      summary: Get account profile
-      description: Retrieve your account information
-      operationId: getAccountProfile
+      summary: Get profile information
+      description: Retrieve information about your current profile
+      operationId: getProfileInfo
       tags:
         - Account
       responses:
         '200':
-          description: Account information retrieved successfully
+          description: Profile information retrieved successfully
           content:
             application/json:
               schema:
@@ -542,7 +542,7 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/Account'
+                    $ref: '#/components/schemas/Profile'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -743,25 +743,24 @@ components:
           type: string
           example: "centos-69-x64"
 
-    Account:
+    Profile:
       type: object
       properties:
         name:
           type: string
-          example: "John Doe"
+          example: "John Smith"
         company_name:
           type: string
-          nullable: true
-          example: "Acme Corp"
+          example: "LetsCloud Company"
         email:
           type: string
-          example: "user@example.com"
+          example: "john.smith@letscloud.io"
         currency:
           type: string
-          example: "R$"
+          example: "$"
         balance:
           type: string
-          example: "8846.91"
+          example: "100.00"
 
     Error:
       type: object
