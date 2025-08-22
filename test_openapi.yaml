@@ -1,0 +1,13 @@
+openapi: 3.1.0
+info:
+  title: Test API
+  version: 1.0.0
+servers:
+  - url: https://core.letscloud.io
+paths:
+  /api/servers:
+    get:
+      summary: List servers
+      responses:
+        '200':
+          description: Success
