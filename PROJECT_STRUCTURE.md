@@ -26,8 +26,9 @@ letscould-openapi-gpt/
 ├── API_KEY_SETUP_GUIDE.md              # API key configuration guide
 ├── KNOWLEDGE_FILES.md                  # Knowledge files documentation
 ├── .gitignore                          # Git ignore rules
-├── assets/                             # Static assets and images
-│   └── LetsCloud_logo.png              # LetsCould logo image
+├── docs/
+│   ├── assets/                         # Static assets and images
+│   │   └── LetsCloud_logo.png          # LetsCould logo image
 ├── examples/                           # Code examples and implementations
 │   ├── usage-examples.py               # Python client implementation
 │   └── requirements.txt                # Python dependencies
