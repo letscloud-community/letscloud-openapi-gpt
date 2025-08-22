@@ -31,7 +31,7 @@ info:
     url: https://opensource.org/licenses/MIT
 
 servers:
-  - url: https://core.letscloud.io/api
+  - url: https://core.letscloud.io
     description: Production API server
 
 security:
