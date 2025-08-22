@@ -104,50 +104,23 @@ To use the LetsCloud Infrastructure Manager, you need your **LetsCloud API key**
 - **[Quick Start](QUICK_SETUP.md)** - Get started in 3 steps
 - **[Privacy Policy](https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html)** - How we protect your data
 
-### Setting up GPT Actions
+## 🛠️ For Developers
 
-#### Step 1: Configure Basic GPT Information
+*This section is for developers who want to create their own GPT or integrate with the API directly.*
 
-**Name:**
-```
-LetsCloud Infrastructure Manager
-```
+### Technical Setup
 
-**Description:**
+**OpenAPI Specification URL:**
 ```
-A specialized GPT for managing cloud infrastructure on LetsCloud platform. Create, manage, and monitor servers, SSH keys, snapshots, and account resources using natural language commands.
+https://raw.githubusercontent.com/letscloud-community/letscloud-openapi-gpt/main/openapi.yaml
 ```
 
-**Instructions:**
+**Authentication:**
+```yaml
+Authentication Type: API Key
+Header Name: Authorization
+Header Value Format: Bearer {api_key}
 ```
-You are a cloud infrastructure management assistant for LetsCloud platform. Help users manage their cloud resources through natural language commands. Create, start, stop servers, manage SSH keys, handle snapshots, provide plan information, and optimize costs. Always confirm destructive operations and prioritize user safety.
-```
-
-**Conversation Starters:**
-- "Show me all my servers and their current status"
-- "Create a new web server with Ubuntu 22.04"
-- "Help me optimize my infrastructure costs"
-
-**Capabilities:**
-- ✅ **Web Search**: Enable
-- ❌ **Canvas**: Disable
-- ❌ **Image Generation**: Disable
-- ✅ **Code Interpreter**: Enable
-
-#### Privacy & Sharing Considerations
-
-**For Private GPTs (Recommended):**
-- No privacy policy required
-- Use your own API key
-- Full control over access
-
-**For Public GPTs:**
-- Privacy policy URL required
-- Each user must provide their own API key
-- Users need to configure authentication individually
-- **Privacy Policy URL**: `https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html`
-
-#### Step 2: Import OpenAPI Specification
    
    **Option A: Direct URL Import (Recommended)**
    ```yaml
@@ -268,150 +241,49 @@ actions:
 - ✅ Monitor your API usage to avoid rate limits
 - ✅ Use the latest version of the specification
 
-## 🚀 Deployment Options
+## 🛠️ Troubleshooting
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deploy%20Free-lightgrey.svg)](https://pages.github.com/)
-[![Docker](https://img.shields.io/badge/Docker-Container%20Ready-blue.svg)](https://www.docker.com/)
-[![AWS](https://img.shields.io/badge/AWS-Deploy%20Ready-orange.svg)](https://aws.amazon.com/)
-[![GCP](https://img.shields.io/badge/GCP-Deploy%20Ready-blue.svg)](https://cloud.google.com/)
-[![Azure](https://img.shields.io/badge/Azure-Deploy%20Ready-blue.svg)](https://azure.microsoft.com/)
+### Common Issues
 
-## 📖 Examples
+**"Authentication failed"**
+- Check if your API key is correct
+- Make sure you included "Bearer" before your API key
+- Try regenerating your API key in your LetsCloud dashboard
 
-### Creating a Server
+**"Server not found"**
+- Make sure the server exists in your account
+- Use "List my servers" to see all available servers
 
-```bash
-curl -X POST https://core.letscloud.io/api/servers \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "label": "My Web Server",
-    "plan_slug": "basic-1gb",
-    "image_slug": "ubuntu-22-04",
-    "location_slug": "nyc1",
-    "hostname": "webserver-01"
-  }'
-```
+**"Action failed"**
+- Check if your API key has the right permissions
+- Try again - some actions may take a few moments
+- Contact support if problems persist
 
-### Listing Servers
+### Getting Help
 
-```bash
-curl -X GET https://core.letscloud.io/api/servers \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
+- **Support**: support@letscloud.io
+- **Documentation**: [https://www.letscloud.io/docs](https://www.letscloud.io/docs)
+- **Community**: [GitHub Repository](https://github.com/letscloud-community/letscloud-openapi-gpt)
 
-### Creating an SSH Key
+## 🔗 Useful Links
 
-```bash
-curl -X POST https://core.letscloud.io/api/ssh-keys \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "My Laptop Key",
-    "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-  }'
-```
-
-## 🔍 Data Models
-
-### Server Object
-
-```json
-{
-  "id": 123,
-  "label": "My Web Server",
-  "hostname": "webserver-01",
-  "status": "running",
-  "ip_address": "192.168.1.100",
-  "private_ip": "10.0.0.100",
-  "plan": {
-    "slug": "basic-1gb",
-    "name": "Basic 1GB",
-    "ram": 1024,
-    "cpu": 1,
-    "disk": 25,
-    "price": 5.00
-  },
-  "image": {
-    "slug": "ubuntu-22-04",
-    "name": "Ubuntu 22.04 LTS",
-    "distribution": "Ubuntu",
-    "version": "22.04"
-  },
-  "location": {
-    "slug": "nyc1",
-    "name": "New York",
-    "country": "United States"
-  },
-  "created_at": "2024-01-15T10:30:00Z"
-}
-```
-
-### Error Response
-
-```json
-{
-  "error": "Server not found",
-  "code": "NOT_FOUND",
-  "details": {
-    "server_id": 123
-  }
-}
-```
-
-## 🛡️ Error Handling
-
-The API uses standard HTTP status codes and returns detailed error messages:
-
-- `400` - Bad Request (invalid parameters)
-- `401` - Unauthorized (invalid API key)
-- `404` - Not Found (resource doesn't exist)
-- `409` - Conflict (resource state conflict)
-- `422` - Validation Error (invalid request data)
-- `500` - Internal Server Error
-
-## 📊 Rate Limiting
-
-API requests are rate limited to ensure fair usage. Implement appropriate retry logic with exponential backoff when encountering rate limit errors.
-
-## 🔗 Related Resources
-
-- [LetsCloud Go Library](https://github.com/letscloud-community/letscloud-go)
 - [LetsCloud Website](https://www.letscloud.io)
-- [API Documentation](https://developers.letscloud.io)
+- [LetsCloud Documentation](https://www.letscloud.io/docs)
+- [Privacy Policy](https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html)
 
-## 🔧 Compatibility
+## 📞 Support
 
-[![OpenAI GPT](https://img.shields.io/badge/OpenAI%20GPT-Compatible-brightgreen.svg)](https://platform.openai.com/)
-[![ChatGPT](https://img.shields.io/badge/ChatGPT-Integration-blue.svg)](https://chat.openai.com/)
-[![Claude](https://img.shields.io/badge/Claude-Compatible-orange.svg)](https://claude.ai/)
-[![Postman](https://img.shields.io/badge/Postman-Import-yellow.svg)](https://www.postman.com/)
-[![Insomnia](https://img.shields.io/badge/Insomnia-Import-purple.svg)](https://insomnia.rest/)
-[![Swagger UI](https://img.shields.io/badge/Swagger%20UI-Compatible-green.svg)](https://swagger.io/tools/swagger-ui/)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 🤝 Community & Support
-
-[![Issues](https://img.shields.io/badge/Issues-Welcome-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/issues)
-[![Pull Requests](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/pulls)
-[![Discussions](https://img.shields.io/badge/Discussions-Open-blue.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/discussions)
-[![Contributing](https://img.shields.io/badge/Contributing-Guidelines-lightgrey.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/blob/main/CONTRIBUTING.md)
-
-### Support Channels
-
-For support, please contact:
+**Need help?**
 - **Email**: support@letscloud.io
-- **Website**: https://www.letscloud.io
-- **Documentation**: https://developers.letscloud.io
-- **GitHub Issues**: [Create an issue](https://github.com/letscloud-community/letscloud-openapi-gpt/issues)
+- **Website**: [https://www.letscloud.io](https://www.letscloud.io)
+- **Documentation**: [https://www.letscloud.io/docs](https://www.letscloud.io/docs)
 
 ---
 
-**Note**: This OpenAPI specification is based on the LetsCloud Go library and uses the official API endpoint at [https://core.letscloud.io/api](https://core.letscloud.io/api). The specification may be updated as the API evolves. Always refer to the official documentation for the most current information.
+**Ready to get started?** 🚀
+
+1. Get your API key from your [LetsCloud dashboard](https://www.letscloud.io)
+2. Find the **LetsCloud Infrastructure Manager** in the GPT Store
+3. Set up your API key and start managing your infrastructure with simple commands!
+
+**Happy cloud managing!** ☁️
