@@ -28,6 +28,11 @@ pip-delete-this-directory.txt
 # Creator instructions (internal use only)
 GPT_CREATOR_INSTRUCTIONS.md
 
+# Knowledge files planning (internal use only)
+KNOWLEDGE_FILES.md
+knowledge-examples/
+API_KEY_SETUP_GUIDE.md
+
 # OS generated files
 .DS_Store
 .DS_Store?
