@@ -26,7 +26,7 @@ The **LetsCloud Infrastructure Manager** is a smart AI assistant that helps you 
 
 1. **Find the LetsCloud GPT** in the GPT Store
 2. **Start a conversation** with the GPT
-3. **Set up your API key** by saying: *"I need to set up my API key: YOUR_API_TOKEN"*
+3. **Provide your API key** when prompted by the GPT
 4. **Start managing your infrastructure!**
 
 ## 💬 Example Conversations
@@ -160,7 +160,7 @@ A: The GPT will ask for confirmation before destructive actions. You can also cr
 
 1. **Get your API key** from your LetsCloud dashboard
 2. **Find the LetsCloud GPT** in the GPT Store
-3. **Set up your API key** in the conversation
+3. **Provide your API key** when prompted
 4. **Start managing your infrastructure** with simple commands!
 
 **Happy cloud managing! 🚀**

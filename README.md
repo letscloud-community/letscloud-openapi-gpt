@@ -36,8 +36,7 @@ The public version is available for testing and demonstration purposes, but requ
 
 1. **Find the LetsCould GPT** in the GPT Store
 2. **Start a conversation** with the GPT
-3. **Set up your API key** in the conversation
-4. **Start managing your infrastructure!**
+3. **Start managing your infrastructure!**
 
 **⚠️ Security Note**: The public version requires you to share your API key in the conversation, which is less secure. We recommend using the private version for production use.
 
@@ -125,7 +124,7 @@ If using the public version, you'll need to provide your API key in each convers
 
 **"GPT not responding to commands"**
 - **Private GPT**: Ensure your API key is properly configured in the GPT settings
-- **Public GPT**: Make sure you've set up your API key in the conversation
+- **Public GPT**: Make sure you've provided your API key in the conversation
 - Try restarting the conversation
 
 ### **Recommended Solution**

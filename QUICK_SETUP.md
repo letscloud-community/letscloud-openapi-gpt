@@ -41,9 +41,7 @@ If you prefer to use the public version:
 - Start a conversation with the GPT
 
 #### 3. Set Up Your Access
-```
-"I need to set up my API key: YOUR_API_TOKEN_HERE"
-```
+Provide your API key when prompted by the GPT.
 
 **⚠️ Security Note**: The public version requires sharing your API key in conversations, which is less secure.
 
@@ -105,7 +103,7 @@ If you prefer to use the public version:
 ### **Alternative Path:**
 1. Get your API key from LetsCould
 2. Find the GPT in the store
-3. Set up your API key in conversation
+3. Provide your API key when prompted
 4. Start managing your infrastructure!
 
 **That's it! 🎉**
