@@ -8,6 +8,8 @@
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Available-lightgrey.svg)](https://pages.github.com/)
 [![LetsCloud](https://img.shields.io/badge/LetsCloud-API-red.svg)](https://www.letscloud.io)
 
+> **📝 Note**: All documentation in this repository is in English.
+
 This project provides a comprehensive OpenAPI 3.0 specification for the LetsCloud API, designed specifically for integration with GPT Actions. The specification covers all major cloud infrastructure management operations available through the [LetsCloud Go library](https://github.com/letscloud-community/letscloud-go).
 
 ## 📋 Overview
@@ -92,6 +94,13 @@ All API requests require authentication using your LetsCloud API key. You can pr
 [![GPT Actions Setup](https://img.shields.io/badge/GPT%20Actions-Setup%20Guide-blue.svg)](https://platform.openai.com/docs/actions)
 [![OpenAPI Import](https://img.shields.io/badge/OpenAPI-Import%20Ready-green.svg)](https://swagger.io/specification/)
 [![Authentication](https://img.shields.io/badge/Auth-API%20Key%20Ready-orange.svg)](https://platform.openai.com/docs/actions)
+
+### 📖 Complete Setup Guide
+
+**For detailed step-by-step instructions, see:**
+- **[GPT_ACTIONS_SETUP_GUIDE.md](GPT_ACTIONS_SETUP_GUIDE.md)** - Complete setup guide
+- **[QUICK_SETUP.md](QUICK_SETUP.md)** - Quick reference guide
+- **[docs/gpt-actions.html](docs/gpt-actions.html)** - Interactive web documentation
 
 ### Setting up GPT Actions
 
