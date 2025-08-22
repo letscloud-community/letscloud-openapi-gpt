@@ -5,7 +5,6 @@
 [![GPT Actions](https://img.shields.io/badge/GPT%20Actions-Ready-orange.svg)](https://platform.openai.com/docs/actions)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
-[![Nginx](https://img.shields.io/badge/Nginx-Gateway-green.svg)](https://nginx.org/)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Available-lightgrey.svg)](https://pages.github.com/)
 [![LetsCloud](https://img.shields.io/badge/LetsCloud-API-red.svg)](https://www.letscloud.io)
 
@@ -130,7 +129,6 @@ actions:
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deploy%20Free-lightgrey.svg)](https://pages.github.com/)
 [![Docker](https://img.shields.io/badge/Docker-Container%20Ready-blue.svg)](https://www.docker.com/)
-[![Nginx](https://img.shields.io/badge/Nginx-Gateway%20Ready-green.svg)](https://nginx.org/)
 [![AWS](https://img.shields.io/badge/AWS-Deploy%20Ready-orange.svg)](https://aws.amazon.com/)
 [![GCP](https://img.shields.io/badge/GCP-Deploy%20Ready-blue.svg)](https://cloud.google.com/)
 [![Azure](https://img.shields.io/badge/Azure-Deploy%20Ready-blue.svg)](https://azure.microsoft.com/)

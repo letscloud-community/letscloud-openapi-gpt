@@ -57,7 +57,6 @@ Before deploying, ensure you have:
 1. **Choose a gateway solution**:
    - AWS API Gateway
    - Kong Gateway
-   - Nginx with OpenAPI
    - Custom Node.js/Express server
 
 2. **Deploy the gateway**:

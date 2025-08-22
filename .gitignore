@@ -69,3 +69,9 @@ config.json
 prometheus-data/
 grafana-data/
 redis-data/
+
+# Private infrastructure configurations
+../letscloud-api-gateway-private/
+nginx/
+gateway/
+infrastructure/
