@@ -41,31 +41,70 @@ paths:
   /servers:
     get:
       summary: List all servers
-      description: Retrieve a list of all servers in your account
+      description: Retrieve a list of all servers in your account with pagination support
       operationId: listServers
       tags:
         - Servers
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default: 1)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: per_page
+          in: query
+          description: Number of servers per page (default: 10, max: 50)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+          example: 10
+        - name: status
+          in: query
+          description: Filter servers by status (running, stopped, etc.)
+          required: false
+          schema:
+            type: string
+            enum: [running, stopped, starting, stopping, rebooting, error]
+          example: "running"
       responses:
         '200':
-          description: List of servers retrieved successfully
+          description: List of servers retrieved successfully (limited to 50 servers per page)
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  servers:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Server'
-                  total:
-                    type: integer
-                    description: Total number of servers
-                  page:
-                    type: integer
-                    description: Current page number
-                  per_page:
-                    type: integer
-                    description: Number of servers per page
+                  success:
+                    type: boolean
+                    description: Whether the request was successful
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      servers:
+                        type: array
+                        maxItems: 50
+                        items:
+                          $ref: '#/components/schemas/Server'
+                      total:
+                        type: integer
+                        description: Total number of servers
+                      page:
+                        type: integer
+                        description: Current page number
+                      per_page:
+                        type: integer
+                        description: Number of servers per page
+                      has_more:
+                        type: boolean
+                        description: Whether there are more servers available
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -284,13 +323,33 @@ paths:
   /ssh-keys:
     get:
       summary: List all SSH keys
-      description: Retrieve a list of all SSH keys in your account
+      description: Retrieve a list of all SSH keys in your account with pagination support
       operationId: listSSHKeys
       tags:
         - SSH Keys
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default: 1)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: per_page
+          in: query
+          description: Number of SSH keys per page (default: 20, max: 100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
       responses:
         '200':
-          description: List of SSH keys retrieved successfully
+          description: List of SSH keys retrieved successfully (limited to 100 keys per page)
           content:
             application/json:
               schema:
@@ -298,11 +357,21 @@ paths:
                 properties:
                   ssh_keys:
                     type: array
+                    maxItems: 100
                     items:
                       $ref: '#/components/schemas/SSHKey'
                   total:
                     type: integer
                     description: Total number of SSH keys
+                  page:
+                    type: integer
+                    description: Current page number
+                  per_page:
+                    type: integer
+                    description: Number of SSH keys per page
+                  has_more:
+                    type: boolean
+                    description: Whether there are more SSH keys available
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -674,7 +743,7 @@ paths:
   /account:
     get:
       summary: Get account information
-      description: Retrieve your LetsCloud account information
+      description: Retrieve your LetsCloud account information (profile)
       operationId: getAccountInfo
       tags:
         - Account
@@ -684,7 +753,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the request was successful
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Account'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -695,10 +771,10 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: Authorization
+      name: api-token
       description: |
-        Your LetsCloud API key. You can also set the `LETSCLOUD_API_KEY` environment variable.
-        Format: `Bearer YOUR_API_KEY`
+        Your LetsCloud API token. You can also set the `LETSCLOUD_API_TOKEN` environment variable.
+        Format: `your-token-here`
 
   schemas:
     Server:
@@ -903,35 +979,26 @@ components:
     Account:
       type: object
       properties:
-        id:
-          type: integer
-          description: Unique identifier for the account
-          example: 789
-        email:
-          type: string
-          description: Account email address
-          example: "user@example.com"
         name:
           type: string
-          description: Account holder name
-          example: "John Doe"
-        company:
+          description: The First and Last name
+          example: "John Smith"
+        company_name:
           type: string
-          description: Company name (if applicable)
-          example: "Acme Corp"
-        balance:
-          type: number
-          description: Current account balance in USD
-          example: 50.00
+          description: The company name of this profile
+          example: "LetsCloud Company"
+        email:
+          type: string
+          description: The email of the user registered in LetsCloud
+          example: "john.smith@letscloud.io"
         currency:
           type: string
-          description: Account currency
-          example: "USD"
-        created_at:
+          description: Your currency shortcode
+          example: "$"
+        balance:
           type: string
-          format: date-time
-          description: Account creation timestamp
-          example: "2024-01-15T10:30:00Z"
+          description: Your current balance
+          example: "100.00"
 
     Error:
       type: object

@@ -41,13 +41,41 @@ paths:
   /servers:
     get:
       summary: List all servers
-      description: Retrieve a list of all servers in your account
+      description: Retrieve a list of all servers in your account with pagination support
       operationId: listServers
       tags:
         - Servers
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination (default: 1)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: per_page
+          in: query
+          description: Number of servers per page (default: 10, max: 50)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+          example: 10
+        - name: status
+          in: query
+          description: Filter servers by status (running, stopped, etc.)
+          required: false
+          schema:
+            type: string
+            enum: [running, stopped, starting, stopping, rebooting, error]
+          example: "running"
       responses:
         '200':
-          description: List of servers retrieved successfully
+          description: List of servers retrieved successfully (limited to 50 servers per page)
           content:
             application/json:
               schema:
@@ -55,6 +83,7 @@ paths:
                 properties:
                   servers:
                     type: array
+                    maxItems: 50
                     items:
                       $ref: '#/components/schemas/Server'
                   total:
@@ -66,6 +95,9 @@ paths:
                   per_page:
                     type: integer
                     description: Number of servers per page
+                  has_more:
+                    type: boolean
+                    description: Whether there are more servers available
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -695,10 +727,10 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: Authorization
+      name: api-token
       description: |
-        Your LetsCloud API key. You can also set the `LETSCLOUD_API_KEY` environment variable.
-        Format: `Bearer YOUR_API_KEY`
+        Your LetsCloud API token. You can also set the `LETSCLOUD_API_TOKEN` environment variable.
+        Format: `your-token-here`
 
   schemas:
     Server:

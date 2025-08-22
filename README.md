@@ -32,12 +32,12 @@ With the **LetsCloud Infrastructure Manager**, you can:
 
 After starting a conversation with the GPT, type:
 ```
-I need to set up my API key: Bearer YOUR_API_KEY_HERE
+I need to set up my API key: YOUR_API_TOKEN_HERE
 ```
 
 **Example:**
 ```
-You: "I need to set up my API key: Bearer lc_1234567890abcdef1234567890abcdef12345678"
+You: "I need to set up my API key: your-token-here"
 GPT: "✅ API key configured successfully! You can now manage your infrastructure."
 You: "Show me all my servers"
 GPT: "Here are your servers: [list of your servers]"
