@@ -127,8 +127,8 @@ https://raw.githubusercontent.com/letscloud-community/letscloud-openapi-gpt/main
 **Authentication:**
 ```yaml
 Authentication Type: API Key
-Header Name: Authorization
-Header Value Format: Bearer {api_key}
+Header Name: api-token
+Header Value Format: {api_token}
 ```
    
    **Option A: Direct URL Import (Recommended)**
@@ -160,8 +160,8 @@ Header Value Format: Bearer {api_key}
    **API Key Setup:**
    ```yaml
    # Security scheme: ApiKeyAuth
-   # Header name: Authorization
-   # Value format: Bearer YOUR_API_KEY
+   # Header name: api-token
+   # Value format: YOUR_API_TOKEN
    ```
    
    **Environment Variable:**
@@ -229,7 +229,7 @@ actions:
 
 1. **Authentication Errors:**
    - Ensure your API key is valid and active
-   - Check that the Authorization header format is correct: `Bearer YOUR_API_KEY`
+   - Check that the api-token header format is correct: `YOUR_API_TOKEN`
    - Verify your API key has the necessary permissions
 
 2. **Import Issues:**

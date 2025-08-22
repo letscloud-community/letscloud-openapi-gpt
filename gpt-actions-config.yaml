@@ -9,9 +9,9 @@ version: "1.2.0"
 # Authentication Configuration
 auth:
   type: "api_key"
-  header_name: "Authorization"
-  header_value_format: "Bearer {api_key}"
-  environment_variable: "LETSCLOUD_API_KEY"
+  header_name: "api-token"
+  header_value_format: "{api_key}"
+  environment_variable: "LETSCLOUD_API_TOKEN"
 
 # API Base URLs
 servers:

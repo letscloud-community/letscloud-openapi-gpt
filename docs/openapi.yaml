@@ -813,7 +813,7 @@ components:
       type: apiKey
       in: header
       name: api-token
-      description: Your LetsCloud API token
+      description: Your LetsCloud API token. Required for all API calls.
 
   schemas:
     Server:
