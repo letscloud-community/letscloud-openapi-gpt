@@ -1,132 +1,127 @@
-# 🔧 Guia Completo: Como Duplicar seu GPT Actions e Torná-lo Privado
+# 🔧 Complete Guide: How to Duplicate your GPT Actions and Make it Private
 
-## 🎯 **Objetivo**
+> **Transform your public GPT into a private version with your own API key pre-configured!**
 
-Este guia mostra como criar uma **versão privada** do seu GPT Actions para uso pessoal, mantendo a **versão pública** segura para outros usuários.
+This guide will show you how to create a **private copy** of the LetsCould Infrastructure Manager GPT with your API key already configured, so you can use it without needing to set up authentication every time.
 
-## 📋 **Pré-requisitos**
+## 📋 **Prerequisites**
 
-- ✅ GPT Actions já criado e funcionando
-- ✅ Acesso ao GPT Builder
-- ✅ API key da LetsCloud para uso pessoal
+- ✅ LetsCould API key for personal use
+- ✅ Access to GPT Creator (ChatGPT Plus or Enterprise)
+- ✅ Basic understanding of GPT Actions
 
-## 🚀 **Passo a Passo Detalhado**
+## 🚀 **Step-by-Step Process**
 
-### **Passo 1: Acessar o GPT Builder**
+### **Step 1: Access GPT Creator**
 
-1. **Abra o ChatGPT**
-2. **Vá para GPTs** (menu lateral)
-3. **Encontre seu GPT** "LetsCloud Infrastructure Manager"
-4. **Clique em "Editar"** (ou ⋮ → Editar GPT)
+1. **Go to** [https://chat.openai.com/gpts](https://chat.openai.com/gpts)
+2. **Click** "Create a GPT"
+3. **Find your GPT** "LetsCould Infrastructure Manager"
 
-### **Passo 2: Fazer uma Cópia**
+### **Step 2: Make a Copy**
 
-1. **No topo direito**, clique em **⋮ Mais opções**
-2. **Selecione "Duplicar"**
-3. **Aguarde** a criação da cópia
-4. **Confirme** que a cópia foi criada
+1. **Open the GPT** you want to duplicate
+2. **Click** the three dots menu (⋮)
+3. **Select** "Copy GPT"
+4. **Rename** it to something like "My Private LetsCould Manager"
 
-### **Passo 3: Configurar como Privado**
+### **Step 3: Configure the Private Version**
 
-1. **Na cópia criada**, vá em **Configurações**
-2. **Encontre "Visibilidade"**
-3. **Selecione "Somente eu"**
-4. **Isso garante** que só você terá acesso
+1. **Go to** the "Configure" tab
+2. **Open the Action** that connects to `core_letscloud_io__jit_plugin`
+3. **Add Environment Variable:**
+   - **Name**: `LETSCLOUD_API_TOKEN`
+   - **Value**: Your LetsCould API key
+4. **Save** the configuration
 
-### **Passo 4: Configurar a API Key**
+### **Step 4: Set Privacy Settings**
 
-1. **Vá para a aba "Actions"**
-2. **Abra a Action** que conecta ao `core_letscloud_io__jit_plugin`
-3. **Encontre "Autenticação"**
-4. **Configure a Environment Variable:**
-   - **Nome**: `LETSCLOUD_API_TOKEN`
-   - **Valor**: Sua API key da LetsCloud
-5. **Salve as alterações**
+1. **Go to** "Privacy" section
+2. **Select** "Only me" (private)
+3. **Save** the settings
 
-### **Passo 5: Testar a Configuração**
+### **Step 5: Test the Configuration**
 
-1. **Clique em "Salvar"** ou "Publicar"
-2. **Teste a versão privada:**
-   ```
-   "Show me my account information"
-   ```
-3. **Verifique** se funciona sem solicitar API key
+1. **Start a conversation** with your private GPT
+2. **Try a command** like "Show me all my servers"
+3. **Verify** that it works without asking for API key
 
-## 🎯 **Resultado Final**
+## 🎯 **Result: Two Versions**
 
-### **✅ Versão Pública (Original)**
-- **Visibilidade**: Pública
-- **API Key**: Não configurada
-- **Uso**: Para clientes da LetsCloud
-- **Segurança**: Solicita API key quando necessário
+### **✅ Public Version (Original)**
+- **Purpose**: For customers and public use
+- **Privacy**: Public
+- **API Key**: Users must provide their own
+- **Use**: For general LetsCould customers
 
-### **🔒 Versão Privada (Cópia)**
-- **Visibilidade**: Privada (só você)
-- **API Key**: Configurada
-- **Uso**: Para seu gerenciamento pessoal
-- **Segurança**: Acesso direto sem configuração
+### **🔒 Private Version (Copy)**
+- **Purpose**: For your personal use
+- **Privacy**: Private (only you)
+- **API Key**: Pre-configured with yours
+- **Use**: For your own infrastructure management
 
-## 🔍 **Verificação**
+## 🔍 **Verification**
 
-### **Teste da Versão Pública:**
+### **Test Public Version:**
 ```
-Usuário: "Show me my account information"
-GPT: "I need your API key to access your account..."
+You: "Show me my servers"
+GPT: "I need your API key to access your LetsCould account..."
 ```
 
-### **Teste da Versão Privada:**
+### **Test Private Version:**
 ```
-Você: "Show me my account information"
-GPT: "Here's your account information: [dados da conta]"
-```
-
-## 🛡️ **Segurança**
-
-### **✅ Benefícios:**
-- **API key protegida**: Não exposta publicamente
-- **Controle de acesso**: Versão privada só para você
-- **Conformidade**: Segue melhores práticas de segurança
-- **Flexibilidade**: Duas versões para diferentes usos
-
-### **⚠️ Lembretes:**
-- **Nunca compartilhe** a versão privada
-- **Mantenha a API key** segura
-- **Use a versão pública** para demonstrações
-- **Use a versão privada** para gerenciamento pessoal
-
-## 🚀 **Comandos Úteis para Testar**
-
-### **Versão Pública (para clientes):**
-```
-"List my servers"
-"Create a new server"
-"Show me my SSH keys"
-"Get my account balance"
+You: "Show me my servers"
+GPT: "Here are your servers: [list of your servers]"
 ```
 
-### **Versão Privada (para você):**
+## 🛡️ **Security**
+
+### **✅ Benefits:**
+- **Your API key is private** - only you can access it
+- **No setup required** - ready to use immediately
+- **Separate from public version** - doesn't affect customers
+- **Full functionality** - all features available
+- **Secure storage** - API key stored in OpenAI's secure environment
+
+### **⚠️ Important Notes:**
+- **Never share** your private GPT with others
+- **Keep your API key secure** - it has full access to your account
+- **Monitor usage** - check your LetsCould dashboard regularly
+- **Rotate keys** - change your API key periodically for security
+
+## 🚀 **Useful Commands to Test**
+
+### **Public Version (for customers):**
 ```
-"Show me my account information"
-"List all my servers"
 "Create a new Ubuntu server"
-"Take a snapshot of server-123"
+"List all my servers"
+"Show my account balance"
+"Add a new SSH key"
+"Create a snapshot of server-123"
 ```
 
-## 📞 **Suporte**
+### **Private Version (for you):**
+```
+"Show me all my servers"
+"Create a backup snapshot"
+"Check my current usage"
+"List available plans"
+"Restart server-456"
+```
 
-Se encontrar problemas:
+## 📚 **Additional Resources**
 
-1. **Verifique** se a API key está correta
-2. **Confirme** que a visibilidade está como "Somente eu"
-3. **Teste** com comandos simples primeiro
-4. **Consulte** a documentação da LetsCloud
+1. **API Documentation**: [LetsCould API Docs](https://developers.letscloud.io)
+2. **Support**: support@letscloud.io
+3. **Community**: [Discord](https://discord.gg/letscloud)
+4. **Consult** the LetsCould documentation
 
-## 🎉 **Parabéns!**
+## 🎉 **Congratulations!**
 
-Agora você tem:
-- ✅ **Versão pública** para clientes
-- ✅ **Versão privada** para uso pessoal
-- ✅ **Segurança** garantida
-- ✅ **Funcionalidade** completa
+You now have:
+- ✅ **Public GPT** for your customers
+- ✅ **Private GPT** for your personal use
+- ✅ **Secure API key management**
+- ✅ **No setup required** for personal use
 
-**Seu setup está perfeito!** 🚀
+**Enjoy managing your infrastructure with natural language commands!** 🚀
