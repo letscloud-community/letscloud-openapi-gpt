@@ -1,8 +1,15 @@
 openapi: 3.1.0
 info:
-  title: LetsCloud API Test
-  description: Test API for authentication
-  version: 1.0.0
+  title: LetsCloud API
+  description: A comprehensive API for managing cloud infrastructure on LetsCloud platform
+  version: 1.2.0
+  contact:
+    name: LetsCloud Support
+    url: https://www.letscloud.io
+    email: support@letscloud.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 
 servers:
   - url: https://core.letscloud.io
@@ -12,10 +19,773 @@ security:
   - ApiKeyAuth: []
 
 paths:
+  /api/servers:
+    get:
+      summary: List all servers
+      description: Retrieve a list of all servers in your account
+      operationId: listServers
+      tags:
+        - Servers
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of servers per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+            default: 5
+        - name: status
+          in: query
+          description: Filter servers by status
+          required: false
+          schema:
+            type: string
+            enum:
+              - running
+              - stopped
+              - starting
+              - stopping
+              - rebooting
+              - error
+      responses:
+        '200':
+          description: List of servers retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      servers:
+                        type: array
+                        maxItems: 20
+                        items:
+                          $ref: '#/components/schemas/Server'
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      has_more:
+                        type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    post:
+      summary: Create a new server
+      description: Create a new server instance
+      operationId: createServer
+      tags:
+        - Servers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - label
+                - plan_slug
+                - image_slug
+                - location_slug
+              properties:
+                label:
+                  type: string
+                  example: "My Web Server"
+                plan_slug:
+                  type: string
+                  example: "basic-1gb"
+                image_slug:
+                  type: string
+                  example: "ubuntu-22-04"
+                location_slug:
+                  type: string
+                  example: "nyc1"
+                hostname:
+                  type: string
+                  example: "webserver-01"
+                password:
+                  type: string
+                  example: "SecurePassword123!"
+                ssh_keys:
+                  type: array
+                  items:
+                    type: integer
+                  example: [1, 2, 3]
+      responses:
+        '201':
+          description: Server created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Server'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}:
+    get:
+      summary: Get server details
+      description: Retrieve detailed information about a specific server
+      operationId: getServer
+      tags:
+        - Servers
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to retrieve
+          schema:
+            type: integer
+          example: 123
+      responses:
+        '200':
+          description: Server details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Server'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    delete:
+      summary: Delete a server
+      description: Permanently delete a server
+      operationId: deleteServer
+      tags:
+        - Servers
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to delete
+          schema:
+            type: integer
+          example: 123
+      responses:
+        '204':
+          description: Server deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}/start:
+    post:
+      summary: Start a server
+      description: Start a server that is currently stopped
+      operationId: startServer
+      tags:
+        - Servers
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to start
+          schema:
+            type: integer
+          example: 123
+      responses:
+        '200':
+          description: Server started successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Server'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Server is already running
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}/stop:
+    post:
+      summary: Shutdown a server
+      description: Shutdown a server that is currently running
+      operationId: shutdownServer
+      tags:
+        - Servers
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to shutdown
+          schema:
+            type: integer
+          example: 123
+      responses:
+        '200':
+          description: Server shutdown successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Server'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Server is already stopped
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}/reboot:
+    post:
+      summary: Reboot a server
+      description: Reboot a server that is currently running
+      operationId: rebootServer
+      tags:
+        - Servers
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to reboot
+          schema:
+            type: integer
+          example: 123
+      responses:
+        '200':
+          description: Server rebooted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Server'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Server is not running
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/ssh-keys:
+    get:
+      summary: List all SSH keys
+      description: Retrieve a list of all SSH keys in your account
+      operationId: listSSHKeys
+      tags:
+        - SSH Keys
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of SSH keys per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: List of SSH keys retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      ssh_keys:
+                        type: array
+                        maxItems: 100
+                        items:
+                          $ref: '#/components/schemas/SSHKey'
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      has_more:
+                        type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    post:
+      summary: Create a new SSH key
+      description: Add a new SSH key to your account
+      operationId: createSSHKey
+      tags:
+        - SSH Keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - key
+              properties:
+                title:
+                  type: string
+                  example: "My Laptop Key"
+                key:
+                  type: string
+                  example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+      responses:
+        '201':
+          description: SSH key created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/SSHKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/ssh-keys/{key_id}:
+    get:
+      summary: Get SSH key details
+      description: Retrieve detailed information about a specific SSH key
+      operationId: getSSHKey
+      tags:
+        - SSH Keys
+      parameters:
+        - name: key_id
+          in: path
+          required: true
+          description: The ID of the SSH key to retrieve
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: SSH key details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/SSHKey'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    delete:
+      summary: Delete an SSH key
+      description: Delete an SSH key from your account
+      operationId: deleteSSHKey
+      tags:
+        - SSH Keys
+      parameters:
+        - name: key_id
+          in: path
+          required: true
+          description: The ID of the SSH key to delete
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: SSH key deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}/snapshots:
+    get:
+      summary: List server snapshots
+      description: Retrieve a list of all snapshots for a specific server
+      operationId: listSnapshots
+      tags:
+        - Snapshots
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to list snapshots for
+          schema:
+            type: integer
+          example: 123
+      responses:
+        '200':
+          description: List of snapshots retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      snapshots:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Snapshot'
+                      total:
+                        type: integer
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    post:
+      summary: Create a server snapshot
+      description: Create a snapshot of a server
+      operationId: createSnapshot
+      tags:
+        - Snapshots
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to snapshot
+          schema:
+            type: integer
+          example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - label
+              properties:
+                label:
+                  type: string
+                  example: "Backup before update"
+                description:
+                  type: string
+                  example: "Snapshot created before applying system updates"
+      responses:
+        '201':
+          description: Snapshot created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Snapshot'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}/snapshots/{snapshot_id}:
+    get:
+      summary: Get snapshot details
+      description: Retrieve detailed information about a specific snapshot
+      operationId: getSnapshot
+      tags:
+        - Snapshots
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server
+          schema:
+            type: integer
+          example: 123
+        - name: snapshot_id
+          in: path
+          required: true
+          description: The ID of the snapshot to retrieve
+          schema:
+            type: integer
+          example: 456
+      responses:
+        '200':
+          description: Snapshot details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Snapshot'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    
+    delete:
+      summary: Delete a snapshot
+      description: Delete a snapshot permanently
+      operationId: deleteSnapshot
+      tags:
+        - Snapshots
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server
+          schema:
+            type: integer
+          example: 123
+        - name: snapshot_id
+          in: path
+          required: true
+          description: The ID of the snapshot to delete
+          schema:
+            type: integer
+          example: 456
+      responses:
+        '204':
+          description: Snapshot deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/servers/{server_id}/snapshots/{snapshot_id}/restore:
+    post:
+      summary: Restore server from snapshot
+      description: Restore a server from a snapshot
+      operationId: restoreSnapshot
+      tags:
+        - Snapshots
+      parameters:
+        - name: server_id
+          in: path
+          required: true
+          description: The ID of the server to restore
+          schema:
+            type: integer
+          example: 123
+        - name: snapshot_id
+          in: path
+          required: true
+          description: The ID of the snapshot to restore from
+          schema:
+            type: integer
+          example: 456
+      responses:
+        '200':
+          description: Server restored successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Server'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Server is currently running
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/plans:
+    get:
+      summary: List available plans
+      description: Retrieve a list of all available server plans
+      operationId: listPlans
+      tags:
+        - Resources
+      responses:
+        '200':
+          description: List of plans retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      plans:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Plan'
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/images:
+    get:
+      summary: List available images
+      description: Retrieve a list of all available OS images
+      operationId: listImages
+      tags:
+        - Resources
+      responses:
+        '200':
+          description: List of images retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      images:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Image'
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/locations:
+    get:
+      summary: List available locations
+      description: Retrieve a list of all available server locations
+      operationId: listLocations
+      tags:
+        - Resources
+      responses:
+        '200':
+          description: List of locations retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      locations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Location'
+                      total:
+                        type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /api/account:
     get:
       summary: Get account information
-      description: Test authentication with account info
+      description: Retrieve your LetsCloud account information
       operationId: getAccountInfo
       tags:
         - Account
@@ -46,48 +816,265 @@ components:
       description: Your LetsCloud API token. Required for all API calls.
 
   schemas:
+    Server:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        label:
+          type: string
+          example: "My Web Server"
+        hostname:
+          type: string
+          example: "webserver-01"
+        status:
+          type: string
+          enum:
+            - running
+            - stopped
+            - starting
+            - stopping
+            - rebooting
+            - error
+          example: "running"
+        ip_address:
+          type: string
+          example: "192.168.1.100"
+        private_ip:
+          type: string
+          example: "10.0.0.100"
+        plan:
+          $ref: '#/components/schemas/Plan'
+        image:
+          $ref: '#/components/schemas/Image'
+        location:
+          $ref: '#/components/schemas/Location'
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        ssh_keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHKey'
+        snapshots:
+          type: array
+          items:
+            $ref: '#/components/schemas/Snapshot'
+
+    Plan:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "basic-1gb"
+        name:
+          type: string
+          example: "Basic 1GB"
+        ram:
+          type: integer
+          example: 1024
+        cpu:
+          type: integer
+          example: 1
+        disk:
+          type: integer
+          example: 25
+        price:
+          type: number
+          example: 5.00
+        available:
+          type: boolean
+          example: true
+
+    Image:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "ubuntu-22-04"
+        name:
+          type: string
+          example: "Ubuntu 22.04 LTS"
+        distribution:
+          type: string
+          example: "Ubuntu"
+        version:
+          type: string
+          example: "22.04"
+        architecture:
+          type: string
+          enum:
+            - x86_64
+            - arm64
+          example: "x86_64"
+        available:
+          type: boolean
+          example: true
+
+    Location:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "nyc1"
+        name:
+          type: string
+          example: "New York"
+        country:
+          type: string
+          example: "United States"
+        region:
+          type: string
+          example: "New York"
+        available:
+          type: boolean
+          example: true
+
+    SSHKey:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "My Laptop Key"
+        fingerprint:
+          type: string
+          example: "SHA256:abc123..."
+        public_key:
+          type: string
+          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    Snapshot:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 456
+        label:
+          type: string
+          example: "Backup before update"
+        description:
+          type: string
+          example: "Snapshot created before applying system updates"
+        size:
+          type: integer
+          example: 25
+        status:
+          type: string
+          enum:
+            - creating
+            - available
+            - error
+            - deleting
+          example: "available"
+        server_id:
+          type: integer
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
     Account:
       type: object
       properties:
-        name:
-          type: string
-          example: "John Smith"
+        id:
+          type: integer
+          example: 789
         email:
           type: string
-          example: "john.smith@letscloud.io"
-        balance:
+          example: "user@example.com"
+        name:
           type: string
-          example: "100.00"
+          example: "John Doe"
+        company:
+          type: string
+          example: "Acme Corp"
+        balance:
+          type: number
+          example: 50.00
+        currency:
+          type: string
+          example: "USD"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Server not found"
+        code:
+          type: string
+          example: "NOT_FOUND"
+        details:
+          type: object
+          additionalProperties: true
 
   responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Invalid parameters provided"
+            code: "BAD_REQUEST"
+
     Unauthorized:
       description: Unauthorized - invalid or missing API key
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              error:
-                type: string
-                example: "Invalid API key"
-              code:
-                type: string
-                example: "UNAUTHORIZED"
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Invalid API key"
+            code: "UNAUTHORIZED"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Server not found"
+            code: "NOT_FOUND"
 
     InternalServerError:
       description: Internal server error
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              error:
-                type: string
-                example: "Internal server error"
-              code:
-                type: string
-                example: "INTERNAL_ERROR"
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Internal server error"
+            code: "INTERNAL_ERROR"
 
 tags:
+  - name: Servers
+    description: Server management operations
+  - name: SSH Keys
+    description: SSH key management operations
+  - name: Snapshots
+    description: Server snapshot operations
+  - name: Resources
+    description: Resource discovery operations
   - name: Account
     description: Account information operations
