@@ -26,8 +26,12 @@ API Key: [your_letscloud_key]
 
 ### 2. Configure GPT Actions
 - Go to: https://platform.openai.com
-- GPTs → Create/Edit → Configure → Actions
-- Import from URL: paste the URL above
+- GPTs → Create/Edit → Configure
+- **Basic Info:**
+  - Name: `LetsCloud Infrastructure Manager`
+  - Description: `Manage cloud infrastructure on LetsCloud platform using natural language`
+  - Instructions: See detailed guide for complete instructions
+- **Actions:** Import from URL: paste the URL above
 
 ### 3. Configure Authentication
 - Authentication Type: **API Key**

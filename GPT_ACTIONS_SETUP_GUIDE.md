@@ -52,6 +52,72 @@ lc_1234567890abcdef1234567890abcdef12345678
 2. Scroll down to find the **"Actions"** section
 3. Click **"Add actions"** or **"Create new action"**
 
+### 2.4 Configure GPT Basic Information
+
+Before setting up Actions, configure the basic GPT information:
+
+**Name:**
+```
+LetsCloud Infrastructure Manager
+```
+
+**Description:**
+```
+A specialized GPT for managing cloud infrastructure on LetsCloud platform. Create, manage, and monitor servers, SSH keys, snapshots, and account resources using natural language commands.
+```
+
+**Instructions:**
+```
+You are a cloud infrastructure management assistant for LetsCloud platform. Your role is to help users manage their cloud resources through natural language commands.
+
+What you do:
+- Create, start, stop, and manage servers
+- Handle SSH key management (add, list, delete keys)
+- Manage server snapshots and backups
+- Provide information about available plans, images, and locations
+- Show account information and billing details
+- Optimize infrastructure costs and configurations
+
+How you behave:
+- Use clear, professional language
+- Confirm actions before executing destructive operations
+- Provide helpful explanations for technical concepts
+- Suggest best practices for security and cost optimization
+- Ask for clarification when parameters are unclear
+
+What to avoid:
+- Never share API keys or sensitive information
+- Don't execute actions without user confirmation for destructive operations
+- Avoid making assumptions about user preferences
+- Don't provide information about other cloud providers unless specifically asked
+- Don't execute actions that could incur unexpected costs without warning
+
+Always prioritize user safety and cost awareness when managing infrastructure.
+```
+
+**Conversation Starters:**
+```
+- "Show me all my servers and their current status"
+- "Create a new web server with Ubuntu 22.04"
+- "Help me optimize my infrastructure costs"
+- "Set up SSH access for my new server"
+- "Create a backup snapshot of my production server"
+```
+
+**Knowledge:**
+- Leave this section empty (no file uploads needed)
+- The GPT will use the OpenAPI specification for all API interactions
+
+**Recommended Model:**
+- Select **"GPT-4"** for best results with complex infrastructure management
+- Alternative: **"GPT-4 Turbo"** for faster responses
+
+**Capabilities:**
+- ✅ **Web Search**: Enable for checking latest LetsCloud documentation
+- ❌ **Canvas**: Disable (not needed for infrastructure management)
+- ❌ **Image Generation**: Disable (not needed for infrastructure management)
+- ✅ **Code Interpreter & Data Analysis**: Enable for analyzing server data and costs
+
 ---
 
 ## 🔧 Step 3: Configure the Action
@@ -228,11 +294,6 @@ curl -H "Authorization: Bearer YOUR_API_KEY" https://core.letscloud.io/api/serve
 1. Go to [https://platform.openai.com/usage](https://platform.openai.com/usage)
 2. Check Actions requests
 3. Monitor errors and latency
-
-### Check LetsCloud Logs
-1. Access your LetsCloud dashboard
-2. Go to "API Usage" or "Logs"
-3. Check the requests made
 
 ---
 
