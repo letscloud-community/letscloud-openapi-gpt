@@ -1,0 +1,242 @@
+# GPT Actions Configuration for LetsCloud API
+# This file provides examples and templates for integrating LetsCloud API with GPT Actions
+
+# Basic Configuration
+name: "LetsCloud API Integration"
+description: "Manage cloud infrastructure on LetsCloud platform through GPT Actions"
+version: "1.2.0"
+
+# Authentication Configuration
+auth:
+  type: "api_key"
+  header_name: "Authorization"
+  header_value_format: "Bearer {api_key}"
+  environment_variable: "LETSCLOUD_API_KEY"
+
+# API Base URLs
+servers:
+  - url: "https://core.letscloud.io/api"
+    description: "Production API"
+  - url: "https://core.letscloud.io/api"
+    description: "Staging API"
+
+# Available Actions Configuration
+actions:
+  # Server Management Actions
+  - name: "list_servers"
+    description: "List all servers in your LetsCloud account"
+    operation_id: "listServers"
+    category: "Server Management"
+    
+  - name: "create_server"
+    description: "Create a new server with specified configuration"
+    operation_id: "createServer"
+    category: "Server Management"
+    required_params:
+      - "label"
+      - "plan_slug"
+      - "image_slug"
+      - "location_slug"
+    
+  - name: "get_server_details"
+    description: "Get detailed information about a specific server"
+    operation_id: "getServer"
+    category: "Server Management"
+    required_params:
+      - "server_id"
+    
+  - name: "delete_server"
+    description: "Permanently delete a server (cannot be undone)"
+    operation_id: "deleteServer"
+    category: "Server Management"
+    required_params:
+      - "server_id"
+    
+  - name: "start_server"
+    description: "Start a server that is currently stopped"
+    operation_id: "startServer"
+    category: "Server Management"
+    required_params:
+      - "server_id"
+    
+  - name: "stop_server"
+    description: "Shutdown a server that is currently running"
+    operation_id: "shutdownServer"
+    category: "Server Management"
+    required_params:
+      - "server_id"
+    
+  - name: "reboot_server"
+    description: "Reboot a server that is currently running"
+    operation_id: "rebootServer"
+    category: "Server Management"
+    required_params:
+      - "server_id"
+
+  # SSH Key Management Actions
+  - name: "list_ssh_keys"
+    description: "List all SSH keys in your account"
+    operation_id: "listSSHKeys"
+    category: "SSH Key Management"
+    
+  - name: "create_ssh_key"
+    description: "Add a new SSH key to your account"
+    operation_id: "createSSHKey"
+    category: "SSH Key Management"
+    required_params:
+      - "title"
+      - "key"
+    
+  - name: "get_ssh_key"
+    description: "Get detailed information about a specific SSH key"
+    operation_id: "getSSHKey"
+    category: "SSH Key Management"
+    required_params:
+      - "key_id"
+    
+  - name: "delete_ssh_key"
+    description: "Delete an SSH key from your account"
+    operation_id: "deleteSSHKey"
+    category: "SSH Key Management"
+    required_params:
+      - "key_id"
+
+  # Snapshot Management Actions
+  - name: "list_snapshots"
+    description: "List all snapshots for a specific server"
+    operation_id: "listSnapshots"
+    category: "Snapshot Management"
+    required_params:
+      - "server_id"
+    
+  - name: "create_snapshot"
+    description: "Create a snapshot of a server"
+    operation_id: "createSnapshot"
+    category: "Snapshot Management"
+    required_params:
+      - "server_id"
+      - "label"
+    
+  - name: "get_snapshot"
+    description: "Get detailed information about a specific snapshot"
+    operation_id: "getSnapshot"
+    category: "Snapshot Management"
+    required_params:
+      - "server_id"
+      - "snapshot_id"
+    
+  - name: "delete_snapshot"
+    description: "Delete a snapshot permanently"
+    operation_id: "deleteSnapshot"
+    category: "Snapshot Management"
+    required_params:
+      - "server_id"
+      - "snapshot_id"
+    
+  - name: "restore_snapshot"
+    description: "Restore a server from a snapshot"
+    operation_id: "restoreSnapshot"
+    category: "Snapshot Management"
+    required_params:
+      - "server_id"
+      - "snapshot_id"
+
+  # Resource Discovery Actions
+  - name: "list_plans"
+    description: "List all available server plans"
+    operation_id: "listPlans"
+    category: "Resource Discovery"
+    
+  - name: "list_images"
+    description: "List all available OS images"
+    operation_id: "listImages"
+    category: "Resource Discovery"
+    
+  - name: "list_locations"
+    description: "List all available server locations"
+    operation_id: "listLocations"
+    category: "Resource Discovery"
+
+  # Account Information Actions
+  - name: "get_account_info"
+    description: "Get your LetsCloud account information"
+    operation_id: "getAccountInfo"
+    category: "Account Information"
+
+# Parameter Templates
+parameter_templates:
+  server_creation:
+    label: "My Web Server"
+    plan_slug: "basic-1gb"
+    image_slug: "ubuntu-22-04"
+    location_slug: "nyc1"
+    hostname: "webserver-01"
+    password: "SecurePassword123!"
+    ssh_keys: [1, 2, 3]
+  
+  ssh_key_creation:
+    title: "My Laptop Key"
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+  
+  snapshot_creation:
+    label: "Backup before update"
+    description: "Snapshot created before applying system updates"
+
+# Usage Examples
+usage_examples:
+  - scenario: "Create a new web server"
+    actions:
+      - "list_plans"
+      - "list_images"
+      - "list_locations"
+      - "create_server"
+    description: "First discover available resources, then create a server"
+  
+  - scenario: "Backup and restore a server"
+    actions:
+      - "list_snapshots"
+      - "create_snapshot"
+      - "restore_snapshot"
+    description: "Create a backup snapshot and restore from it if needed"
+  
+  - scenario: "Manage SSH access"
+    actions:
+      - "list_ssh_keys"
+      - "create_ssh_key"
+      - "delete_ssh_key"
+    description: "Manage SSH keys for secure server access"
+
+# Error Handling
+error_handling:
+  retry_config:
+    max_retries: 3
+    backoff_multiplier: 2
+    initial_delay: 1
+  
+  common_errors:
+    - code: "UNAUTHORIZED"
+      description: "Invalid or missing API key"
+      solution: "Check your API key configuration"
+    
+    - code: "NOT_FOUND"
+      description: "Resource not found"
+      solution: "Verify the resource ID exists"
+    
+    - code: "VALIDATION_ERROR"
+      description: "Invalid request parameters"
+      solution: "Check required parameters and data types"
+
+# Security Considerations
+security:
+  - "API keys should be stored securely and not exposed in logs"
+  - "Use HTTPS for all API communications"
+  - "Implement proper error handling to avoid exposing sensitive information"
+  - "Consider implementing rate limiting on the client side"
+
+# Best Practices
+best_practices:
+  - "Always validate server IDs before performing operations"
+  - "Use descriptive labels for servers and snapshots"
+  - "Implement proper backup strategies using snapshots"
+  - "Monitor server status before performing state-changing operations"
+  - "Keep SSH keys organized with meaningful titles"
