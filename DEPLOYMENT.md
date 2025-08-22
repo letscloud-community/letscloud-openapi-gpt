@@ -112,8 +112,8 @@ CMD ["npm", "start"]
 
 1. **Create a new repository** for hosting the OpenAPI spec
 2. **Upload the files**:
-   - `openapi.yaml`
-   - `index.html` (Swagger UI)
+   - `docs/openapi.yaml`
+   - `docs/LETSCOULD_API_DOCUMENTATION.md`
    - `README.md`
 
 3. **Enable GitHub Pages**:
@@ -121,13 +121,15 @@ CMD ["npm", "start"]
    - Enable GitHub Pages
    - Select source branch
 
-#### Step 2: Create Swagger UI Page
+#### Step 2: Create Swagger UI Page (Optional)
+
+If you want to create a web-based API documentation, you can create an `index.html` file:
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>LetsCloud API Documentation</title>
+    <title>LetsCould API Documentation</title>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css">
 </head>
 <body>
@@ -136,7 +138,7 @@ CMD ["npm", "start"]
     <script>
         window.onload = function() {
             SwaggerUIBundle({
-                url: './openapi.yaml',
+                url: './docs/openapi.yaml',
                 dom_id: '#swagger-ui',
                 presets: [
                     SwaggerUIBundle.presets.apis,

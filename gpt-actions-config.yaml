@@ -1,10 +1,10 @@
-# GPT Actions Configuration for LetsCloud API
-# This file provides examples and templates for integrating LetsCloud API with GPT Actions
+# GPT Actions Configuration for LetsCould API
+# This file provides examples and templates for integrating LetsCould API with GPT Actions
 
 # Basic Configuration
-name: "LetsCloud API Integration"
-description: "Manage cloud infrastructure on LetsCloud platform through GPT Actions"
-version: "1.2.0"
+name: "LetsCould API Integration"
+description: "Manage cloud infrastructure on LetsCould platform through GPT Actions"
+version: "1.0.0"
 
 # Authentication Configuration
 auth:
@@ -102,6 +102,28 @@ actions:
       - "key_id"
 
   # Snapshot Management Actions
+  - name: "get_snapshot_status"
+    description: "Get the current build status of a snapshot"
+    operation_id: "getSnapshotStatus"
+    category: "Snapshot Management"
+    required_params:
+      - "image_slug"
+    
+  - name: "update_snapshot_label"
+    description: "Update the label of an existing snapshot"
+    operation_id: "updateSnapshotLabel"
+    category: "Snapshot Management"
+    required_params:
+      - "image_slug"
+      - "label"
+    
+  - name: "delete_snapshot_by_slug"
+    description: "Delete a snapshot using its slug"
+    operation_id: "deleteSnapshot"
+    category: "Snapshot Management"
+    required_params:
+      - "image_slug"
+    
   - name: "list_snapshots"
     description: "List all snapshots for a specific server"
     operation_id: "listSnapshots"
@@ -125,9 +147,9 @@ actions:
       - "server_id"
       - "snapshot_id"
     
-  - name: "delete_snapshot"
-    description: "Delete a snapshot permanently"
-    operation_id: "deleteSnapshot"
+  - name: "delete_snapshot_by_id"
+    description: "Delete a snapshot permanently using its ID"
+    operation_id: "deleteSnapshotById"
     category: "Snapshot Management"
     required_params:
       - "server_id"
@@ -159,8 +181,8 @@ actions:
 
   # Account Information Actions
   - name: "get_account_info"
-    description: "Get your LetsCloud account information"
-    operation_id: "getAccountInfo"
+    description: "Get your LetsCould account information"
+    operation_id: "getAccountProfile"
     category: "Account Information"
 
 # Parameter Templates

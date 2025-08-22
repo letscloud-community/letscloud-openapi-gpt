@@ -1,17 +1,27 @@
-# Jekyll configuration for GitHub Pages
-# This file configures the GitHub Pages site for better SEO and functionality
+# GitHub Pages Configuration for LetsCould API GPT Actions
 
 # Site settings
-title: "LetsCloud API Documentation"
-description: "Complete cloud infrastructure management API for LetsCloud platform with GPT Actions integration"
+title: "LetsCould API GPT Actions"
+description: "OpenAPI specification and documentation for LetsCould API integration with GPT Actions"
 url: "https://letscloud-community.github.io"
 baseurl: "/letscloud-openapi-gpt"
 
 # Author information
 author:
-  name: "LetsCloud Community"
+  name: "LetsCould Community"
   email: "support@letscloud.io"
-  url: "https://www.letscloud.io"
+  bio: "Open-source project for integrating LetsCould API with GPT Actions"
+  location: "Global"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/letscloud-community/letscloud-openapi-gpt"
+    - label: "Discord"
+      icon: "fab fa-discord"
+      url: "https://discord.gg/letscloud"
+    - label: "Twitter"
+      icon: "fab fa-twitter"
+      url: "https://twitter.com/letscloud"
 
 # Build settings
 markdown: kramdown
@@ -32,7 +42,7 @@ defaults:
     values:
       layout: "default"
 
-# Plugins (GitHub Pages compatible)
+# Plugins
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
@@ -51,9 +61,77 @@ exclude:
 # Include files
 include:
   - _pages
-  - _posts
-  - _drafts
+  - assets
+  - docs
 
 # SEO settings
-lang: en_US
-locale: en_US
+seo:
+  title: "LetsCould API GPT Actions"
+  description: "OpenAPI specification and documentation for LetsCould API integration with GPT Actions"
+  keywords: "LetsCould, API, GPT Actions, OpenAPI, cloud infrastructure, server management"
+  author: "LetsCould Community"
+  image: "/assets/LetsCloud_logo.png"
+  type: "website"
+  twitter:
+    card: "summary_large_image"
+    site: "@letscloud"
+  facebook:
+    app_id: ""
+    pages: ""
+
+# Social media
+social:
+  name: "LetsCould Community"
+  links:
+    - "https://github.com/letscloud-community/letscloud-openapi-gpt"
+    - "https://discord.gg/letscloud"
+    - "https://twitter.com/letscloud"
+
+# Analytics (optional)
+google_analytics: ""
+google_tag_manager: ""
+
+# Comments (optional)
+disqus:
+  shortname: ""
+
+# Pagination
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# Timezone
+timezone: "UTC"
+
+# Encoding
+encoding: "utf-8"
+
+# Safe mode
+safe: true
+
+# Future posts
+future: false
+
+# Show drafts
+show_drafts: false
+
+# Limit posts
+limit_posts: 0
+
+# Keep files
+keep_files: [".git", "assets", "docs"]
+
+# Ignore files
+ignore: [".git", "node_modules", "vendor"]
+
+# Theme settings
+theme: minima
+
+# Minima theme settings
+minima:
+  social_links:
+    github: letscloud-community/letscloud-openapi-gpt
+    discord: letscloud
+    twitter: letscloud
+  skin: auto
+  dark_skin: dark
+  light_skin: light

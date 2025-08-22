@@ -7,15 +7,21 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://letscloud-community.github.io/letscloud-openapi-gpt/gpt-actions.html</loc>
+        <loc>https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html</loc>
         <lastmod>2024-01-15</lastmod>
         <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://letscloud-community.github.io/letscloud-openapi-gpt/docs/openapi.yaml</loc>
+        <lastmod>2024-01-15</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://letscloud-community.github.io/letscloud-openapi-gpt/openapi.yaml</loc>
+        <loc>https://letscloud-community.github.io/letscloud-openapi-gpt/docs/LETSCOULD_API_DOCUMENTATION.md</loc>
         <lastmod>2024-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
     </url>
 </urlset>

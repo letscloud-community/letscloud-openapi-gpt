@@ -1,8 +1,8 @@
-# 🚀 LetsCloud Infrastructure Manager - AI Assistant
+# 🚀 LetsCould Infrastructure Manager - AI Assistant
 
 > **Your AI-powered cloud infrastructure management companion**
 
-Manage your LetsCloud servers, SSH keys, snapshots, and resources with natural language commands through ChatGPT.
+Manage your LetsCould servers, SSH keys, snapshots, and resources with natural language commands through ChatGPT.
 
 ## ✨ **Features**
 
@@ -17,7 +17,7 @@ Manage your LetsCloud servers, SSH keys, snapshots, and resources with natural l
 
 ### **For Users (Public Version)**
 
-1. **Find the LetsCloud GPT** in the GPT Store
+1. **Find the LetsCould GPT** in the GPT Store
 2. **Start a conversation** with the GPT
 3. **Set up your API key** in the conversation
 4. **Start managing your infrastructure!**
@@ -89,7 +89,7 @@ If you want to create a **private version** for personal use with your API key p
 
 ### **Getting Your API Token**
 
-1. **Log in** to your [LetsCloud Dashboard](https://app.letscloud.io)
+1. **Log in** to your [LetsCould Dashboard](https://app.letscloud.io)
 2. **Go to Settings** → API Keys
 3. **Generate a new API key**
 4. **Copy the token** (keep it secure!)
@@ -101,7 +101,7 @@ If you want to create a **private version** for personal use with your API key p
 **"Authentication failed"**
 - Check if your API key is correct
 - Make sure you provide your API token without any prefix
-- Try regenerating your API key in your LetsCloud dashboard
+- Try regenerating your API key in your LetsCould dashboard
 
 **"No servers found"**
 - Verify your account has active servers
@@ -115,8 +115,8 @@ If you want to create a **private version** for personal use with your API key p
 
 ## 📚 **Useful Links**
 
-- [LetsCloud Dashboard](https://app.letscloud.io)
-- [LetsCloud Documentation](https://developers.letscloud.io)
+- [LetsCould Dashboard](https://app.letscloud.io)
+- [LetsCould Documentation](https://developers.letscloud.io)
 - [API Reference](https://developers.letscloud.io/api)
 - [Support Center](https://support.letscloud.io)
 
@@ -137,6 +137,6 @@ Need help? We're here for you:
 
 ---
 
-**Made with ❤️ by the LetsCloud Team**
+**Made with ❤️ by the LetsCould Team**
 
 *Transform your cloud infrastructure management with AI!*

@@ -1,38 +1,46 @@
 # Project Structure
 
-This document provides an overview of the project structure and the purpose of each file in the LetsCloud API OpenAPI specification for GPT Actions.
+This document provides an overview of the project structure and the purpose of each file in the LetsCould API OpenAPI specification for GPT Actions.
 
 ## 📁 Root Directory
 
 ```
-letscloud-openapi-gpt/
-├── openapi.yaml                 # Main OpenAPI 3.0 specification
-├── README.md                    # Project documentation and usage guide
-├── LICENSE                      # MIT License
-├── DEPLOYMENT.md               # Deployment and publishing guide
-├── PROJECT_STRUCTURE.md        # This file - project structure overview
-├── gpt-actions-config.yaml     # GPT Actions configuration examples
-├── .gitignore                  # Git ignore rules
-├── assets/                     # Static assets and images
-│   └── LetsCloud_logo.png      # LetsCloud logo image
-├── docs/                       # Web documentation
-│   ├── index.html              # Main API documentation page
-│   ├── gpt-actions.html        # GPT Actions documentation page
-│   ├── openapi.yaml            # OpenAPI spec for web docs
-│   ├── robots.txt              # SEO configuration
-│   ├── sitemap.xml             # Site map for search engines
-│   └── _config.yml             # Documentation configuration
-└── examples/                   # Code examples and implementations
-    ├── usage-examples.py       # Python client implementation
-    └── requirements.txt        # Python dependencies
+letscould-openapi-gpt/
+├── docs/
+│   ├── openapi.yaml                    # Main OpenAPI 3.1 specification
+│   ├── LETSCOULD_API_DOCUMENTATION.md  # Complete API documentation
+│   ├── index.html                      # GitHub Pages main page
+│   ├── privacy-policy.html             # Privacy policy page
+│   ├── robots.txt                      # SEO configuration
+│   ├── sitemap.xml                     # Site map for search engines
+│   └── _config.yml                     # Jekyll configuration
+├── README.md                           # Project documentation and usage guide
+├── LICENSE                             # MIT License
+├── DEPLOYMENT.md                       # Deployment and publishing guide
+├── PROJECT_STRUCTURE.md                # This file - project structure overview
+├── gpt-actions-config.yaml             # GPT Actions configuration examples
+├── GPT_CREATOR_INSTRUCTIONS.md         # Instructions for GPT creators
+├── GPT_DUPLICATION_GUIDE.md            # Guide for duplicating GPTs
+├── GPT_ACTIONS_SETUP_GUIDE.md          # Setup guide for GPT Actions
+├── QUICK_SETUP.md                      # Quick setup instructions
+├── API_KEY_SETUP_GUIDE.md              # API key configuration guide
+├── KNOWLEDGE_FILES.md                  # Knowledge files documentation
+├── .gitignore                          # Git ignore rules
+├── assets/                             # Static assets and images
+│   └── LetsCloud_logo.png              # LetsCould logo image
+├── examples/                           # Code examples and implementations
+│   ├── usage-examples.py               # Python client implementation
+│   └── requirements.txt                # Python dependencies
+└── knowledge-examples/                 # Knowledge base examples
+    └── letscloud-platform-guide.md     # Platform usage guide
 ```
 
 ## 📄 File Descriptions
 
 ### Core Files
 
-#### `openapi.yaml`
-- **Purpose**: Main OpenAPI 3.0 specification file
+#### `docs/openapi.yaml`
+- **Purpose**: Main OpenAPI 3.1 specification file for LetsCould API
 - **Content**: Complete API definition with all endpoints, schemas, and examples
 - **Usage**: Import directly into GPT Actions or use with API documentation tools
 - **Key Features**:
@@ -41,6 +49,67 @@ letscloud-openapi-gpt/
   - Detailed error responses
   - Authentication configuration
   - GPT Actions optimized operation IDs
+  - Updated for LetsCould API v1.0.0
+
+#### `docs/LETSCOULD_API_DOCUMENTATION.md`
+- **Purpose**: Complete API documentation for LetsCould
+- **Content**: 
+  - Authentication methods
+  - HTTP methods and status codes
+  - Response formats
+  - Rate limits
+  - Endpoint examples
+  - Best practices
+- **Target Audience**: Developers, DevOps engineers, API users
+
+### Web Documentation Files
+
+#### `docs/index.html`
+- **Purpose**: Main GitHub Pages website with interactive API documentation
+- **Content**: 
+  - Landing page with project overview
+  - Interactive Swagger UI for API testing
+  - Feature showcase and documentation links
+  - Responsive design with modern UI
+- **Features**: 
+  - Real-time API testing interface
+  - Bootstrap-based responsive design
+  - SEO optimized with meta tags
+  - Social media integration
+
+#### `docs/privacy-policy.html`
+- **Purpose**: Privacy policy page for legal compliance
+- **Content**: 
+  - Comprehensive privacy policy
+  - GDPR and CCPA compliance information
+  - Data handling practices
+  - User rights and contact information
+- **Usage**: Required for legal compliance and user trust
+
+#### `docs/robots.txt`
+- **Purpose**: SEO configuration for search engine crawlers
+- **Content**: 
+  - Crawling rules and permissions
+  - Sitemap reference
+  - Crawl delay settings
+- **Usage**: Helps search engines index the site properly
+
+#### `docs/sitemap.xml`
+- **Purpose**: XML sitemap for search engine indexing
+- **Content**: 
+  - List of all important pages
+  - Update frequency and priority settings
+  - Last modification dates
+- **Usage**: Improves search engine discoverability
+
+#### `docs/_config.yml`
+- **Purpose**: Jekyll configuration for GitHub Pages
+- **Content**: 
+  - Site metadata and settings
+  - SEO configuration
+  - Social media links
+  - Build settings
+- **Usage**: Controls how GitHub Pages builds and serves the site
 
 #### `README.md`
 - **Purpose**: Main project documentation
@@ -68,6 +137,7 @@ letscloud-openapi-gpt/
   - Best practices
   - Security considerations
 - **Usage**: Reference for setting up GPT Actions
+- **Updated**: Now includes all LetsCould API endpoints
 
 #### `DEPLOYMENT.md`
 - **Purpose**: Comprehensive deployment guide
@@ -79,272 +149,140 @@ letscloud-openapi-gpt/
   - Performance optimization tips
 - **Target Audience**: System administrators, DevOps teams
 
-### Assets Directory
+### GPT Integration Files
 
-#### `assets/LetsCloud_logo.png`
-- **Purpose**: LetsCloud brand logo for web documentation
-- **Usage**: Displayed in the footer of the API documentation pages
-- **Format**: PNG image with transparent background
-- **Size**: Optimized for web display
-
-### Web Documentation Directory
-
-#### `docs/index.html`
-- **Purpose**: Main API documentation page with Swagger UI
+#### `GPT_CREATOR_INSTRUCTIONS.md`
+- **Purpose**: Instructions for creating GPTs with LetsCould API
 - **Content**: 
-  - Interactive API documentation
-  - Swagger UI integration
-  - Custom branding and styling
-  - Navigation to other pages
-- **Features**: 
-  - Real-time API testing
-  - Authentication setup
-  - Request/response examples
-  - Mobile responsive design
-
-#### `docs/gpt-actions.html`
-- **Purpose**: GPT Actions specific documentation page
-- **Content**: 
-  - GPT Actions integration guide
-  - Configuration examples
+  - Step-by-step GPT creation guide
+  - Configuration instructions
   - Best practices
   - Troubleshooting tips
 
-#### `docs/openapi.yaml`
-- **Purpose**: OpenAPI specification for web documentation
-- **Content**: Identical to root openapi.yaml for web access
-- **Usage**: Served by web documentation pages
+#### `GPT_DUPLICATION_GUIDE.md`
+- **Purpose**: Guide for duplicating and customizing GPTs
+- **Content**:
+  - Duplication process
+  - Customization options
+  - Configuration management
 
-#### `docs/robots.txt`
-- **Purpose**: SEO configuration for search engines
-- **Content**: Crawling rules and sitemap reference
+#### `GPT_ACTIONS_SETUP_GUIDE.md`
+- **Purpose**: Detailed setup guide for GPT Actions
+- **Content**:
+  - Action configuration
+  - Authentication setup
+  - Testing procedures
+  - Integration examples
 
-#### `docs/sitemap.xml`
-- **Purpose**: XML sitemap for search engine indexing
-- **Content**: List of all documentation pages
+#### `QUICK_SETUP.md`
+- **Purpose**: Quick start guide for immediate setup
+- **Content**:
+  - Minimal setup steps
+  - Essential configuration
+  - Basic usage examples
 
-#### `docs/_config.yml`
-- **Purpose**: Configuration file for documentation generation
-- **Content**: Site settings and metadata
+#### `API_KEY_SETUP_GUIDE.md`
+- **Purpose**: Guide for setting up API authentication
+- **Content**:
+  - API key generation
+  - Security best practices
+  - Environment configuration
+
+#### `KNOWLEDGE_FILES.md`
+- **Purpose**: Documentation for knowledge base integration
+- **Content**:
+  - Knowledge file structure
+  - Integration guidelines
+  - Best practices
+
+### Assets Directory
+
+#### `assets/LetsCloud_logo.png`
+- **Purpose**: LetsCould brand logo for documentation
+- **Usage**: Displayed in documentation and examples
+- **Format**: PNG image with transparent background
+- **Size**: Optimized for web display
 
 ### Examples Directory
 
 #### `examples/usage-examples.py`
-- **Purpose**: Practical implementation examples
+- **Purpose**: Python client implementation examples
 - **Content**:
-  - Complete Python client class
-  - All API methods implemented
+  - Complete API client class
+  - Method implementations for all endpoints
   - Error handling examples
-  - GPT Actions workflow examples
-- **Usage**: Learning resource and starting point for custom implementations
+  - Usage patterns
+- **Target Audience**: Python developers, API integrators
 
 #### `examples/requirements.txt`
 - **Purpose**: Python dependencies for examples
-- **Content**: Required packages for running the examples
-- **Dependencies**:
-  - `requests>=2.31.0` - HTTP client library
-  - `typing-extensions>=4.0.0` - Type hints support
+- **Content**: Required packages for running examples
+- **Usage**: Install with `pip install -r requirements.txt`
 
-## 🏗️ Architecture Overview
+### Knowledge Examples Directory
 
-### OpenAPI Specification Structure
+#### `knowledge-examples/letscloud-platform-guide.md`
+- **Purpose**: Platform usage guide for knowledge base
+- **Content**:
+  - Platform overview
+  - Feature descriptions
+  - Usage examples
+  - Best practices
+- **Usage**: Can be used as knowledge base content for GPTs
 
-```
-openapi.yaml
-├── Info Section
-│   ├── Title, description, version
-│   ├── Contact information
-│   └── License details
-├── Servers
-│   └── Production API
-├── Security
-│   └── API Key authentication
-├── Paths
-│   ├── /servers (GET, POST)
-│   ├── /servers/{server_id} (GET, DELETE)
-│   ├── /servers/{server_id}/start (POST)
-│   ├── /servers/{server_id}/stop (POST)
-│   ├── /servers/{server_id}/reboot (POST)
-│   ├── /ssh-keys (GET, POST)
-│   ├── /ssh-keys/{key_id} (GET, DELETE)
-│   ├── /servers/{server_id}/snapshots (GET, POST)
-│   ├── /servers/{server_id}/snapshots/{snapshot_id} (GET, DELETE)
-│   ├── /servers/{server_id}/snapshots/{snapshot_id}/restore (POST)
-│   ├── /plans (GET)
-│   ├── /images (GET)
-│   ├── /locations (GET)
-│   └── /account (GET)
-└── Components
-    ├── Security Schemes
-    ├── Schemas
-    │   ├── Server
-    │   ├── Plan
-    │   ├── Image
-    │   ├── Location
-    │   ├── SSHKey
-    │   ├── Snapshot
-    │   ├── Account
-    │   └── Error
-    └── Responses
-        ├── BadRequest
-        ├── Unauthorized
-        ├── NotFound
-        ├── ValidationError
-        └── InternalServerError
-```
+## 🔄 Recent Changes
 
-### API Endpoint Categories
+### Removed Files
+The following files were removed to streamline the project:
+- `docs/openapi_simple_backup.yaml` - Backup file no longer needed
+- `docs/openapi_test.yaml` - Test specification file
+- `docs/openapi_simple.yaml` - Simplified specification file
+- `docs/openapi_full.yaml` - Redundant full specification
 
-#### 1. Server Management
-- **Purpose**: Full lifecycle management of cloud servers
-- **Endpoints**: 7 endpoints for CRUD operations and power management
-- **Key Features**: Create, read, update, delete, start, stop, reboot
+### Updated Files
+- `docs/openapi.yaml` - Updated to LetsCould API v1.0.0
+- `gpt-actions-config.yaml` - Updated with new endpoints and operation IDs
+- `PROJECT_STRUCTURE.md` - This file updated to reflect current structure
 
-#### 2. SSH Key Management
-- **Purpose**: Secure access management for servers
-- **Endpoints**: 4 endpoints for key management
-- **Key Features**: Add, list, view, delete SSH keys
+## 🎯 Project Goals
 
-#### 3. Snapshot Management
-- **Purpose**: Backup and restore functionality
-- **Endpoints**: 5 endpoints for snapshot operations
-- **Key Features**: Create, list, view, delete, restore snapshots
+1. **Provide a complete OpenAPI specification** for the LetsCould API
+2. **Enable GPT Actions integration** with comprehensive configuration
+3. **Offer clear documentation** for developers and users
+4. **Maintain clean project structure** with only necessary files
+5. **Support multiple deployment options** for different use cases
 
-#### 4. Resource Discovery
-- **Purpose**: Information about available resources
-- **Endpoints**: 3 endpoints for resource listing
-- **Key Features**: Plans, images, locations discovery
+## 📚 Documentation Structure
 
-#### 5. Account Information
-- **Purpose**: Account and billing information
-- **Endpoints**: 1 endpoint for account details
-- **Key Features**: Balance, profile, billing information
+The project documentation is organized into several categories:
 
-## 🔧 Integration Points
+### Core Documentation
+- **API Specification**: `docs/openapi.yaml`
+- **API Documentation**: `docs/LETSCOULD_API_DOCUMENTATION.md`
+- **Project Overview**: `README.md`
 
-### GPT Actions Integration
+### Setup Guides
+- **Quick Setup**: `QUICK_SETUP.md`
+- **GPT Actions Setup**: `GPT_ACTIONS_SETUP_GUIDE.md`
+- **API Key Setup**: `API_KEY_SETUP_GUIDE.md`
 
-```
-GPT Actions Configuration
-├── Import openapi.yaml
-├── Configure authentication
-├── Set up environment variables
-├── Test endpoints
-└── Deploy to production
-```
+### Integration Guides
+- **GPT Creation**: `GPT_CREATOR_INSTRUCTIONS.md`
+- **GPT Duplication**: `GPT_DUPLICATION_GUIDE.md`
+- **Knowledge Files**: `KNOWLEDGE_FILES.md`
 
-### Custom Client Integration
+### Advanced Topics
+- **Deployment**: `DEPLOYMENT.md`
+- **Project Structure**: `PROJECT_STRUCTURE.md`
 
-```
-Custom Implementation
-├── Use openapi.yaml as reference
-├── Implement client library
-├── Add error handling
-├── Include authentication
-└── Add monitoring/logging
-```
+## 🚀 Getting Started
 
-### API Gateway Integration
+1. **Read the Quick Setup guide** (`QUICK_SETUP.md`)
+2. **Configure your API key** (`API_KEY_SETUP_GUIDE.md`)
+3. **Set up GPT Actions** (`GPT_ACTIONS_SETUP_GUIDE.md`)
+4. **Explore the API documentation** (`docs/LETSCOULD_API_DOCUMENTATION.md`)
+5. **Review examples** (`examples/usage-examples.py`)
 
-```
-API Gateway Setup
-├── Load openapi.yaml
-├── Configure routing
-├── Set up authentication
-├── Add rate limiting
-└── Deploy to cloud platform
-```
+## 🤝 Contributing
 
-## 📊 Data Flow
-
-### Request Flow
-```
-User Request → GPT Actions → LetsCloud API → Response → User
-```
-
-### Authentication Flow
-```
-API Key → Authorization Header → LetsCloud API → Validation → Response
-```
-
-### Error Handling Flow
-```
-Error → HTTP Status Code → Error Response → User Notification
-```
-
-## 🛡️ Security Model
-
-### Authentication
-- **Method**: API Key authentication
-- **Header**: `Authorization: Bearer {api_key}`
-- **Environment Variable**: `LETSCLOUD_API_KEY`
-
-### Authorization
-- **Scope**: Account-level access
-- **Permissions**: Full account management
-- **Rate Limiting**: Server-side enforcement
-
-### Data Protection
-- **Transport**: HTTPS/TLS encryption
-- **Storage**: Secure API key management
-- **Logging**: No sensitive data in logs
-
-## 📈 Scalability Considerations
-
-### API Design
-- **Stateless**: Each request is independent
-- **RESTful**: Standard HTTP methods and status codes
-- **Pagination**: Support for large result sets
-- **Caching**: Appropriate cache headers
-
-### Performance
-- **Response Time**: Optimized for real-time operations
-- **Throughput**: Rate limiting for fair usage
-- **Availability**: High availability infrastructure
-
-## 🔄 Versioning Strategy
-
-### API Versioning
-- **Current Version**: 1.2.0
-- **Backward Compatibility**: Maintained within major versions
-- **Deprecation Policy**: Clear communication of changes
-- **Migration Path**: Documented upgrade procedures
-
-### Specification Updates
-- **Semantic Versioning**: MAJOR.MINOR.PATCH
-- **Change Log**: Documented in README
-- **Breaking Changes**: Clearly marked and explained
-
-## 🎯 Use Cases
-
-### Primary Use Cases
-1. **Server Provisioning**: Automated server creation and configuration
-2. **Infrastructure Management**: Ongoing server maintenance and monitoring
-3. **Backup Management**: Automated snapshot creation and restoration
-4. **Access Control**: SSH key management for secure access
-5. **Resource Planning**: Discovery of available plans and locations
-
-### GPT Actions Use Cases
-1. **Natural Language Commands**: "Create a web server with Ubuntu"
-2. **Workflow Automation**: Multi-step infrastructure setup
-3. **Monitoring and Alerts**: Status checking and notifications
-4. **Cost Optimization**: Plan comparison and recommendations
-5. **Disaster Recovery**: Automated backup and restore procedures
-
-## 📚 Documentation Standards
-
-### Code Comments
-- **Language**: English (as per user preference)
-- **Style**: Clear and descriptive
-- **Examples**: Practical usage examples
-- **Updates**: Maintained with code changes
-
-### API Documentation
-- **Format**: OpenAPI 3.0 specification
-- **Examples**: Comprehensive request/response examples
-- **Error Codes**: Detailed error descriptions
-- **Authentication**: Clear setup instructions
-
----
-
-This project structure provides a complete foundation for integrating LetsCloud API with GPT Actions, including comprehensive documentation, examples, and deployment guidance.
+This project is open source and welcomes contributions. Please refer to the individual documentation files for specific guidelines and best practices.

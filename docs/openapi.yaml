@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
-  title: LetsCloud API
-  description: A comprehensive API for managing cloud infrastructure on LetsCloud platform
-  version: 1.2.0
+  title: LetsCould API
+  description: A comprehensive API for managing cloud infrastructure on LetsCould platform
+  version: 1.0.0
   contact:
-    name: LetsCloud Support
+    name: LetsCould Support
     url: https://www.letscloud.io
     email: support@letscloud.io
   license:
@@ -12,14 +12,14 @@ info:
     url: https://opensource.org/licenses/MIT
 
 servers:
-  - url: https://core.letscloud.io
+  - url: https://core.letscloud.io/api
     description: Production API server
 
 security:
   - ApiKeyAuth: []
 
 paths:
-  /api/servers:
+  /servers:
     get:
       summary: List all servers
       description: Retrieve a list of all servers in your account
@@ -84,10 +84,14 @@ paths:
                         type: integer
                       has_more:
                         type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
     
     post:
       summary: Create a new server
@@ -131,7 +135,7 @@ paths:
                     type: integer
                   example: [1, 2, 3]
       responses:
-        '201':
+        '200':
           description: Server created successfully
           content:
             application/json:
@@ -149,8 +153,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}:
+  /servers/{server_id}:
     get:
       summary: Get server details
       description: Retrieve detailed information about a specific server
@@ -178,12 +184,14 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Server'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
     
     delete:
       summary: Delete a server
@@ -200,16 +208,29 @@ paths:
             type: integer
           example: 123
       responses:
-        '204':
+        '200':
           description: Server deleted successfully
-        '404':
-          $ref: '#/components/responses/NotFound'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Server successfully deleted!"
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}/start:
+  /servers/{server_id}/start:
     post:
       summary: Start a server
       description: Start a server that is currently stopped
@@ -237,16 +258,16 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Server'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          description: Server is already running
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}/stop:
+  /servers/{server_id}/stop:
     post:
       summary: Shutdown a server
       description: Shutdown a server that is currently running
@@ -274,16 +295,16 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Server'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          description: Server is already stopped
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}/reboot:
+  /servers/{server_id}/reboot:
     post:
       summary: Reboot a server
       description: Reboot a server that is currently running
@@ -311,16 +332,16 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Server'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          description: Server is not running
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/ssh-keys:
+  /ssh-keys:
     get:
       summary: List all SSH keys
       description: Retrieve a list of all SSH keys in your account
@@ -372,10 +393,14 @@ paths:
                         type: integer
                       has_more:
                         type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
     
     post:
       summary: Create a new SSH key
@@ -400,7 +425,7 @@ paths:
                   type: string
                   example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
       responses:
-        '201':
+        '200':
           description: SSH key created successfully
           content:
             application/json:
@@ -418,8 +443,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/ssh-keys/{key_id}:
+  /ssh-keys/{key_id}:
     get:
       summary: Get SSH key details
       description: Retrieve detailed information about a specific SSH key
@@ -447,12 +474,14 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/SSHKey'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
     
     delete:
       summary: Delete an SSH key
@@ -469,16 +498,155 @@ paths:
             type: integer
           example: 1
       responses:
-        '204':
+        '200':
           description: SSH key deleted successfully
-        '404':
-          $ref: '#/components/responses/NotFound'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "SSH key successfully deleted!"
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}/snapshots:
+  /snapshots/status/{image_slug}:
+    get:
+      summary: Get snapshot status
+      description: Retrieve the current build status of a snapshot
+      operationId: getSnapshotStatus
+      tags:
+        - Snapshots
+      parameters:
+        - name: image_slug
+          in: path
+          required: true
+          description: The slug of the snapshot
+          schema:
+            type: string
+          example: "your-image-slug-here"
+      responses:
+        '200':
+          description: Snapshot status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /snapshots/{image_slug}:
+    post:
+      summary: Update snapshot label
+      description: Update the label of an existing snapshot
+      operationId: updateSnapshotLabel
+      tags:
+        - Snapshots
+      parameters:
+        - name: image_slug
+          in: path
+          required: true
+          description: The slug of the snapshot
+          schema:
+            type: string
+          example: "your-snapshot-slug"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - _method
+                - label
+              properties:
+                _method:
+                  type: string
+                  example: "PUT"
+                label:
+                  type: string
+                  example: "Your new label"
+      responses:
+        '200':
+          description: Snapshot label updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Snapshot successfully updated"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+    
+    delete:
+      summary: Delete a snapshot
+      description: Delete a snapshot from your account
+      operationId: deleteSnapshot
+      tags:
+        - Snapshots
+      parameters:
+        - name: image_slug
+          in: path
+          required: true
+          description: The slug of the snapshot to delete
+          schema:
+            type: string
+          example: "your-snapshot-slug"
+      responses:
+        '200':
+          description: Snapshot deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Snapshot successfully deleted!"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /servers/{server_id}/snapshots:
     get:
       summary: List server snapshots
       description: Retrieve a list of all snapshots for a specific server
@@ -513,12 +681,14 @@ paths:
                           $ref: '#/components/schemas/Snapshot'
                       total:
                         type: integer
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
     
     post:
       summary: Create a server snapshot
@@ -550,7 +720,7 @@ paths:
                   type: string
                   example: "Snapshot created before applying system updates"
       responses:
-        '201':
+        '200':
           description: Snapshot created successfully
           content:
             application/json:
@@ -562,14 +732,16 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Snapshot'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}/snapshots/{snapshot_id}:
+  /servers/{server_id}/snapshots/{snapshot_id}:
     get:
       summary: Get snapshot details
       description: Retrieve detailed information about a specific snapshot
@@ -604,17 +776,19 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Snapshot'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
     
     delete:
       summary: Delete a snapshot
       description: Delete a snapshot permanently
-      operationId: deleteSnapshot
+      operationId: deleteSnapshotById
       tags:
         - Snapshots
       parameters:
@@ -633,16 +807,29 @@ paths:
             type: integer
           example: 456
       responses:
-        '204':
+        '200':
           description: Snapshot deleted successfully
-        '404':
-          $ref: '#/components/responses/NotFound'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Snapshot successfully deleted!"
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/servers/{server_id}/snapshots/{snapshot_id}/restore:
+  /servers/{server_id}/snapshots/{snapshot_id}/restore:
     post:
       summary: Restore server from snapshot
       description: Restore a server from a snapshot
@@ -677,16 +864,16 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Server'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '409':
-          description: Server is currently running
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/plans:
+  /plans:
     get:
       summary: List available plans
       description: Retrieve a list of all available server plans
@@ -713,12 +900,16 @@ paths:
                           $ref: '#/components/schemas/Plan'
                       total:
                         type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/images:
+  /images:
     get:
       summary: List available images
       description: Retrieve a list of all available OS images
@@ -745,12 +936,16 @@ paths:
                           $ref: '#/components/schemas/Image'
                       total:
                         type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/locations:
+  /locations:
     get:
       summary: List available locations
       description: Retrieve a list of all available server locations
@@ -777,21 +972,25 @@ paths:
                           $ref: '#/components/schemas/Location'
                       total:
                         type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
-  /api/account:
+  /profile:
     get:
-      summary: Get account information
-      description: Retrieve your LetsCloud account information
-      operationId: getAccountInfo
+      summary: Get account profile information
+      description: Retrieve your LetsCould account profile information
+      operationId: getAccountProfile
       tags:
         - Account
       responses:
         '200':
-          description: Account information retrieved successfully
+          description: Account profile information retrieved successfully
           content:
             application/json:
               schema:
@@ -802,10 +1001,14 @@ paths:
                     example: true
                   data:
                     $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
 components:
   securitySchemes:
@@ -813,7 +1016,7 @@ components:
       type: apiKey
       in: header
       name: api-token
-      description: Your LetsCloud API token. Required for all API calls.
+      description: Your LetsCould API token. Required for all API calls.
 
   schemas:
     Server:
@@ -990,41 +1193,32 @@ components:
     Account:
       type: object
       properties:
-        id:
-          type: integer
-          example: 789
-        email:
-          type: string
-          example: "user@example.com"
         name:
           type: string
           example: "John Doe"
-        company:
+        company_name:
           type: string
+          nullable: true
           example: "Acme Corp"
-        balance:
-          type: number
-          example: 50.00
+        email:
+          type: string
+          example: "user@example.com"
         currency:
           type: string
-          example: "USD"
-        created_at:
+          example: "R$"
+        balance:
           type: string
-          format: date-time
-          example: "2024-01-15T10:30:00Z"
+          example: "8846.91"
 
     Error:
       type: object
       properties:
-        error:
+        success:
+          type: boolean
+          example: false
+        message:
           type: string
           example: "Server not found"
-        code:
-          type: string
-          example: "NOT_FOUND"
-        details:
-          type: object
-          additionalProperties: true
 
   responses:
     BadRequest:
@@ -1034,8 +1228,8 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            error: "Invalid parameters provided"
-            code: "BAD_REQUEST"
+            success: false
+            message: "Invalid parameters provided"
 
     Unauthorized:
       description: Unauthorized - invalid or missing API key
@@ -1044,18 +1238,8 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            error: "Invalid API key"
-            code: "UNAUTHORIZED"
-
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error: "Server not found"
-            code: "NOT_FOUND"
+            success: false
+            message: "Invalid API key"
 
     InternalServerError:
       description: Internal server error
@@ -1064,8 +1248,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            error: "Internal server error"
-            code: "INTERNAL_ERROR"
+            success: false
+            message: "Internal server error"
+
+    ServiceUnavailable:
+      description: Service unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: "Service temporarily unavailable"
 
 tags:
   - name: Servers
