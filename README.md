@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LetsCloud API - OpenAPI Specification for GPT Actions
 
 [![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-green.svg)](https://swagger.io/specification/)
@@ -274,3 +275,6 @@ For support, please contact:
 ---
 
 **Note**: This OpenAPI specification is based on the LetsCloud Go library and uses the official API endpoint at [https://core.letscloud.io/api](https://core.letscloud.io/api). The specification may be updated as the API evolves. Always refer to the official documentation for the most current information.
+=======
+# letscloud-openapi-gpt
+>>>>>>> 7c4851acc0278a08414f7ee31db81fde50547fdd
