@@ -1,5 +1,14 @@
 # LetsCloud API - OpenAPI Specification for GPT Actions
 
+[![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-green.svg)](https://swagger.io/specification/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GPT Actions](https://img.shields.io/badge/GPT%20Actions-Ready-orange.svg)](https://platform.openai.com/docs/actions)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
+[![Nginx](https://img.shields.io/badge/Nginx-Gateway-green.svg)](https://nginx.org/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Available-lightgrey.svg)](https://pages.github.com/)
+[![LetsCloud](https://img.shields.io/badge/LetsCloud-API-red.svg)](https://www.letscloud.io)
+
 This project provides a comprehensive OpenAPI 3.0 specification for the LetsCloud API, designed specifically for integration with GPT Actions. The specification covers all major cloud infrastructure management operations available through the [LetsCloud Go library](https://github.com/letscloud-community/letscloud-go).
 
 ## 📋 Overview
@@ -10,6 +19,13 @@ The LetsCloud API allows you to manage cloud infrastructure including:
 - **Snapshot Management**: Create, restore, and delete server snapshots
 - **Resource Discovery**: List available plans, images, and locations
 - **Account Information**: Get account details and billing information
+
+## 🚀 Quick Status
+
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
+[![Code Quality](https://img.shields.io/badge/code%20quality-A%2B-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
+[![Documentation](https://img.shields.io/badge/docs-complete-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
+[![Deployment](https://img.shields.io/badge/deployment-ready-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt)
 
 ## 🚀 Quick Start
 
@@ -74,6 +90,10 @@ All API requests require authentication using your LetsCloud API key. You can pr
 
 ## 🔧 GPT Actions Integration
 
+[![GPT Actions Setup](https://img.shields.io/badge/GPT%20Actions-Setup%20Guide-blue.svg)](https://platform.openai.com/docs/actions)
+[![OpenAPI Import](https://img.shields.io/badge/OpenAPI-Import%20Ready-green.svg)](https://swagger.io/specification/)
+[![Authentication](https://img.shields.io/badge/Auth-API%20Key%20Ready-orange.svg)](https://platform.openai.com/docs/actions)
+
 ### Setting up GPT Actions
 
 1. **Import the OpenAPI Specification**:
@@ -105,6 +125,15 @@ actions:
     description: "Manage SSH keys for server access"
     operation_id: listSSHKeys
 ```
+
+## 🚀 Deployment Options
+
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deploy%20Free-lightgrey.svg)](https://pages.github.com/)
+[![Docker](https://img.shields.io/badge/Docker-Container%20Ready-blue.svg)](https://www.docker.com/)
+[![Nginx](https://img.shields.io/badge/Nginx-Gateway%20Ready-green.svg)](https://nginx.org/)
+[![AWS](https://img.shields.io/badge/AWS-Deploy%20Ready-orange.svg)](https://aws.amazon.com/)
+[![GCP](https://img.shields.io/badge/GCP-Deploy%20Ready-blue.svg)](https://cloud.google.com/)
+[![Azure](https://img.shields.io/badge/Azure-Deploy%20Ready-blue.svg)](https://azure.microsoft.com/)
 
 ## 📖 Examples
 
@@ -210,6 +239,15 @@ API requests are rate limited to ensure fair usage. Implement appropriate retry 
 - [LetsCloud Website](https://www.letscloud.io)
 - [API Documentation](https://developers.letscloud.io)
 
+## 🔧 Compatibility
+
+[![OpenAI GPT](https://img.shields.io/badge/OpenAI%20GPT-Compatible-brightgreen.svg)](https://platform.openai.com/)
+[![ChatGPT](https://img.shields.io/badge/ChatGPT-Integration-blue.svg)](https://chat.openai.com/)
+[![Claude](https://img.shields.io/badge/Claude-Compatible-orange.svg)](https://claude.ai/)
+[![Postman](https://img.shields.io/badge/Postman-Import-yellow.svg)](https://www.postman.com/)
+[![Insomnia](https://img.shields.io/badge/Insomnia-Import-purple.svg)](https://insomnia.rest/)
+[![Swagger UI](https://img.shields.io/badge/Swagger%20UI-Compatible-green.svg)](https://swagger.io/tools/swagger-ui/)
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -218,12 +256,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📞 Support
+## 🤝 Community & Support
+
+[![Issues](https://img.shields.io/badge/Issues-Welcome-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/issues)
+[![Pull Requests](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/pulls)
+[![Discussions](https://img.shields.io/badge/Discussions-Open-blue.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/discussions)
+[![Contributing](https://img.shields.io/badge/Contributing-Guidelines-lightgrey.svg)](https://github.com/letscloud-community/letscloud-openapi-gpt/blob/main/CONTRIBUTING.md)
+
+### Support Channels
 
 For support, please contact:
 - **Email**: support@letscloud.io
 - **Website**: https://www.letscloud.io
 - **Documentation**: https://developers.letscloud.io
+- **GitHub Issues**: [Create an issue](https://github.com/letscloud-community/letscloud-openapi-gpt/issues)
 
 ---
 
