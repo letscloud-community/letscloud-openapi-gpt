@@ -1,65 +1,47 @@
 openapi: 3.1.0
 info:
   title: LetsCould API
-  description: A comprehensive API for managing cloud infrastructure on LetsCould platform
+  description: |
+    The LetsCould API allows you to manage your cloud resources programmatically.
+    All requests must be made over HTTPS for encryption and security.
+    
+    ## Authentication
+    All API requests require authentication using an API token in the request headers.
+    
+    ## Response Format
+    All API responses are returned in JSON format with two main properties: `success` and either `data` or `message`.
+    
+    ## Rate Limits
+    - **Hourly limit**: 5,000 requests per hour
+    - **Daily limit**: 120,000 requests per day per API token
   version: 1.0.0
   contact:
     name: LetsCould Support
-    url: https://www.letscloud.io
-    email: support@letscloud.io
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
+    url: https://letscloud.io/support
 
 servers:
   - url: https://api.letscloud.io
     description: Production API server
 
-security:
-  - ApiKeyAuth: []
-
 paths:
-  /servers:
-    get:
-      summary: List all servers
-      description: Retrieve a list of all servers in your account
-      operationId: listServers
+  /instances/{identifier}/shutdown:
+    post:
+      summary: Shutdown instance
+      description: Shutdown a running instance
+      operationId: shutdownInstance
       tags:
-        - Servers
+        - Instances
       parameters:
-        - name: page
-          in: query
-          description: Page number for pagination
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-        - name: per_page
-          in: query
-          description: Number of servers per page
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 20
-            default: 5
-        - name: status
-          in: query
-          description: Filter servers by status
-          required: false
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
           schema:
             type: string
-            enum:
-              - running
-              - stopped
-              - starting
-              - stopping
-              - rebooting
-              - error
+          example: "your-identifier-here"
       responses:
         '200':
-          description: List of servers retrieved successfully
+          description: Instance shutdown successfully
           content:
             application/json:
               schema:
@@ -68,22 +50,9 @@ paths:
                   success:
                     type: boolean
                     example: true
-                  data:
-                    type: object
-                    properties:
-                      servers:
-                        type: array
-                        maxItems: 20
-                        items:
-                          $ref: '#/components/schemas/Server'
-                      total:
-                        type: integer
-                      page:
-                        type: integer
-                      per_page:
-                        type: integer
-                      has_more:
-                        type: boolean
+                  message:
+                    type: string
+                    example: "Instance shutdown successfully"
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -92,124 +61,41 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-    
+
+  /instances/{identifier}/change-plan:
     post:
-      summary: Create a new server
-      description: Create a new server instance
-      operationId: createServer
+      summary: Change instance plan
+      description: Change the plan of an existing instance
+      operationId: changeInstancePlan
       tags:
-        - Servers
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "Mq5VF63YAdCqXt4U"
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               required:
-                - label
+                - _method
                 - plan_slug
-                - image_slug
-                - location_slug
               properties:
-                label:
+                _method:
                   type: string
-                  example: "My Web Server"
+                  example: "PUT"
                 plan_slug:
                   type: string
-                  example: "basic-1gb"
-                image_slug:
-                  type: string
-                  example: "ubuntu-22-04"
-                location_slug:
-                  type: string
-                  example: "nyc1"
-                hostname:
-                  type: string
-                  example: "webserver-01"
-                password:
-                  type: string
-                  example: "SecurePassword123!"
-                ssh_keys:
-                  type: array
-                  items:
-                    type: integer
-                  example: [1, 2, 3]
+                  example: "1vcpu-2gb-20ssd"
       responses:
         '200':
-          description: Server created successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Server'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /servers/{server_id}:
-    get:
-      summary: Get server details
-      description: Retrieve detailed information about a specific server
-      operationId: getServer
-      tags:
-        - Servers
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to retrieve
-          schema:
-            type: integer
-          example: 123
-      responses:
-        '200':
-          description: Server details retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Server'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-    
-    delete:
-      summary: Delete a server
-      description: Permanently delete a server
-      operationId: deleteServer
-      tags:
-        - Servers
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to delete
-          schema:
-            type: integer
-          example: 123
-      responses:
-        '200':
-          description: Server deleted successfully
+          description: Instance plan changed successfully
           content:
             application/json:
               schema:
@@ -220,297 +106,7 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: "Server successfully deleted!"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /servers/{server_id}/start:
-    post:
-      summary: Start a server
-      description: Start a server that is currently stopped
-      operationId: startServer
-      tags:
-        - Servers
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to start
-          schema:
-            type: integer
-          example: 123
-      responses:
-        '200':
-          description: Server started successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Server'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /servers/{server_id}/stop:
-    post:
-      summary: Shutdown a server
-      description: Shutdown a server that is currently running
-      operationId: shutdownServer
-      tags:
-        - Servers
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to shutdown
-          schema:
-            type: integer
-          example: 123
-      responses:
-        '200':
-          description: Server shutdown successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Server'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /servers/{server_id}/reboot:
-    post:
-      summary: Reboot a server
-      description: Reboot a server that is currently running
-      operationId: rebootServer
-      tags:
-        - Servers
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to reboot
-          schema:
-            type: integer
-          example: 123
-      responses:
-        '200':
-          description: Server rebooted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Server'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /ssh-keys:
-    get:
-      summary: List all SSH keys
-      description: Retrieve a list of all SSH keys in your account
-      operationId: listSSHKeys
-      tags:
-        - SSH Keys
-      parameters:
-        - name: page
-          in: query
-          description: Page number for pagination
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-        - name: per_page
-          in: query
-          description: Number of SSH keys per page
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-            default: 20
-      responses:
-        '200':
-          description: List of SSH keys retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      ssh_keys:
-                        type: array
-                        maxItems: 100
-                        items:
-                          $ref: '#/components/schemas/SSHKey'
-                      total:
-                        type: integer
-                      page:
-                        type: integer
-                      per_page:
-                        type: integer
-                      has_more:
-                        type: boolean
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-    
-    post:
-      summary: Create a new SSH key
-      description: Add a new SSH key to your account
-      operationId: createSSHKey
-      tags:
-        - SSH Keys
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - title
-                - key
-              properties:
-                title:
-                  type: string
-                  example: "My Laptop Key"
-                key:
-                  type: string
-                  example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-      responses:
-        '200':
-          description: SSH key created successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/SSHKey'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /ssh-keys/{key_id}:
-    get:
-      summary: Get SSH key details
-      description: Retrieve detailed information about a specific SSH key
-      operationId: getSSHKey
-      tags:
-        - SSH Keys
-      parameters:
-        - name: key_id
-          in: path
-          required: true
-          description: The ID of the SSH key to retrieve
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: SSH key details retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/SSHKey'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-    
-    delete:
-      summary: Delete an SSH key
-      description: Delete an SSH key from your account
-      operationId: deleteSSHKey
-      tags:
-        - SSH Keys
-      parameters:
-        - name: key_id
-          in: path
-          required: true
-          description: The ID of the SSH key to delete
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: SSH key deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "SSH key successfully deleted!"
+                    example: "Instance plan changed successfully"
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -523,7 +119,7 @@ paths:
   /snapshots/status/{image_slug}:
     get:
       summary: Get snapshot status
-      description: Retrieve the current build status of a snapshot
+      description: Get the current build status of a snapshot. To find out the slug, you can List All Snapshots.
       operationId: getSnapshotStatus
       tags:
         - Snapshots
@@ -573,7 +169,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               required:
@@ -610,8 +206,8 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
     
     delete:
-      summary: Delete a snapshot
-      description: Delete a snapshot from your account
+      summary: Delete snapshot
+      description: Delete a snapshot from your account. To find out the slug, you can List All Snapshots.
       operationId: deleteSnapshot
       tags:
         - Snapshots
@@ -619,10 +215,22 @@ paths:
         - name: image_slug
           in: path
           required: true
-          description: The slug of the snapshot to delete
+          description: The slug of the snapshot
           schema:
             type: string
           example: "your-snapshot-slug"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - _method
+              properties:
+                _method:
+                  type: string
+                  example: "DELETE"
       responses:
         '200':
           description: Snapshot deleted successfully
@@ -646,64 +254,13 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 
-  /servers/{server_id}/snapshots:
-    get:
-      summary: List server snapshots
-      description: Retrieve a list of all snapshots for a specific server
-      operationId: listSnapshots
-      tags:
-        - Snapshots
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to list snapshots for
-          schema:
-            type: integer
-          example: 123
-      responses:
-        '200':
-          description: List of snapshots retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      snapshots:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Snapshot'
-                      total:
-                        type: integer
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-    
+  /sshkeys:
     post:
-      summary: Create a server snapshot
-      description: Create a snapshot of a server
-      operationId: createSnapshot
+      summary: Store or generate SSH key
+      description: Store your current SSH key or generate a new one. If you want to update or recreate a new SSH key, use the same title that will be updating the key. After creating a new key, save the private key as it will not be stored and cannot be retrieved later.
+      operationId: storeOrGenerateSSHKey
       tags:
-        - Snapshots
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to snapshot
-          schema:
-            type: integer
-          example: 123
+        - SSH Keys
       requestBody:
         required: true
         content:
@@ -711,17 +268,17 @@ paths:
             schema:
               type: object
               required:
-                - label
+                - title
               properties:
-                label:
+                title:
                   type: string
-                  example: "Backup before update"
-                description:
+                  example: "My Project 1"
+                key:
                   type: string
-                  example: "Snapshot created before applying system updates"
+                  example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
       responses:
         '200':
-          description: Snapshot created successfully
+          description: SSH key stored or generated successfully
           content:
             application/json:
               schema:
@@ -731,51 +288,7 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/Snapshot'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /servers/{server_id}/snapshots/{snapshot_id}:
-    get:
-      summary: Get snapshot details
-      description: Retrieve detailed information about a specific snapshot
-      operationId: getSnapshot
-      tags:
-        - Snapshots
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server
-          schema:
-            type: integer
-          example: 123
-        - name: snapshot_id
-          in: path
-          required: true
-          description: The ID of the snapshot to retrieve
-          schema:
-            type: integer
-          example: 456
-      responses:
-        '200':
-          description: Snapshot details retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Snapshot'
+                    $ref: '#/components/schemas/SSHKeyResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -786,29 +299,30 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
     
     delete:
-      summary: Delete a snapshot
-      description: Delete a snapshot permanently
-      operationId: deleteSnapshotById
+      summary: Delete SSH key by slug
+      description: Delete an SSH key from your account using its slug
+      operationId: deleteSSHKeyBySlug
       tags:
-        - Snapshots
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server
-          schema:
-            type: integer
-          example: 123
-        - name: snapshot_id
-          in: path
-          required: true
-          description: The ID of the snapshot to delete
-          schema:
-            type: integer
-          example: 456
+        - SSH Keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - slug
+                - _method
+              properties:
+                slug:
+                  type: string
+                  example: "my-project-1"
+                _method:
+                  type: string
+                  example: "DELETE"
       responses:
         '200':
-          description: Snapshot deleted successfully
+          description: SSH key deleted successfully
           content:
             application/json:
               schema:
@@ -819,51 +333,7 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: "Snapshot successfully deleted!"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /servers/{server_id}/snapshots/{snapshot_id}/restore:
-    post:
-      summary: Restore server from snapshot
-      description: Restore a server from a snapshot
-      operationId: restoreSnapshot
-      tags:
-        - Snapshots
-      parameters:
-        - name: server_id
-          in: path
-          required: true
-          description: The ID of the server to restore
-          schema:
-            type: integer
-          example: 123
-        - name: snapshot_id
-          in: path
-          required: true
-          description: The ID of the snapshot to restore from
-          schema:
-            type: integer
-          example: 456
-      responses:
-        '200':
-          description: Server restored successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Server'
+                    example: "SSH Key was successfully deleted!"
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -875,7 +345,7 @@ paths:
 
   /plans:
     get:
-      summary: List available plans
+      summary: List all plans
       description: Retrieve a list of all available server plans
       operationId: listPlans
       tags:
@@ -898,8 +368,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Plan'
-                      total:
-                        type: integer
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -911,7 +379,7 @@ paths:
 
   /images:
     get:
-      summary: List available images
+      summary: List all images
       description: Retrieve a list of all available OS images
       operationId: listImages
       tags:
@@ -934,8 +402,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Image'
-                      total:
-                        type: integer
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -947,7 +413,7 @@ paths:
 
   /locations:
     get:
-      summary: List available locations
+      summary: List all locations
       description: Retrieve a list of all available server locations
       operationId: listLocations
       tags:
@@ -970,8 +436,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Location'
-                      total:
-                        type: integer
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -981,16 +445,94 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 
-  /profile:
+  /locations/{location_slug}/plans:
     get:
-      summary: Get account profile information
-      description: Retrieve your LetsCould account profile information
+      summary: List plans by location
+      description: Retrieve all available plans for a specific location in your desired currency
+      operationId: listPlansByLocation
+      tags:
+        - Resources
+      parameters:
+        - name: location_slug
+          in: path
+          required: true
+          description: The slug of the location
+          schema:
+            type: string
+          example: "MIA1"
+      responses:
+        '200':
+          description: Plans by location retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LocationWithPlans'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /locations/{location_slug}/images:
+    get:
+      summary: List images by location
+      description: Retrieve all available images for a specific location
+      operationId: listImagesByLocation
+      tags:
+        - Resources
+      parameters:
+        - name: location_slug
+          in: path
+          required: true
+          description: The slug of the location
+          schema:
+            type: string
+          example: "MIA2"
+      responses:
+        '200':
+          description: Images by location retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ImageByLocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /account:
+    get:
+      summary: Get account profile
+      description: Retrieve your account information
       operationId: getAccountProfile
       tags:
         - Account
       responses:
         '200':
-          description: Account profile information retrieved successfully
+          description: Account information retrieved successfully
           content:
             application/json:
               schema:
@@ -1011,64 +553,74 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 
 components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: api-token
-      description: Your LetsCould API token. Required for all API calls.
-
   schemas:
-    Server:
+    Snapshot:
       type: object
       properties:
         id:
           type: integer
           example: 123
+        name:
+          type: string
+          example: "my-snapshot"
+        slug:
+          type: string
+          example: "my-snapshot-slug"
         label:
           type: string
-          example: "My Web Server"
-        hostname:
+          example: "My Snapshot"
+        description:
           type: string
-          example: "webserver-01"
+          nullable: true
+          example: "Backup snapshot"
         status:
           type: string
           enum:
-            - running
-            - stopped
-            - starting
-            - stopping
-            - rebooting
+            - creating
+            - available
             - error
-          example: "running"
-        ip_address:
-          type: string
-          example: "192.168.1.100"
-        private_ip:
-          type: string
-          example: "10.0.0.100"
-        plan:
-          $ref: '#/components/schemas/Plan'
-        image:
-          $ref: '#/components/schemas/Image'
-        location:
-          $ref: '#/components/schemas/Location'
+            - deleting
+          example: "available"
+        size:
+          type: integer
+          example: 25
         created_at:
           type: string
           format: date-time
           example: "2024-01-15T10:30:00Z"
-        updated_at:
+
+    SSHKey:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        title:
+          type: string
+          example: "My Laptop Key"
+        key:
+          type: string
+          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+        fingerprint:
+          type: string
+          example: "a1:b2:c3:d4:e5:f6:g7:h8:i9:j0:k1:l2:m3:n4:o5"
+        created_at:
           type: string
           format: date-time
           example: "2024-01-15T10:30:00Z"
-        ssh_keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHKey'
-        snapshots:
-          type: array
-          items:
-            $ref: '#/components/schemas/Snapshot'
+
+    SSHKeyResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "My Project 1"
+        slug:
+          type: string
+          example: "my-project-1"
+        public_key:
+          type: string
+          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
 
     Plan:
       type: object
@@ -1079,21 +631,24 @@ components:
         name:
           type: string
           example: "Basic 1GB"
-        ram:
-          type: integer
-          example: 1024
-        cpu:
-          type: integer
-          example: 1
-        disk:
-          type: integer
-          example: 25
         price:
           type: number
           example: 5.00
-        available:
-          type: boolean
-          example: true
+        currency:
+          type: string
+          example: "USD"
+        specs:
+          type: object
+          properties:
+            cpu:
+              type: integer
+              example: 1
+            ram:
+              type: integer
+              example: 1024
+            disk:
+              type: integer
+              example: 25
 
     Image:
       type: object
@@ -1112,13 +667,7 @@ components:
           example: "22.04"
         architecture:
           type: string
-          enum:
-            - x86_64
-            - arm64
           example: "x86_64"
-        available:
-          type: boolean
-          example: true
 
     Location:
       type: object
@@ -1128,67 +677,71 @@ components:
           example: "nyc1"
         name:
           type: string
-          example: "New York"
+          example: "New York 1"
         country:
           type: string
           example: "United States"
-        region:
+        city:
           type: string
           example: "New York"
-        available:
-          type: boolean
-          example: true
 
-    SSHKey:
+    LocationWithPlans:
       type: object
       properties:
-        id:
+        country:
+          type: string
+          example: "United States"
+        city:
+          type: string
+          example: "Miami"
+        slug:
+          type: string
+          example: "MIA1"
+        plans:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanByLocation'
+
+    PlanByLocation:
+      type: object
+      properties:
+        currencycode:
+          type: string
+          example: "USD"
+        shortcode:
+          type: string
+          example: "$"
+        slug:
+          type: string
+          example: "1vcpu-1gb-10ssd"
+        core:
           type: integer
           example: 1
-        title:
+        memory:
+          type: integer
+          example: 1024
+        disk:
+          type: integer
+          example: 10
+        bandwidth:
+          type: integer
+          example: 1000
+        monthly_value:
           type: string
-          example: "My Laptop Key"
-        fingerprint:
-          type: string
-          example: "SHA256:abc123..."
-        public_key:
-          type: string
-          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-        created_at:
-          type: string
-          format: date-time
-          example: "2024-01-15T10:30:00Z"
+          example: "5.00"
 
-    Snapshot:
+    ImageByLocation:
       type: object
       properties:
-        id:
-          type: integer
-          example: 456
-        label:
+        distro:
           type: string
-          example: "Backup before update"
-        description:
+          example: "CentOS 6.9 x64"
+        os:
           type: string
-          example: "Snapshot created before applying system updates"
-        size:
-          type: integer
-          example: 25
-        status:
+          example: "linux"
+        slug:
           type: string
-          enum:
-            - creating
-            - available
-            - error
-            - deleting
-          example: "available"
-        server_id:
-          type: integer
-          example: 123
-        created_at:
-          type: string
-          format: date-time
-          example: "2024-01-15T10:30:00Z"
+          example: "centos-69-x64"
 
     Account:
       type: object
@@ -1262,12 +815,12 @@ components:
             message: "Service temporarily unavailable"
 
 tags:
-  - name: Servers
-    description: Server management operations
+  - name: Instances
+    description: Instance management operations
+  - name: Snapshots
+    description: Snapshot management operations
   - name: SSH Keys
     description: SSH key management operations
-  - name: Snapshots
-    description: Server snapshot operations
   - name: Resources
     description: Resource discovery operations
   - name: Account

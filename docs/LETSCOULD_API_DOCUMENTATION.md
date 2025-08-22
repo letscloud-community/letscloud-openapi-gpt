@@ -103,7 +103,7 @@ The rate can vary per resource, and the current rate limiting information is ret
 
 #### Get Snapshot Status
 
-Retrieve the current build status of a snapshot.
+Get the current build status of a snapshot. To find out the slug, you can List All Snapshots.
 
 **Endpoint:** `GET /snapshots/status/:image-slug`
 
@@ -167,7 +167,7 @@ curl --location --request PUT 'https://api.letscloud.io/snapshots/your-snapshot-
 
 #### Delete Snapshot
 
-Delete a snapshot from your account.
+Delete a snapshot from your account. To find out the slug, you can List All Snapshots.
 
 **Endpoint:** `POST /snapshots/:image-slug`
 
@@ -196,6 +196,261 @@ curl --location --request DELETE 'https://api.letscloud.io/snapshots/your-snapsh
 {
   "success": true,
   "message": "Snapshot successfully deleted!"
+}
+```
+
+### Instances
+
+#### Shutdown Instance
+
+Shutdown a running instance.
+
+**Endpoint:** `POST /instances/:identifier/shutdown`
+
+**Headers:**
+```
+api-token: your-token-here
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Example Request:**
+```bash
+curl --location --request POST 'https://api.letscloud.io/instances/your-identifier-here/shutdown' \
+--header 'api-token: your-token-here'
+```
+
+**Response:**
+This request doesn't return any response body.
+
+#### Change Instance Plan
+
+Change the plan of an existing instance.
+
+**Endpoint:** `POST /instances/:identifier/change-plan`
+
+**Headers:**
+```
+api-token: your-token-here
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Body (formdata):**
+```
+_method: PUT
+plan_slug: 1vcpu-2gb-20ssd
+```
+
+**Example Request:**
+```bash
+curl --location 'https://api.letscloud.io/instances/Mq5VF63YAdCqXt4U/change-plan' \
+--header 'api-token: your-token-here' \
+--form '_method="PUT"' \
+--form 'plan_slug="1vcpu-2gb-20ssd"'
+```
+
+**Response:**
+This request doesn't return any response body.
+
+### Resources by Location
+
+#### List Plans by Location
+
+Retrieve all available plans for a specific location in your desired currency.
+
+**Endpoint:** `GET /locations/:location-slug/plans`
+
+**Headers:**
+```
+api-token: your-token-here
+```
+
+**Path Variables:**
+- `location-slug`: The slug of the location (required)
+
+**Example Request:**
+```bash
+curl --location 'https://api.letscloud.io/locations/location-slug-here/plans' \
+--header 'api-token: your-token-here'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "country": "United States",
+      "city": "Miami",
+      "slug": "MIA1",
+      "plans": [
+        {
+          "currencycode": "USD",
+          "shortcode": "$",
+          "slug": "1vcpu-1gb-10ssd",
+          "core": 1,
+          "memory": 1024,
+          "disk": 10,
+          "bandwidth": 1000,
+          "monthly_value": "5.00"
+        },
+        {
+          "currencycode": "USD",
+          "shortcode": "$",
+          "slug": "1vcpu-2gb-20ssd",
+          "core": 1,
+          "memory": 2048,
+          "disk": 20,
+          "bandwidth": 1500,
+          "monthly_value": "10.00"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### List Images by Location
+
+Retrieve all available images for a specific location.
+
+**Endpoint:** `GET /locations/:location-slug/images`
+
+**Headers:**
+```
+api-token: your-token-here
+```
+
+**Path Variables:**
+- `location-slug`: The slug of the location (required)
+
+**Example Request:**
+```bash
+curl --location 'https://api.letscloud.io/locations/location-slug-here/images' \
+--header 'api-token: your-token-here'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "distro": "CentOS 6.9 x64",
+      "os": "linux",
+      "slug": "centos-69-x64"
+    },
+    {
+      "distro": "Fedora 27 x64",
+      "os": "linux",
+      "slug": "fedora-27-x64"
+    },
+    {
+      "distro": "FreeBSD 10.4 x64",
+      "os": "freebsd",
+      "slug": "freebsd-104-x64"
+    }
+  ]
+}
+```
+
+### SSH Keys
+
+#### Store or Generate SSH Key
+
+Store your current SSH key or generate a new one. If you want to update or recreate a new SSH key, use the same title that will be updating the key.
+
+**Important:** After creating a new key, the response will return both `public_key` and `private_key`. You must save the private key because it will not be stored and cannot be retrieved later.
+
+**Endpoint:** `POST /sshkeys`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "title": "your-title-here",
+  "key": "your-key-here"
+}
+```
+
+**Note:** If you want to generate a new key, send only the `title` and omit the `key` parameter.
+
+**Example Request - Store Current SSH Key:**
+```bash
+curl --location 'https://api.letscloud.io/sshkeys' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json' \
+--data '{
+  "title": "My Project 1",
+  "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
+}'
+```
+
+**Example Request - Generate New SSH Key:**
+```bash
+curl --location 'https://api.letscloud.io/sshkeys' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json' \
+--data '{
+  "title": "My New Key"
+}'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "title": "My Project 1",
+    "slug": "my-project-1",
+    "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
+  }
+}
+```
+
+#### Delete SSH Key by Slug
+
+Delete an SSH key from your account using its slug.
+
+**Endpoint:** `DELETE /sshkeys`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Body:**
+```json
+{
+  "slug": "your-sshkey-slug-here",
+  "_method": "DELETE"
+}
+```
+
+**Example Request:**
+```bash
+curl --location --request DELETE 'https://api.letscloud.io/sshkeys' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json' \
+--data '{
+  "slug": "my-project-1"
+}'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "SSH Key was successfully deleted!"
 }
 ```
 

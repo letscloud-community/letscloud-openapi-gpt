@@ -51,92 +51,35 @@ class LetsCloudAPI:
                 print(f"Response: {e.response.text}")
             raise
 
-    # Server Management Methods
-    def list_servers(self) -> Dict:
-        """List all servers in your account"""
-        return self._make_request('GET', '/servers')
-    
-    def create_server(self, label: str, plan_slug: str, image_slug: str, 
-                     location_slug: str, hostname: str = None, 
-                     password: str = None, ssh_keys: List[int] = None) -> Dict:
-        """Create a new server"""
-        data = {
-            'label': label,
-            'plan_slug': plan_slug,
-            'image_slug': image_slug,
-            'location_slug': location_slug
-        }
-        
-        if hostname:
-            data['hostname'] = hostname
-        if password:
-            data['password'] = password
-        if ssh_keys:
-            data['ssh_keys'] = ssh_keys
-            
-        return self._make_request('POST', '/servers', data)
-    
-    def get_server(self, server_id: int) -> Dict:
-        """Get server details"""
-        return self._make_request('GET', f'/servers/{server_id}')
-    
-    def delete_server(self, server_id: int) -> None:
-        """Delete a server"""
-        self._make_request('DELETE', f'/servers/{server_id}')
-    
-    def start_server(self, server_id: int) -> Dict:
-        """Start a server"""
-        return self._make_request('POST', f'/servers/{server_id}/start')
-    
-    def stop_server(self, server_id: int) -> Dict:
-        """Stop a server"""
-        return self._make_request('POST', f'/servers/{server_id}/stop')
-    
-    def reboot_server(self, server_id: int) -> Dict:
-        """Reboot a server"""
-        return self._make_request('POST', f'/servers/{server_id}/reboot')
+
 
     # SSH Key Management Methods
-    def list_ssh_keys(self) -> Dict:
-        """List all SSH keys"""
-        return self._make_request('GET', '/ssh-keys')
+    def store_or_generate_ssh_key(self, title: str, key: str = None) -> Dict:
+        """Store your current SSH key or generate a new one"""
+        data = {'title': title}
+        if key:
+            data['key'] = key
+        return self._make_request('POST', '/sshkeys', data)
     
-    def create_ssh_key(self, title: str, key: str) -> Dict:
-        """Create a new SSH key"""
-        data = {'title': title, 'key': key}
-        return self._make_request('POST', '/ssh-keys', data)
-    
-    def get_ssh_key(self, key_id: int) -> Dict:
-        """Get SSH key details"""
-        return self._make_request('GET', f'/ssh-keys/{key_id}')
-    
-    def delete_ssh_key(self, key_id: int) -> None:
-        """Delete an SSH key"""
-        self._make_request('DELETE', f'/ssh-keys/{key_id}')
+    def delete_ssh_key_by_slug(self, slug: str) -> Dict:
+        """Delete an SSH key using its slug"""
+        data = {'slug': slug, '_method': 'DELETE'}
+        return self._make_request('DELETE', '/sshkeys', data)
 
-    # Snapshot Management Methods
-    def list_snapshots(self, server_id: int) -> Dict:
-        """List server snapshots"""
-        return self._make_request('GET', f'/servers/{server_id}/snapshots')
+
+
+    # Instance Management Methods
+    def shutdown_instance(self, identifier: str) -> Dict:
+        """Shutdown a running instance"""
+        return self._make_request('POST', f'/instances/{identifier}/shutdown')
     
-    def create_snapshot(self, server_id: int, label: str, description: str = None) -> Dict:
-        """Create a server snapshot"""
-        data = {'label': label}
-        if description:
-            data['description'] = description
-        return self._make_request('POST', f'/servers/{server_id}/snapshots', data)
-    
-    def get_snapshot(self, server_id: int, snapshot_id: int) -> Dict:
-        """Get snapshot details"""
-        return self._make_request('GET', f'/servers/{server_id}/snapshots/{snapshot_id}')
-    
-    def delete_snapshot(self, server_id: int, snapshot_id: int) -> None:
-        """Delete a snapshot"""
-        self._make_request('DELETE', f'/servers/{server_id}/snapshots/{snapshot_id}')
-    
-    def restore_snapshot(self, server_id: int, snapshot_id: int) -> Dict:
-        """Restore server from snapshot"""
-        return self._make_request('POST', f'/servers/{server_id}/snapshots/{snapshot_id}/restore')
+    def change_instance_plan(self, identifier: str, plan_slug: str) -> Dict:
+        """Change the plan of an existing instance"""
+        data = {
+            '_method': 'PUT',
+            'plan_slug': plan_slug
+        }
+        return self._make_request('POST', f'/instances/{identifier}/change-plan', data)
 
     # Resource Discovery Methods
     def list_plans(self) -> Dict:
@@ -150,6 +93,14 @@ class LetsCloudAPI:
     def list_locations(self) -> Dict:
         """List available locations"""
         return self._make_request('GET', '/locations')
+    
+    def list_plans_by_location(self, location_slug: str) -> Dict:
+        """List plans by location"""
+        return self._make_request('GET', f'/locations/{location_slug}/plans')
+    
+    def list_images_by_location(self, location_slug: str) -> Dict:
+        """List images by location"""
+        return self._make_request('GET', f'/locations/{location_slug}/images')
 
     # Account Information Methods
     def get_account_info(self) -> Dict:
@@ -188,45 +139,27 @@ def main():
         locations = client.list_locations()
         print(f"Available locations: {len(locations.get('locations', []))}")
 
-        # Example 3: List existing servers
-        print("\n🖥️  Listing existing servers...")
-        servers = client.list_servers()
-        server_count = len(servers.get('servers', []))
-        print(f"Found {server_count} server(s)")
-        
-        for server in servers.get('servers', []):
-            print(f"  - {server.get('label', 'Unnamed')} (ID: {server.get('id')}) - {server.get('status', 'Unknown')}")
+        # Example 3: List plans by location
+        print("\n📍 Listing plans by location...")
+        location_plans = client.list_plans_by_location("MIA1")
+        if location_plans.get('data'):
+            location_data = location_plans['data'][0]
+            print(f"Location: {location_data.get('city')}, {location_data.get('country')}")
+            print(f"Available plans: {len(location_data.get('plans', []))}")
 
-        # Example 4: List SSH keys
-        print("\n🔑 Listing SSH keys...")
-        ssh_keys = client.list_ssh_keys()
-        key_count = len(ssh_keys.get('ssh_keys', []))
-        print(f"Found {key_count} SSH key(s)")
-        
-        for key in ssh_keys.get('ssh_keys', []):
-            print(f"  - {key.get('title', 'Untitled')} (ID: {key.get('id')})")
+        # Example 4: List images by location
+        print("\n🖼️  Listing images by location...")
+        location_images = client.list_images_by_location("MIA2")
+        print(f"Available images: {len(location_images.get('data', []))}")
 
-        # Example 5: Create a new SSH key (commented out for safety)
+        # Example 5: Store or generate SSH key (commented out for safety)
         """
-        print("\n🔑 Creating a new SSH key...")
-        new_key = client.create_ssh_key(
+        print("\n🔑 Storing SSH key...")
+        new_key = client.store_or_generate_ssh_key(
             title="Example Key",
             key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
         )
-        print(f"Created SSH key: {new_key.get('title')} (ID: {new_key.get('id')})")
-        """
-
-        # Example 6: Create a new server (commented out for safety)
-        """
-        print("\n🖥️  Creating a new server...")
-        new_server = client.create_server(
-            label="Example Server",
-            plan_slug="basic-1gb",
-            image_slug="ubuntu-22-04",
-            location_slug="nyc1",
-            hostname="example-server"
-        )
-        print(f"Created server: {new_server.get('label')} (ID: {new_server.get('id')})")
+        print(f"Stored SSH key: {new_key.get('title')} (Slug: {new_key.get('slug')})")
         """
 
         print("\n✅ All examples completed successfully!")
@@ -243,11 +176,6 @@ def gpt_actions_example():
     
     actions_workflow = [
         {
-            "action": "listServers",
-            "description": "Check existing servers before creating new ones",
-            "parameters": {}
-        },
-        {
             "action": "listPlans",
             "description": "Get available server plans for cost optimization",
             "parameters": {}
@@ -258,23 +186,44 @@ def gpt_actions_example():
             "parameters": {}
         },
         {
-            "action": "createServer",
-            "description": "Create a new server with optimal configuration",
+            "action": "listLocations",
+            "description": "Get available server locations",
+            "parameters": {}
+        },
+        {
+            "action": "listPlansByLocation",
+            "description": "Get plans available in a specific location",
             "parameters": {
-                "label": "AI-Powered Web Server",
-                "plan_slug": "standard-2gb",
-                "image_slug": "ubuntu-22-04",
-                "location_slug": "nyc1",
-                "hostname": "ai-webserver-01"
+                "location_slug": "MIA1"
             }
         },
         {
-            "action": "createSnapshot",
-            "description": "Create a backup snapshot after server setup",
+            "action": "listImagesByLocation",
+            "description": "Get images available in a specific location",
             "parameters": {
-                "server_id": "{server_id_from_previous_action}",
-                "label": "Initial setup backup",
-                "description": "Backup created after initial server configuration"
+                "location_slug": "MIA2"
+            }
+        },
+        {
+            "action": "storeOrGenerateSSHKey",
+            "description": "Store or generate a new SSH key",
+            "parameters": {
+                "title": "My Project Key"
+            }
+        },
+        {
+            "action": "shutdownInstance",
+            "description": "Shutdown a running instance",
+            "parameters": {
+                "identifier": "your-instance-identifier"
+            }
+        },
+        {
+            "action": "changeInstancePlan",
+            "description": "Change instance plan for cost optimization",
+            "parameters": {
+                "identifier": "your-instance-identifier",
+                "plan_slug": "1vcpu-2gb-20ssd"
             }
         }
     ]

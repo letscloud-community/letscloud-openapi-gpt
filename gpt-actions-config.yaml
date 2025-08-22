@@ -22,84 +22,38 @@ servers:
 
 # Available Actions Configuration
 actions:
-  # Server Management Actions
-  - name: "list_servers"
-    description: "List all servers in your LetsCloud account"
-    operation_id: "listServers"
-    category: "Server Management"
-    
-  - name: "create_server"
-    description: "Create a new server with specified configuration"
-    operation_id: "createServer"
-    category: "Server Management"
+
+
+  # Instance Management Actions
+  - name: "shutdown_instance"
+    description: "Shutdown a running instance"
+    operation_id: "shutdownInstance"
+    category: "Instance Management"
     required_params:
-      - "label"
+      - "identifier"
+    
+  - name: "change_instance_plan"
+    description: "Change the plan of an existing instance"
+    operation_id: "changeInstancePlan"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
       - "plan_slug"
-      - "image_slug"
-      - "location_slug"
-    
-  - name: "get_server_details"
-    description: "Get detailed information about a specific server"
-    operation_id: "getServer"
-    category: "Server Management"
-    required_params:
-      - "server_id"
-    
-  - name: "delete_server"
-    description: "Permanently delete a server (cannot be undone)"
-    operation_id: "deleteServer"
-    category: "Server Management"
-    required_params:
-      - "server_id"
-    
-  - name: "start_server"
-    description: "Start a server that is currently stopped"
-    operation_id: "startServer"
-    category: "Server Management"
-    required_params:
-      - "server_id"
-    
-  - name: "stop_server"
-    description: "Shutdown a server that is currently running"
-    operation_id: "shutdownServer"
-    category: "Server Management"
-    required_params:
-      - "server_id"
-    
-  - name: "reboot_server"
-    description: "Reboot a server that is currently running"
-    operation_id: "rebootServer"
-    category: "Server Management"
-    required_params:
-      - "server_id"
 
   # SSH Key Management Actions
-  - name: "list_ssh_keys"
-    description: "List all SSH keys in your account"
-    operation_id: "listSSHKeys"
-    category: "SSH Key Management"
-    
-  - name: "create_ssh_key"
-    description: "Add a new SSH key to your account"
-    operation_id: "createSSHKey"
+  - name: "store_or_generate_ssh_key"
+    description: "Store your current SSH key or generate a new one"
+    operation_id: "storeOrGenerateSSHKey"
     category: "SSH Key Management"
     required_params:
       - "title"
-      - "key"
     
-  - name: "get_ssh_key"
-    description: "Get detailed information about a specific SSH key"
-    operation_id: "getSSHKey"
+  - name: "delete_ssh_key_by_slug"
+    description: "Delete an SSH key from your account using its slug"
+    operation_id: "deleteSSHKeyBySlug"
     category: "SSH Key Management"
     required_params:
-      - "key_id"
-    
-  - name: "delete_ssh_key"
-    description: "Delete an SSH key from your account"
-    operation_id: "deleteSSHKey"
-    category: "SSH Key Management"
-    required_params:
-      - "key_id"
+      - "slug"
 
   # Snapshot Management Actions
   - name: "get_snapshot_status"
@@ -124,44 +78,7 @@ actions:
     required_params:
       - "image_slug"
     
-  - name: "list_snapshots"
-    description: "List all snapshots for a specific server"
-    operation_id: "listSnapshots"
-    category: "Snapshot Management"
-    required_params:
-      - "server_id"
-    
-  - name: "create_snapshot"
-    description: "Create a snapshot of a server"
-    operation_id: "createSnapshot"
-    category: "Snapshot Management"
-    required_params:
-      - "server_id"
-      - "label"
-    
-  - name: "get_snapshot"
-    description: "Get detailed information about a specific snapshot"
-    operation_id: "getSnapshot"
-    category: "Snapshot Management"
-    required_params:
-      - "server_id"
-      - "snapshot_id"
-    
-  - name: "delete_snapshot_by_id"
-    description: "Delete a snapshot permanently using its ID"
-    operation_id: "deleteSnapshotById"
-    category: "Snapshot Management"
-    required_params:
-      - "server_id"
-      - "snapshot_id"
-    
-  - name: "restore_snapshot"
-    description: "Restore a server from a snapshot"
-    operation_id: "restoreSnapshot"
-    category: "Snapshot Management"
-    required_params:
-      - "server_id"
-      - "snapshot_id"
+
 
   # Resource Discovery Actions
   - name: "list_plans"
@@ -178,6 +95,20 @@ actions:
     description: "List all available server locations"
     operation_id: "listLocations"
     category: "Resource Discovery"
+    
+  - name: "list_plans_by_location"
+    description: "List all available plans for a specific location"
+    operation_id: "listPlansByLocation"
+    category: "Resource Discovery"
+    required_params:
+      - "location_slug"
+    
+  - name: "list_images_by_location"
+    description: "List all available images for a specific location"
+    operation_id: "listImagesByLocation"
+    category: "Resource Discovery"
+    required_params:
+      - "location_slug"
 
   # Account Information Actions
   - name: "get_account_info"
