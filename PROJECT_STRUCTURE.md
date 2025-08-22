@@ -16,7 +16,6 @@ letscould-openapi-gpt/
 │   └── _config.yml                     # Jekyll configuration
 ├── README.md                           # Project documentation and usage guide
 ├── LICENSE                             # MIT License
-├── DEPLOYMENT.md                       # Deployment and publishing guide
 ├── PROJECT_STRUCTURE.md                # This file - project structure overview
 ├── gpt-actions-config.yaml             # GPT Actions configuration examples
 ├── GPT_CREATOR_INSTRUCTIONS.md         # Instructions for GPT creators
@@ -140,15 +139,7 @@ letscould-openapi-gpt/
 - **Usage**: Reference for setting up GPT Actions
 - **Updated**: Now includes all LetsCould API endpoints
 
-#### `DEPLOYMENT.md`
-- **Purpose**: Comprehensive deployment guide
-- **Content**:
-  - Multiple deployment options
-  - Step-by-step instructions
-  - Security considerations
-  - Troubleshooting guide
-  - Performance optimization tips
-- **Target Audience**: System administrators, DevOps teams
+
 
 ### GPT Integration Files
 
@@ -273,7 +264,6 @@ The project documentation is organized into several categories:
 - **Knowledge Files**: `KNOWLEDGE_FILES.md`
 
 ### Advanced Topics
-- **Deployment**: `DEPLOYMENT.md`
 - **Project Structure**: `PROJECT_STRUCTURE.md`
 
 ## 🚀 Getting Started
