@@ -15,36 +15,31 @@ Manage your LetsCould servers, SSH keys, snapshots, and resources with natural l
 
 ## 🚀 **Quick Start**
 
-### **For Users (Public Version)**
+### **🔒 Recommended: Private Version (Secure)**
+
+For the best and most secure experience, we **strongly recommend** creating a private copy of this GPT with your API key pre-configured:
+
+1. **Follow our duplication guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+2. **Create a private copy** of the GPT
+3. **Configure your API key** in the private version
+4. **Use without setup** - your key is already configured!
+
+**Benefits of Private Version:**
+- ✅ **Secure**: Your API key is private and encrypted
+- ✅ **No setup required**: Ready to use immediately
+- ✅ **Full functionality**: All features available
+- ✅ **Personal**: Only you have access
+
+### **🌐 Public Version (Limited)**
+
+The public version is available for testing and demonstration purposes, but requires manual API key setup in each conversation:
 
 1. **Find the LetsCould GPT** in the GPT Store
 2. **Start a conversation** with the GPT
 3. **Set up your API key** in the conversation
 4. **Start managing your infrastructure!**
 
-### 🔑 Setting Up Your API Key
-
-After starting a conversation with the GPT, type:
-```
-I need to set up my API key: YOUR_API_TOKEN_HERE
-```
-
-**Example:**
-```
-You: "I need to set up my API key: your-token-here"
-GPT: "✅ API key configured successfully! You can now manage your infrastructure."
-You: "Show me all my servers"
-GPT: "Here are your servers: [list of your servers]"
-```
-
-### **For Personal Use (Private Version)**
-
-If you want to create a **private version** for personal use with your API key pre-configured:
-
-1. **Follow our duplication guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
-2. **Create a private copy** of the GPT
-3. **Configure your API key** in the private version
-4. **Use without setup** - your key is already configured!
+**⚠️ Security Note**: The public version requires you to share your API key in the conversation, which is less secure. We recommend using the private version for production use.
 
 ## 🎯 **What You Can Do**
 
@@ -81,11 +76,20 @@ If you want to create a **private version** for personal use with your API key p
 
 ## 🔧 **Authentication**
 
-### **Authentication Scheme**
-- **Type**: API Key
-- **Header Name**: `api-token`
-- **Header Value Format**: `{api_token}`
-- **Environment Variable**: `LETSCLOUD_API_TOKEN`
+### **🔒 Recommended: Private GPT Setup**
+
+For secure and convenient access, create a private copy of this GPT:
+
+1. **Follow our duplication guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+2. **Configure your API key** in the private GPT settings
+3. **Your key is encrypted** and stored securely by OpenAI
+4. **No need to share keys** in conversations
+
+### **🌐 Public GPT Setup (Alternative)**
+
+If using the public version, you'll need to provide your API key in each conversation:
+
+**⚠️ Security Warning**: This method is less secure as your API key is shared in the conversation.
 
 ### **Getting Your API Token**
 
@@ -94,13 +98,19 @@ If you want to create a **private version** for personal use with your API key p
 3. **Generate a new API key**
 4. **Copy the token** (keep it secure!)
 
+### **Authentication Scheme**
+- **Type**: API Key
+- **Header Name**: `api-token`
+- **Header Value Format**: `{api_token}`
+- **Environment Variable**: `LETSCLOUD_API_TOKEN`
+
 ## 🛠️ **Troubleshooting**
 
 ### **Common Issues**
 
 **"Authentication failed"**
-- Check if your API key is correct
-- Make sure you provide your API token without any prefix
+- **Private GPT**: Check if your API key is correctly configured in the GPT settings
+- **Public GPT**: Check if your API key is correct and provided without any prefix
 - Try regenerating your API key in your LetsCould dashboard
 
 **"No servers found"**
@@ -110,8 +120,20 @@ If you want to create a **private version** for personal use with your API key p
 
 **"Error talking to connector"**
 - Verify your internet connection
-- Check if the LetsCloud API is accessible
+- Check if the LetsCould API is accessible
 - Try again in a few minutes
+
+**"GPT not responding to commands"**
+- **Private GPT**: Ensure your API key is properly configured in the GPT settings
+- **Public GPT**: Make sure you've set up your API key in the conversation
+- Try restarting the conversation
+
+### **Recommended Solution**
+
+For the best experience and to avoid most issues, **use the private version** of this GPT:
+1. Follow the [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+2. Configure your API key once in the private GPT settings
+3. Enjoy hassle-free infrastructure management
 
 ## 📚 **Useful Links**
 

@@ -1,25 +1,51 @@
-# ⚡ Quick Start - LetsCloud Infrastructure Manager
+# ⚡ Quick Start - LetsCould Infrastructure Manager
 
 ## 🎯 What is this?
 
-The **LetsCloud Infrastructure Manager** is an AI assistant that helps you manage your cloud servers using simple, natural language commands. No technical knowledge required!
+The **LetsCould Infrastructure Manager** is an AI assistant that helps you manage your cloud servers using simple, natural language commands. No technical knowledge required!
 
 ## 🚀 Get Started in 3 Steps
 
-### 1. Get Your API Key
+### **🔒 Recommended: Private Version (Secure)**
+
+For the best and most secure experience:
+
+#### 1. Get Your API Key
 - Go to [https://www.letscloud.io](https://www.letscloud.io)
 - Log into your account
 - Go to **API Settings** → **Generate New API Key**
 - Copy the key (you'll only see it once!)
 
-### 2. Find the GPT
-- Search for **"LetsCloud Infrastructure Manager"** in the GPT Store
+#### 2. Create Your Private GPT
+- Follow our [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+- Create a private copy of the GPT
+- Configure your API key in the private GPT settings
+
+#### 3. Start Using Immediately
+- Your API key is securely stored
+- No setup required in conversations
+- Ready to use right away!
+
+### **🌐 Alternative: Public Version (Limited)**
+
+If you prefer to use the public version:
+
+#### 1. Get Your API Key
+- Go to [https://www.letscloud.io](https://www.letscloud.io)
+- Log into your account
+- Go to **API Settings** → **Generate New API Key**
+- Copy the key (you'll only see it once!)
+
+#### 2. Find the GPT
+- Search for **"LetsCould Infrastructure Manager"** in the GPT Store
 - Start a conversation with the GPT
 
-### 3. Set Up Your Access
+#### 3. Set Up Your Access
 ```
 "I need to set up my API key: YOUR_API_TOKEN_HERE"
 ```
+
+**⚠️ Security Note**: The public version requires sharing your API key in conversations, which is less secure.
 
 ## 💬 Try These Commands
 
@@ -51,10 +77,16 @@ The **LetsCloud Infrastructure Manager** is an AI assistant that helps you manag
 
 ## 🔒 Security
 
-- ✅ **Your API key is private** - never shared
-- ✅ **All communications encrypted**
-- ✅ **You control all access**
-- ✅ **Can revoke access anytime**
+### **Private Version Benefits:**
+- ✅ **Your API key is encrypted** and stored securely by OpenAI
+- ✅ **No need to share keys** in conversations
+- ✅ **Private access** - only you can use it
+- ✅ **Full functionality** without setup delays
+
+### **Public Version Considerations:**
+- ⚠️ **API key shared** in conversations
+- ⚠️ **Setup required** in each conversation
+- ⚠️ **Less secure** than private version
 
 ## 🛠️ Need Help?
 
@@ -64,9 +96,16 @@ The **LetsCloud Infrastructure Manager** is an AI assistant that helps you manag
 
 ## ✅ Ready?
 
-1. Get your API key from LetsCloud
+### **Recommended Path:**
+1. Get your API key from LetsCould
+2. Follow the [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+3. Create your private GPT
+4. Start managing your infrastructure!
+
+### **Alternative Path:**
+1. Get your API key from LetsCould
 2. Find the GPT in the store
-3. Set up your API key
+3. Set up your API key in conversation
 4. Start managing your infrastructure!
 
 **That's it! 🎉**
