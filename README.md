@@ -142,14 +142,14 @@ For the best experience and to avoid most issues, **use the private version** of
 - [LetsCould Dashboard](https://my.letscloud.io)
 - [LetsCould Documentation](https://developers.letscloud.io)
 - [API Reference](https://developers.letscloud.io/api)
-- [Support Center](https://support.letscloud.io)
+- [Support Center](https://letscloud.io/help)
 
 ## 🆘 **Support**
 
 Need help? We're here for you:
 
 - **Documentation**: [developers.letscloud.io](https://developers.letscloud.io)
-- **Community**: [Discord](https://discord.gg/letscloud)
+
 - **Email**: support@letscloud.io
 
 ## 🔒 **Security & Privacy**

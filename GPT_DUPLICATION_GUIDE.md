@@ -113,7 +113,7 @@ GPT: "Here are your servers: [list of your servers]"
 
 1. **API Documentation**: [LetsCould API Docs](https://developers.letscloud.io)
 2. **Support**: support@letscloud.io
-3. **Community**: [Discord](https://discord.gg/letscloud)
+
 4. **Consult** the LetsCould documentation
 
 ## 🎉 **Congratulations!**

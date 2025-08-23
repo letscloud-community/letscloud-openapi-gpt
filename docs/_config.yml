@@ -16,9 +16,7 @@ author:
     - label: "GitHub"
       icon: "fab fa-github"
       url: "https://github.com/letscloud-community/letscloud-openapi-gpt"
-    - label: "Discord"
-      icon: "fab fa-discord"
-      url: "https://discord.gg/letscloud"
+    
     - label: "Twitter"
       icon: "fab fa-twitter"
       url: "https://twitter.com/letscloud"
@@ -84,7 +82,7 @@ social:
   name: "LetsCould Community"
   links:
     - "https://github.com/letscloud-community/letscloud-openapi-gpt"
-    - "https://discord.gg/letscloud"
+    
     - "https://twitter.com/letscloud"
 
 # Analytics (optional)
@@ -130,7 +128,7 @@ theme: minima
 minima:
   social_links:
     github: letscloud-community/letscloud-openapi-gpt
-    discord: letscloud
+    
     twitter: letscloud
   skin: auto
   dark_skin: dark

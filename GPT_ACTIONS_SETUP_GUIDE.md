@@ -154,7 +154,6 @@ For detailed information about how your data is handled, see our [Privacy Policy
 
 ### Support Resources
 - **LetsCloud Support**: support@letscloud.io
-- **Documentation**: [https://my.letscloud.io/docs](https://my.letscloud.io/docs)
 - **Community**: [GitHub Repository](https://github.com/letscloud-community/letscloud-openapi-gpt)
 
 ### Common Questions
