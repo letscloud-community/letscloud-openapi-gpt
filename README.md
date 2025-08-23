@@ -39,7 +39,7 @@ For the best and most secure experience, create your own private GPT:
 - 👤 **Personal**: Only you have access
 - 💰 **Free**: No additional costs
 
-**⚠️ Security Note**: We strongly recommend using the private version for all use cases. The public version is for testing only and requires sharing your API key in conversations.
+**⚠️ Security Note**: We strongly recommend using the private version for secure and convenient access to your infrastructure.
 
 ## 🎯 **What You Can Do**
 

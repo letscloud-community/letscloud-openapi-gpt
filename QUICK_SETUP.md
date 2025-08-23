@@ -41,7 +41,7 @@ For the best and most secure experience:
 - 👤 **Personal**: Only you have access
 - 💰 **Free**: No additional costs
 
-**⚠️ Security Note**: We strongly recommend using the private version for all use cases. The public version is for testing only and requires sharing your API key in conversations.
+**⚠️ Security Note**: We strongly recommend using the private version for secure and convenient access to your infrastructure.
 
 ## 💬 Try These Commands
 
