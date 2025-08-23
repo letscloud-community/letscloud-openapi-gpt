@@ -11,7 +11,7 @@ The **LetsCould Infrastructure Manager** is an AI assistant that helps you manag
 For the best and most secure experience:
 
 #### 1. Get Your API Key
-- Go to [https://www.letscloud.io](https://www.letscloud.io)
+- Go to [https://my.letscloud.io](https://my.letscloud.io)
 - Log into your account
 - Go to **API Settings** → **Generate New API Key**
 - Copy the key (you'll only see it once!)
@@ -89,7 +89,6 @@ For the best and most secure experience:
 ## 🛠️ Need Help?
 
 - **Support**: support@letscloud.io
-- **Documentation**: [https://www.letscloud.io/docs](https://www.letscloud.io/docs)
 - **Privacy Policy**: [Privacy Policy](https://letscloud-community.github.io/letscloud-openapi-gpt/privacy-policy.html)
 
 ## ✅ Ready?

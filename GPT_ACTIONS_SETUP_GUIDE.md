@@ -18,7 +18,7 @@ The **LetsCloud Infrastructure Manager** is a smart AI assistant that helps you 
 
 ### Step 1: Get Your API Key
 
-1. **Log into your LetsCloud account** at [https://www.letscloud.io](https://www.letscloud.io)
+1. **Log into your LetsCloud account** at [https://my.letscloud.io](https://my.letscloud.io)
 2. **Go to API Settings** in your dashboard
 3. **Create a new API key** and copy it (you'll only see it once!)
 
@@ -154,7 +154,7 @@ For detailed information about how your data is handled, see our [Privacy Policy
 
 ### Support Resources
 - **LetsCloud Support**: support@letscloud.io
-- **Documentation**: [https://www.letscloud.io/docs](https://www.letscloud.io/docs)
+- **Documentation**: [https://my.letscloud.io/docs](https://my.letscloud.io/docs)
 - **Community**: [GitHub Repository](https://github.com/letscloud-community/letscloud-openapi-gpt)
 
 ### Common Questions

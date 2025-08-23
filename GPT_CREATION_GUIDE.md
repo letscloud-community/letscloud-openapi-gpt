@@ -17,7 +17,7 @@ A private GPT that can:
 
 ### Step 1: Get Your API Key
 
-1. **Log in** to your [LetsCould Dashboard](https://app.letscloud.io)
+1. **Log in** to your [LetsCould Dashboard](https://my.letscloud.io)
 2. **Go to Settings** → **API Keys**
 3. **Generate a new API key**
 4. **Copy the token** (keep it secure!)
@@ -133,7 +133,6 @@ If the URL import doesn't work, manually configure:
 
 ### Getting Help
 - **LetsCould Support**: support@letscloud.io
-- **Documentation**: [https://www.letscloud.io/docs](https://www.letscloud.io/docs)
 - **GitHub Issues**: [Repository Issues](https://github.com/letscloud-community/letscloud-openapi-gpt/issues)
 
 ## 🎉 Success!

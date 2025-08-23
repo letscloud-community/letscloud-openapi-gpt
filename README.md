@@ -95,7 +95,7 @@ For secure and convenient access, create your own private GPT:
 
 ### **Getting Your API Token**
 
-1. **Log in** to your [LetsCould Dashboard](https://app.letscloud.io)
+1. **Log in** to your [LetsCould Dashboard](https://my.letscloud.io)
 2. **Go to Settings** → API Keys
 3. **Generate a new API key**
 4. **Copy the token** (keep it secure!)
@@ -139,7 +139,7 @@ For the best experience and to avoid most issues, **use the private version** of
 
 ## 📚 **Useful Links**
 
-- [LetsCould Dashboard](https://app.letscloud.io)
+- [LetsCould Dashboard](https://my.letscloud.io)
 - [LetsCould Documentation](https://developers.letscloud.io)
 - [API Reference](https://developers.letscloud.io/api)
 - [Support Center](https://support.letscloud.io)
