@@ -15,30 +15,31 @@ Manage your LetsCould servers, SSH keys, snapshots, and resources with natural l
 
 ## 🚀 **Quick Start**
 
-### **🔒 Recommended: Private Version (Secure)**
+### **🔒 Secure Setup: Create Your Private GPT**
 
-For the best and most secure experience, we **strongly recommend** creating a private copy of this GPT with your API key pre-configured:
+For the best and most secure experience, create your own private GPT:
 
-1. **Follow our duplication guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
-2. **Create a private copy** of the GPT
-3. **Configure your API key** in the private version
-4. **Use without setup** - your key is already configured!
+#### **Option 1: Duplicate Existing GPT (Recommended)**
+1. **Follow our step-by-step guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+2. **Create a private copy** of the existing GPT
+3. **Configure your API key** securely in the private GPT settings
+4. **Use immediately** - no setup required in conversations!
 
-**Benefits of Private Version:**
-- ✅ **Secure**: Your API key is private and encrypted
-- ✅ **No setup required**: Ready to use immediately
-- ✅ **Full functionality**: All features available
-- ✅ **Personal**: Only you have access
+#### **Option 2: Create New Private GPT**
+1. **Create a new GPT** in ChatGPT (GPT Builder)
+2. **Configure it as private** in the settings
+3. **Follow our creation guide**: [GPT Creation Guide](GPT_CREATION_GUIDE.md)
+4. **Configure your API key** securely in the GPT settings
+5. **Use immediately** - no setup required in conversations!
 
-### **🌐 Public Version (Limited)**
+**✅ Benefits of Private Setup:**
+- 🔒 **Secure**: Your API key is encrypted and protected
+- 🚀 **Fast**: No setup required in conversations
+- 🎯 **Complete**: All features available
+- 👤 **Personal**: Only you have access
+- 💰 **Free**: No additional costs
 
-The public version is available for testing and demonstration purposes, but requires manual API key setup in each conversation:
-
-1. **Find the LetsCould GPT** in the GPT Store
-2. **Start a conversation** with the GPT
-3. **Start managing your infrastructure!**
-
-**⚠️ Security Note**: The public version requires you to share your API key in the conversation, which is less secure. We recommend using the private version for production use.
+**⚠️ Security Note**: We strongly recommend using the private version for all use cases. The public version is for testing only and requires sharing your API key in conversations.
 
 ## 🎯 **What You Can Do**
 
@@ -75,20 +76,22 @@ The public version is available for testing and demonstration purposes, but requ
 
 ## 🔧 **Authentication**
 
-### **🔒 Recommended: Private GPT Setup**
+### **🔒 Secure Setup: Private GPT**
 
-For secure and convenient access, create a private copy of this GPT:
+For secure and convenient access, create your own private GPT:
 
-1. **Follow our duplication guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
-2. **Configure your API key** in the private GPT settings
+#### **Option 1: Duplicate Existing GPT (Recommended)**
+1. **Follow our step-by-step guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+2. **Configure your API key** securely in the private GPT settings
 3. **Your key is encrypted** and stored securely by OpenAI
 4. **No need to share keys** in conversations
 
-### **🌐 Public GPT Setup (Alternative)**
-
-If using the public version, you'll need to provide your API key in each conversation:
-
-**⚠️ Security Warning**: This method is less secure as your API key is shared in the conversation.
+#### **Option 2: Create New Private GPT**
+1. **Create a new GPT** in ChatGPT (GPT Builder)
+2. **Configure it as private** in the settings
+3. **Follow our creation guide**: [GPT Creation Guide](GPT_CREATION_GUIDE.md)
+4. **Configure your API key** securely in the GPT settings
+5. **Your key is encrypted** and stored securely by OpenAI
 
 ### **Getting Your API Token**
 
@@ -108,9 +111,9 @@ If using the public version, you'll need to provide your API key in each convers
 ### **Common Issues**
 
 **"Authentication failed"**
-- **Private GPT**: Check if your API key is correctly configured in the GPT settings
-- **Public GPT**: Check if your API key is correct and provided without any prefix
+- Check if your API key is correctly configured in the GPT settings
 - Try regenerating your API key in your LetsCould dashboard
+- Ensure you followed the [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md) correctly
 
 **"No servers found"**
 - Verify your account has active servers
@@ -123,9 +126,9 @@ If using the public version, you'll need to provide your API key in each convers
 - Try again in a few minutes
 
 **"GPT not responding to commands"**
-- **Private GPT**: Ensure your API key is properly configured in the GPT settings
-- **Public GPT**: Make sure you've provided your API key in the conversation
+- Ensure your API key is properly configured in the GPT settings
 - Try restarting the conversation
+- Verify you're using the private version of the GPT
 
 ### **Recommended Solution**
 

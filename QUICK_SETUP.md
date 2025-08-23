@@ -6,7 +6,7 @@ The **LetsCould Infrastructure Manager** is an AI assistant that helps you manag
 
 ## 🚀 Get Started in 3 Steps
 
-### **🔒 Recommended: Private Version (Secure)**
+### **🔒 Secure Setup: Create Your Private GPT**
 
 For the best and most secure experience:
 
@@ -17,33 +17,31 @@ For the best and most secure experience:
 - Copy the key (you'll only see it once!)
 
 #### 2. Create Your Private GPT
+
+**Option A: Duplicate Existing GPT (Recommended)**
 - Follow our [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
-- Create a private copy of the GPT
-- Configure your API key in the private GPT settings
+- Create a private copy of the existing GPT
+- Configure your API key securely in the private GPT settings
+
+**Option B: Create New Private GPT**
+- Create a new GPT in ChatGPT (GPT Builder)
+- Configure it as private in the settings
+- Follow our [GPT Creation Guide](GPT_CREATION_GUIDE.md)
+- Configure your API key securely in the GPT settings
 
 #### 3. Start Using Immediately
-- Your API key is securely stored
+- Your API key is encrypted and securely stored
 - No setup required in conversations
 - Ready to use right away!
 
-### **🌐 Alternative: Public Version (Limited)**
+**✅ Benefits:**
+- 🔒 **Secure**: Your API key is encrypted and protected
+- 🚀 **Fast**: No setup required in conversations
+- 🎯 **Complete**: All features available
+- 👤 **Personal**: Only you have access
+- 💰 **Free**: No additional costs
 
-If you prefer to use the public version:
-
-#### 1. Get Your API Key
-- Go to [https://www.letscloud.io](https://www.letscloud.io)
-- Log into your account
-- Go to **API Settings** → **Generate New API Key**
-- Copy the key (you'll only see it once!)
-
-#### 2. Find the GPT
-- Search for **"LetsCould Infrastructure Manager"** in the GPT Store
-- Start a conversation with the GPT
-
-#### 3. Set Up Your Access
-Provide your API key when prompted by the GPT.
-
-**⚠️ Security Note**: The public version requires sharing your API key in conversations, which is less secure.
+**⚠️ Security Note**: We strongly recommend using the private version for all use cases. The public version is for testing only and requires sharing your API key in conversations.
 
 ## 💬 Try These Commands
 
@@ -80,11 +78,13 @@ Provide your API key when prompted by the GPT.
 - ✅ **No need to share keys** in conversations
 - ✅ **Private access** - only you can use it
 - ✅ **Full functionality** without setup delays
+- ✅ **Zero additional cost** - completely free
 
-### **Public Version Considerations:**
-- ⚠️ **API key shared** in conversations
-- ⚠️ **Setup required** in each conversation
-- ⚠️ **Less secure** than private version
+### **Why Private is Better:**
+- 🔒 **Maximum security** - your API key is never shared
+- 🚀 **Instant access** - no setup required in conversations
+- 🎯 **Complete features** - all functionality available
+- 👤 **Personal control** - only you have access
 
 ## 🛠️ Need Help?
 
@@ -94,16 +94,10 @@ Provide your API key when prompted by the GPT.
 
 ## ✅ Ready?
 
-### **Recommended Path:**
+### **Secure Setup Path:**
 1. Get your API key from LetsCould
-2. Follow the [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
-3. Create your private GPT
-4. Start managing your infrastructure!
-
-### **Alternative Path:**
-1. Get your API key from LetsCould
-2. Find the GPT in the store
-3. Provide your API key when prompted
+2. **Option A**: Follow the [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md) OR **Option B**: Create a new private GPT
+3. Configure your API key securely
 4. Start managing your infrastructure!
 
 **That's it! 🎉**

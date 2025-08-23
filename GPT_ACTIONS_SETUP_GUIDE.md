@@ -22,12 +22,27 @@ The **LetsCloud Infrastructure Manager** is a smart AI assistant that helps you 
 2. **Go to API Settings** in your dashboard
 3. **Create a new API key** and copy it (you'll only see it once!)
 
-### Step 2: Use the LetsCloud GPT
+### Step 2: Create Your Private GPT
 
-1. **Find the LetsCloud GPT** in the GPT Store
-2. **Start a conversation** with the GPT
-3. **Provide your API key** when prompted by the GPT
-4. **Start managing your infrastructure!**
+**Option A: Duplicate Existing GPT (Recommended)**
+1. **Follow our step-by-step guide**: [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+2. **Create a private copy** of the existing GPT
+3. **Configure your API key** securely in the private GPT settings
+4. **Start managing your infrastructure immediately!**
+
+**Option B: Create New Private GPT**
+1. **Create a new GPT** in ChatGPT (GPT Builder)
+2. **Configure it as private** in the settings
+3. **Follow our creation guide**: [GPT Creation Guide](GPT_CREATION_GUIDE.md)
+4. **Configure your API key** securely in the GPT settings
+5. **Start managing your infrastructure immediately!**
+
+**✅ Benefits of Private Setup:**
+- 🔒 **Secure**: Your API key is encrypted and protected
+- 🚀 **Fast**: No setup required in conversations
+- 🎯 **Complete**: All features available
+- 👤 **Personal**: Only you have access
+- 💰 **Free**: No additional costs
 
 ## 💬 Example Conversations
 
@@ -159,8 +174,10 @@ A: The GPT will ask for confirmation before destructive actions. You can also cr
 ## 🎉 Ready to Start?
 
 1. **Get your API key** from your LetsCloud dashboard
-2. **Find the LetsCloud GPT** in the GPT Store
-3. **Provide your API key** when prompted
+2. **Choose your setup method**:
+   - **Option A**: Follow our [GPT Duplication Guide](GPT_DUPLICATION_GUIDE.md)
+   - **Option B**: Follow our [GPT Creation Guide](GPT_CREATION_GUIDE.md)
+3. **Configure your API key** securely in the private GPT
 4. **Start managing your infrastructure** with simple commands!
 
 **Happy cloud managing! 🚀**
