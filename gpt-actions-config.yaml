@@ -25,6 +25,66 @@ actions:
 
 
   # Instance Management Actions
+  - name: "list_instances"
+    description: "List all your instances"
+    operation_id: "listInstances"
+    category: "Instance Management"
+    
+  - name: "get_instance_details"
+    description: "Get detailed information about a specific instance"
+    operation_id: "getInstanceDetails"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
+    
+  - name: "create_instance"
+    description: "Create a new instance with specified configuration"
+    operation_id: "createInstance"
+    category: "Instance Management"
+    required_params:
+      - "location_slug"
+      - "plan_slug"
+      - "hostname"
+      - "label"
+      - "image_slug"
+      - "password"
+    
+  - name: "delete_instance"
+    description: "Delete an instance from your account"
+    operation_id: "deleteInstance"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
+    
+  - name: "power_on_instance"
+    description: "Turn on a specific instance"
+    operation_id: "powerOnInstance"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
+    
+  - name: "power_off_instance"
+    description: "Turn off a specific instance"
+    operation_id: "powerOffInstance"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
+    
+  - name: "reboot_instance"
+    description: "Reboot a specific instance"
+    operation_id: "rebootInstance"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
+    
+  - name: "reset_instance_password"
+    description: "Change the root password of a specific instance"
+    operation_id: "resetInstancePassword"
+    category: "Instance Management"
+    required_params:
+      - "identifier"
+      - "password"
+    
   - name: "shutdown_instance"
     description: "Shutdown a running instance"
     operation_id: "shutdownInstance"
@@ -139,11 +199,20 @@ parameter_templates:
 usage_examples:
   - scenario: "Create a new web server"
     actions:
-      - "list_plans"
-      - "list_images"
       - "list_locations"
-      - "create_server"
-    description: "First discover available resources, then create a server"
+      - "list_plans_by_location"
+      - "list_images_by_location"
+      - "create_instance"
+    description: "First discover available resources, then create an instance"
+  
+  - scenario: "Manage existing instances"
+    actions:
+      - "list_instances"
+      - "get_instance_details"
+      - "power_on_instance"
+      - "power_off_instance"
+      - "reboot_instance"
+    description: "List, view details, and control power state of instances"
   
   - scenario: "Backup and restore a server"
     actions:
@@ -158,6 +227,14 @@ usage_examples:
       - "create_ssh_key"
       - "delete_ssh_key"
     description: "Manage SSH keys for secure server access"
+  
+  - scenario: "Instance maintenance"
+    actions:
+      - "list_instances"
+      - "reset_instance_password"
+      - "change_instance_plan"
+      - "shutdown_instance"
+    description: "Perform maintenance tasks on instances"
 
 # Error Handling
 error_handling:

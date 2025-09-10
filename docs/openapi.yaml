@@ -24,6 +24,411 @@ servers:
     description: Production API server
 
 paths:
+  /instances:
+    get:
+      summary: List all instances
+      description: Retrieve information about all your instances
+      operationId: listInstances
+      tags:
+        - Instances
+      responses:
+        '200':
+          description: List of instances retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Instance'
+              example:
+                success: true
+                data:
+                  - identifier: "your-instance-identifier"
+                    booted: false
+                    built: false
+                    locked: true
+                    suspended: false
+                    memory: 1024
+                    total_disk_size: 10
+                    cpus: 1
+                    label: "your-instance-label"
+                    ip_addresses:
+                      - address: "your-instance-ip"
+                    template_label: "CentOS 7.4 x64"
+                    hostname: "your-instance-hostname"
+                    initial_root_password: "?0IZepT67(2x"
+                    location:
+                      slug: "MIA1"
+                      country: "United States"
+                      city: "Miami"
+                      available: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+    post:
+      summary: Create a new instance
+      description: Create a new instance with specified configuration
+      operationId: createInstance
+      tags:
+        - Instances
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - location_slug
+                - plan_slug
+                - hostname
+                - label
+                - image_slug
+                - password
+              properties:
+                location_slug:
+                  type: string
+                  description: The slug of the location where the instance will be created
+                  example: "MIA1"
+                plan_slug:
+                  type: string
+                  description: The slug of the plan for the instance
+                  example: "1vcpu-1gb-10ssd"
+                hostname:
+                  type: string
+                  description: The hostname for the instance
+                  example: "my-server"
+                label:
+                  type: string
+                  description: A friendly name for the instance
+                  example: "My Web Server"
+                image_slug:
+                  type: string
+                  description: The slug of the OS image to use
+                  example: "centos-74-x64"
+                password:
+                  type: string
+                  description: The root password for the instance
+                  example: "SecurePassword123!"
+                ssh_slug:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of SSH key slugs to add to the instance
+                  example: ["my-project-1"]
+      responses:
+        '200':
+          description: Instance created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Instance successfully created"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /instances/{identifier}:
+    get:
+      summary: Show instance details
+      description: Retrieve detailed information about a specific instance
+      operationId: getInstanceDetails
+      tags:
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "your-instance-identifier"
+      responses:
+        '200':
+          description: Instance details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Instance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+    delete:
+      summary: Delete an instance
+      description: Delete an instance from your account
+      operationId: deleteInstance
+      tags:
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "your-instance-identifier"
+      responses:
+        '200':
+          description: Instance deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Instance successfully deleted"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /instances/{identifier}/power-on:
+    put:
+      summary: Power on instance
+      description: Turn on a specific instance
+      operationId: powerOnInstance
+      tags:
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "your-instance-identifier"
+      responses:
+        '200':
+          description: Instance is turning on
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "The instance is turning ON"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /instances/{identifier}/power-off:
+    put:
+      summary: Power off instance
+      description: Turn off a specific instance
+      operationId: powerOffInstance
+      tags:
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "your-instance-identifier"
+      responses:
+        '200':
+          description: Instance is turning off
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "The instance is turning OFF."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /instances/{identifier}/reboot:
+    put:
+      summary: Reboot instance
+      description: Reboot a specific instance
+      operationId: rebootInstance
+      tags:
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "your-instance-identifier"
+      responses:
+        '200':
+          description: Instance is rebooting
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "The instance is rebooting"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /instances/{identifier}/reset-password:
+    post:
+      summary: Reset instance password
+      description: Change the root password of a specific instance
+      operationId: resetInstancePassword
+      tags:
+        - Instances
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "your-instance-identifier"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - password
+                - _method
+              properties:
+                password:
+                  type: string
+                  description: The new root password for the instance
+                  example: "NewSecurePassword123!"
+                _method:
+                  type: string
+                  example: "PUT"
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "The password was changed successfully."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
   /instances/{identifier}/shutdown:
     post:
       summary: Shutdown instance
@@ -554,6 +959,83 @@ paths:
 
 components:
   schemas:
+    Instance:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: A unique identifier for each instance
+          example: "your-instance-identifier"
+        booted:
+          type: boolean
+          description: Whether the instance has been booted
+          example: false
+        built:
+          type: boolean
+          description: Whether the instance has been built
+          example: false
+        locked:
+          type: boolean
+          description: Whether the instance has been locked, preventing actions by users
+          example: true
+        suspended:
+          type: boolean
+          description: Whether the instance has been suspended
+          example: false
+        memory:
+          type: integer
+          description: Memory of the instance in megabytes
+          example: 1024
+        total_disk_size:
+          type: integer
+          description: The size of the instance disk in gigabytes
+          example: 10
+        cpus:
+          type: integer
+          description: The number of virtual CPUs
+          example: 1
+        label:
+          type: string
+          description: The friendly name set for the instance
+          example: "your-instance-label"
+        ip_addresses:
+          type: array
+          description: An array of IP addresses set in the instance
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                example: "your-instance-ip"
+        template_label:
+          type: string
+          description: The name of the operating system set for the instance
+          example: "CentOS 7.4 x64"
+        hostname:
+          type: string
+          description: The hostname set for the instance
+          example: "your-instance-hostname"
+        initial_root_password:
+          type: string
+          description: The initial root password for the instance
+          example: "?0IZepT67(2x"
+        location:
+          type: object
+          description: The location information for the instance
+          properties:
+            slug:
+              type: string
+              example: "MIA1"
+            country:
+              type: string
+              example: "United States"
+            city:
+              type: string
+              example: "Miami"
+            available:
+              type: boolean
+              example: true
+
     Snapshot:
       type: object
       properties:

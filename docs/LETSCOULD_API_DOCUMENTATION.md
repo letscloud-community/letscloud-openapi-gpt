@@ -201,6 +201,317 @@ curl --location --request DELETE 'https://api.letscloud.io/snapshots/your-snapsh
 
 ### Instances
 
+#### List All Instances
+
+Retrieve information about all your instances.
+
+**Endpoint:** `GET /instances`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Example Request:**
+```bash
+curl --location 'https://api.letscloud.io/instances' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "identifier": "your-instance-identifier",
+      "booted": false,
+      "built": false,
+      "locked": true,
+      "suspended": false,
+      "memory": 1024,
+      "total_disk_size": 10,
+      "cpus": 1,
+      "label": "your-instance-label",
+      "ip_addresses": [
+        {
+          "address": "your-instance-ip"
+        }
+      ],
+      "template_label": "CentOS 7.4 x64",
+      "hostname": "your-instance-hostname",
+      "initial_root_password": "?0IZepT67(2x",
+      "location": {
+        "slug": "MIA1",
+        "country": "United States",
+        "city": "Miami",
+        "available": true
+      }
+    }
+  ]
+}
+```
+
+#### Show Instance Details
+
+Retrieve detailed information about a specific instance.
+
+**Endpoint:** `GET /instances/:identifier`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Example Request:**
+```bash
+curl --location 'https://api.letscloud.io/instances/your-instance-identifier' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "identifier": "your-instance-identifier",
+    "booted": true,
+    "built": true,
+    "locked": false,
+    "suspended": false,
+    "memory": 1024,
+    "total_disk_size": 10,
+    "cpus": 1,
+    "label": "your-instance-label",
+    "ip_addresses": [
+      {
+        "address": "your-instance-ip"
+      }
+    ],
+    "template_label": "CentOS 7.4 x64",
+    "hostname": "your-instance-hostname",
+    "initial_root_password": "?0IZepT67(2x",
+    "location": {
+      "slug": "MIA2",
+      "country": "United States",
+      "city": "Miami"
+    }
+  }
+}
+```
+
+#### Create a New Instance
+
+Create a new instance with specified configuration.
+
+**Endpoint:** `POST /instances`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+Accept: application/json
+```
+
+**Body (formdata):**
+```
+location_slug: MIA1
+plan_slug: 1vcpu-1gb-10ssd
+hostname: my-server
+label: My Web Server
+image_slug: centos-74-x64
+password: SecurePassword123!
+ssh_slug: my-project-1
+```
+
+**Example Request:**
+```bash
+curl --location --request POST 'https://api.letscloud.io/instances' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json' \
+--form 'location_slug="MIA1"' \
+--form 'plan_slug="1vcpu-1gb-10ssd"' \
+--form 'hostname="my-server"' \
+--form 'label="My Web Server"' \
+--form 'image_slug="centos-74-x64"' \
+--form 'password="SecurePassword123!"' \
+--form 'ssh_slug="my-project-1"'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "Instance successfully created"
+}
+```
+
+#### Delete an Instance
+
+Delete an instance from your account.
+
+**Endpoint:** `DELETE /instances/:identifier`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Example Request:**
+```bash
+curl --location --request DELETE 'https://api.letscloud.io/instances/your-instance-identifier' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "Instance successfully deleted"
+}
+```
+
+#### Power On Instance
+
+Turn on a specific instance.
+
+**Endpoint:** `PUT /instances/:identifier/power-on`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Example Request:**
+```bash
+curl --location --request PUT 'https://api.letscloud.io/instances/your-instance-identifier/power-on' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "The instance is turning ON"
+}
+```
+
+#### Power Off Instance
+
+Turn off a specific instance.
+
+**Endpoint:** `PUT /instances/:identifier/power-off`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Example Request:**
+```bash
+curl --location --request PUT 'https://api.letscloud.io/instances/your-instance-identifier/power-off' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "The instance is turning OFF."
+}
+```
+
+#### Reboot Instance
+
+Reboot a specific instance.
+
+**Endpoint:** `PUT /instances/:identifier/reboot`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Example Request:**
+```bash
+curl --location --request PUT 'https://api.letscloud.io/instances/your-instance-identifier/reboot' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "The instance is rebooting"
+}
+```
+
+#### Reset Instance Password
+
+Change the root password of a specific instance.
+
+**Endpoint:** `POST /instances/:identifier/reset-password`
+
+**Headers:**
+```
+api-token: your-token-here
+Content-Type: application/json
+Accept: application/json
+```
+
+**Path Variables:**
+- `identifier`: The identifier of the instance (required)
+
+**Body (formdata):**
+```
+password: NewSecurePassword123!
+_method: PUT
+```
+
+**Example Request:**
+```bash
+curl --location --request POST 'https://api.letscloud.io/instances/your-instance-identifier/reset-password' \
+--header 'api-token: your-token-here' \
+--header 'Content-Type: application/json' \
+--form 'password="NewSecurePassword123!"' \
+--form '_method="PUT"'
+```
+
+**Example Response:**
+```json
+{
+  "success": true,
+  "message": "The password was changed successfully."
+}
+```
+
 #### Shutdown Instance
 
 Shutdown a running instance.

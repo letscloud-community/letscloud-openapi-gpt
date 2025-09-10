@@ -69,6 +69,53 @@ class LetsCloudAPI:
 
 
     # Instance Management Methods
+    def list_instances(self) -> Dict:
+        """List all your instances"""
+        return self._make_request('GET', '/instances')
+    
+    def get_instance_details(self, identifier: str) -> Dict:
+        """Get detailed information about a specific instance"""
+        return self._make_request('GET', f'/instances/{identifier}')
+    
+    def create_instance(self, location_slug: str, plan_slug: str, hostname: str, 
+                       label: str, image_slug: str, password: str, ssh_slug: List[str] = None) -> Dict:
+        """Create a new instance with specified configuration"""
+        data = {
+            'location_slug': location_slug,
+            'plan_slug': plan_slug,
+            'hostname': hostname,
+            'label': label,
+            'image_slug': image_slug,
+            'password': password
+        }
+        if ssh_slug:
+            data['ssh_slug'] = ssh_slug
+        return self._make_request('POST', '/instances', data)
+    
+    def delete_instance(self, identifier: str) -> Dict:
+        """Delete an instance from your account"""
+        return self._make_request('DELETE', f'/instances/{identifier}')
+    
+    def power_on_instance(self, identifier: str) -> Dict:
+        """Turn on a specific instance"""
+        return self._make_request('PUT', f'/instances/{identifier}/power-on')
+    
+    def power_off_instance(self, identifier: str) -> Dict:
+        """Turn off a specific instance"""
+        return self._make_request('PUT', f'/instances/{identifier}/power-off')
+    
+    def reboot_instance(self, identifier: str) -> Dict:
+        """Reboot a specific instance"""
+        return self._make_request('PUT', f'/instances/{identifier}/reboot')
+    
+    def reset_instance_password(self, identifier: str, password: str) -> Dict:
+        """Change the root password of a specific instance"""
+        data = {
+            'password': password,
+            '_method': 'PUT'
+        }
+        return self._make_request('POST', f'/instances/{identifier}/reset-password', data)
+    
     def shutdown_instance(self, identifier: str) -> Dict:
         """Shutdown a running instance"""
         return self._make_request('POST', f'/instances/{identifier}/shutdown')
@@ -150,7 +197,51 @@ def main():
         # Example 4: List images by location
         print("\n🖼️  Listing images by location...")
         location_images = client.list_images_by_location("MIA2")
-        print(f"Available images: {len(location_images.get('data', []))}")
+        if location_images.get('data'):
+            print(f"Available images: {len(location_images['data'])}")
+            for image in location_images['data'][:3]:  # Show first 3 images
+                print(f"  - {image.get('distro')} ({image.get('os')})")
+
+        # Example 5: Instance Management
+        print("\n🖥️  Instance Management Examples...")
+        
+        # List all instances
+        print("\n📋 Listing all instances...")
+        instances = client.list_instances()
+        if instances.get('data'):
+            print(f"Found {len(instances['data'])} instances:")
+            for instance in instances['data']:
+                status = "🟢 Running" if instance.get('booted') else "🔴 Stopped"
+                print(f"  - {instance.get('label', 'Unnamed')} ({instance.get('identifier')}) - {status}")
+                print(f"    Plan: {instance.get('cpus')} vCPU, {instance.get('memory')}MB RAM, {instance.get('total_disk_size')}GB disk")
+                print(f"    OS: {instance.get('template_label')} | Location: {instance.get('location', {}).get('city', 'Unknown')}")
+        else:
+            print("No instances found.")
+        
+        # Example 6: Create a new instance (commented out to avoid charges)
+        print("\n🆕 Example: Creating a new instance (commented out to avoid charges)")
+        print("# Uncomment the following lines to create a new instance:")
+        print("# new_instance = client.create_instance(")
+        print("#     location_slug='MIA1',")
+        print("#     plan_slug='1vcpu-1gb-10ssd',")
+        print("#     hostname='my-test-server',")
+        print("#     label='Test Server',")
+        print("#     image_slug='ubuntu-20-04-x64',")
+        print("#     password='SecurePassword123!'")
+        print("# )")
+        print("# print(f'Instance creation result: {new_instance}')")
+        
+        # Example 7: Instance power management (commented out to avoid changes)
+        print("\n⚡ Example: Instance power management (commented out to avoid changes)")
+        print("# Uncomment the following lines to manage instance power state:")
+        print("# if instances.get('data'):")
+        print("#     instance_id = instances['data'][0]['identifier']")
+        print("#     # Power on instance")
+        print("#     power_on_result = client.power_on_instance(instance_id)")
+        print("#     print(f'Power on result: {power_on_result}')")
+        print("#     # Reboot instance")
+        print("#     reboot_result = client.reboot_instance(instance_id)")
+        print("#     print(f'Reboot result: {reboot_result}')")
 
         # Example 5: Store or generate SSH key (commented out for safety)
         """

@@ -1,19 +1,94 @@
-# 🚀 LetsCould Infrastructure Manager - AI Assistant
+# 🚀 LetsCloud API - ChatGPT Actions Integration
 
-> **Your AI-powered cloud infrastructure management companion**
+> **Complete OpenAPI specification and ChatGPT Actions integration for LetsCloud cloud infrastructure management**
 
-Manage your LetsCould servers, SSH keys, snapshots, and resources with natural language commands through ChatGPT.
+Manage your LetsCloud instances, SSH keys, snapshots, and resources with natural language commands through ChatGPT Actions.
 
 ## ✨ **Features**
 
-- 🖥️ **Server Management**: Create, start, stop, reboot, and delete servers
+- 🖥️ **Instance Management**: List, create, delete, and manage cloud instances
+- ⚡ **Power Control**: Start, stop, reboot, and shutdown instances
 - 🔑 **SSH Key Management**: Add, list, and remove SSH keys
-- 📸 **Snapshot Operations**: Create and restore server snapshots
+- 📸 **Snapshot Operations**: Create and manage instance snapshots
 - 💰 **Account Management**: Check balance and account information
-- 🔍 **Resource Monitoring**: List and manage all your resources
+- 🔍 **Resource Discovery**: List available plans, images, and locations
 - 🛡️ **Secure Authentication**: API token-based security
 
 ## 🚀 **Quick Start**
+
+### **📋 ChatGPT Actions Configuration**
+
+This project includes the required `ai-plugin.json` configuration files for ChatGPT Actions:
+
+- **Root configuration**: `ai-plugin.json` - Main plugin configuration
+- **Standard location**: `.well-known/ai-plugin.json` - Where ChatGPT automatically looks for plugin config
+
+The configuration includes:
+- ✅ Plugin metadata and descriptions
+- ✅ Service HTTP authentication with API key authorization
+- ✅ OpenAI verification tokens for ChatGPT Actions (replace with your token)
+- ✅ OpenAPI specification reference
+- ✅ Contact information and legal links
+
+**⚠️ Important**: Before deploying, replace `"replace-with-your-verification-token"` in both `ai-plugin.json` files with your actual OpenAI verification token.
+
+## 📁 **Repository Structure**
+
+```
+letscloud-openapi-gpt/
+├── docs/
+│   ├── openapi.yaml                    # Complete OpenAPI 3.1 specification
+│   ├── LETSCOULD_API_DOCUMENTATION.md  # Comprehensive API documentation
+│   ├── index.html                      # GitHub Pages documentation site
+│   ├── privacy-policy.html             # Privacy policy
+│   ├── robots.txt                      # SEO configuration
+│   ├── sitemap.xml                     # Site map
+│   ├── _config.yml                     # Jekyll configuration
+│   └── assets/
+│       └── LetsCloud_logo.png          # LetsCloud branding
+├── examples/
+│   ├── usage-examples.py               # Python client implementation
+│   └── requirements.txt                # Python dependencies
+├── .well-known/
+│   └── ai-plugin.json                  # ChatGPT Actions configuration
+├── ai-plugin.json                      # Main plugin configuration
+├── gpt-actions-config.yaml             # GPT Actions configuration examples
+├── verify-plugin-config.py             # Configuration validation script
+├── README.md                           # This file
+├── LICENSE                             # MIT License
+└── Setup Guides:
+    ├── GPT_CREATION_GUIDE.md           # How to create a new GPT
+    ├── GPT_DUPLICATION_GUIDE.md        # How to duplicate existing GPT
+    ├── GPT_ACTIONS_SETUP_GUIDE.md      # ChatGPT Actions setup
+    ├── GITHUB_PAGES_SETUP.md           # GitHub Pages deployment guide
+    └── QUICK_SETUP.md                  # Quick start guide
+```
+
+## 📚 **Documentation**
+
+### **🌐 GitHub Pages Documentation**
+This repository includes a complete GitHub Pages site with interactive API documentation:
+- **Live Documentation**: [View the interactive API docs](https://letscloud-community.github.io/letscloud-openapi-gpt/)
+- **Interactive Testing**: Test API endpoints directly in your browser
+- **Complete Reference**: All endpoints, schemas, and examples
+- **Repository**: [GitHub Repository](https://github.com/letscloud-community/letscloud-openapi-gpt)
+
+### **🚀 Deploying GitHub Pages**
+After publishing this repository to GitHub:
+1. Go to **Repository Settings** → **Pages**
+2. Select **Source**: Deploy from a branch
+3. Choose **Branch**: `main` (or your default branch)
+4. Select **Folder**: `/docs`
+5. Click **Save**
+6. The documentation will be available at: `https://letscloud-community.github.io/letscloud-openapi-gpt/`
+
+**📖 Detailed Setup Guide**: See [GitHub Pages Setup Guide](GITHUB_PAGES_SETUP.md) for complete instructions and troubleshooting.
+
+### **📖 Available Documentation**
+- **[Complete API Documentation](docs/LETSCOULD_API_DOCUMENTATION.md)** - Comprehensive API reference
+- **[OpenAPI Specification](docs/openapi.yaml)** - Machine-readable API specification
+- **[Python Examples](examples/usage-examples.py)** - Complete Python client implementation
+- **[Setup Guides](QUICK_SETUP.md)** - Quick start and detailed setup instructions
 
 ### **🔒 Secure Setup: Create Your Private GPT**
 

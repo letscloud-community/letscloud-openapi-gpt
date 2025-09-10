@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "LetsCloud API",
+  "name_for_model": "letscloud_api",
+  "description_for_human": "Manage your cloud infrastructure on LetsCloud platform. Create, manage, and monitor instances, snapshots, SSH keys, and more.",
+  "description_for_model": "A comprehensive API for managing LetsCloud cloud infrastructure. You can list, create, delete, and manage instances; create and manage snapshots; manage SSH keys; discover available resources like plans, images, and locations; and get account information. All operations require authentication via API token.",
+  "auth": {
+    "type": "service_http",
+    "authorization_type": "api_key",
+    "verification_tokens": {
+      "openai": "replace-with-your-verification-token"
+    }
+  },
+    "api": {
+    "type": "openapi",
+    "url": "https://raw.githubusercontent.com/letscloud-community/letscloud-openapi-gpt/main/docs/openapi.yaml",
+    "is_user_authenticated": true
+  },
+  "logo_url": "https://cm-static.letscloud.io/letscloud/letscloud-brand.png",
+  "contact_email": "help@letscloud.io",
+  "legal_info_url": "https://www.letscloud.io/help/terms-of-service"
+}
