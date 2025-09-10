@@ -28,6 +28,339 @@ components:
       type: apiKey
       in: header
       name: api-token
+  schemas:
+    Instance:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: A unique identifier for each instance
+          example: "your-instance-identifier"
+        booted:
+          type: boolean
+          description: Whether the instance has been booted
+          example: false
+        built:
+          type: boolean
+          description: Whether the instance has been built
+          example: false
+        locked:
+          type: boolean
+          description: Whether the instance has been locked, preventing actions by users
+          example: true
+        suspended:
+          type: boolean
+          description: Whether the instance has been suspended
+          example: false
+        memory:
+          type: integer
+          description: Memory of the instance in megabytes
+          example: 1024
+        total_disk_size:
+          type: integer
+          description: The size of the instance disk in gigabytes
+          example: 10
+        cpus:
+          type: integer
+          description: The number of virtual CPUs
+          example: 1
+        label:
+          type: string
+          description: The friendly name set for the instance
+          example: "your-instance-label"
+        ip_addresses:
+          type: array
+          description: An array of IP addresses set in the instance
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                example: "your-instance-ip"
+        template_label:
+          type: string
+          description: The name of the operating system set for the instance
+          example: "CentOS 7.4 x64"
+        hostname:
+          type: string
+          description: The hostname set for the instance
+          example: "your-instance-hostname"
+        location:
+          type: object
+          description: The location information for the instance
+          properties:
+            slug:
+              type: string
+              example: "MIA1"
+            country:
+              type: string
+              example: "United States"
+            city:
+              type: string
+              example: "Miami"
+            available:
+              type: boolean
+              example: true
+
+    Snapshot:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        name:
+          type: string
+          example: "my-snapshot"
+        slug:
+          type: string
+          example: "my-snapshot-slug"
+        label:
+          type: string
+          example: "My Snapshot"
+        description:
+          type: string
+          nullable: true
+          example: "Backup snapshot"
+        status:
+          type: string
+          enum:
+            - creating
+            - available
+            - error
+            - deleting
+          example: "available"
+        size:
+          type: integer
+          example: 25
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    SSHKey:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+        title:
+          type: string
+          example: "My Laptop Key"
+        key:
+          type: string
+          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+        fingerprint:
+          type: string
+          example: "a1:b2:c3:d4:e5:f6:g7:h8:i9:j0:k1:l2:m3:n4:o5"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+
+    SSHKeyResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "My Project 1"
+        slug:
+          type: string
+          example: "my-project-1"
+        public_key:
+          type: string
+          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
+
+    Plan:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "basic-1gb"
+        name:
+          type: string
+          example: "Basic 1GB"
+        price:
+          type: number
+          example: 5.00
+        currency:
+          type: string
+          example: "USD"
+        specs:
+          type: object
+          properties:
+            cpu:
+              type: integer
+              example: 1
+            ram:
+              type: integer
+              example: 1024
+            disk:
+              type: integer
+              example: 25
+
+    Image:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "ubuntu-22-04"
+        name:
+          type: string
+          example: "Ubuntu 22.04 LTS"
+        distribution:
+          type: string
+          example: "Ubuntu"
+        version:
+          type: string
+          example: "22.04"
+        architecture:
+          type: string
+          example: "x86_64"
+
+    Location:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "nyc1"
+        name:
+          type: string
+          example: "New York 1"
+        country:
+          type: string
+          example: "United States"
+        city:
+          type: string
+          example: "New York"
+
+    LocationWithPlans:
+      type: object
+      properties:
+        country:
+          type: string
+          example: "United States"
+        city:
+          type: string
+          example: "Miami"
+        slug:
+          type: string
+          example: "MIA1"
+        plans:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanByLocation'
+
+    PlanByLocation:
+      type: object
+      properties:
+        currencycode:
+          type: string
+          example: "USD"
+        shortcode:
+          type: string
+          example: "$"
+        slug:
+          type: string
+          example: "1vcpu-1gb-10ssd"
+        core:
+          type: integer
+          example: 1
+        memory:
+          type: integer
+          example: 1024
+        disk:
+          type: integer
+          example: 10
+        bandwidth:
+          type: integer
+          example: 1000
+        monthly_value:
+          type: string
+          example: "5.00"
+
+    ImageByLocation:
+      type: object
+      properties:
+        distro:
+          type: string
+          example: "CentOS 6.9 x64"
+        os:
+          type: string
+          example: "linux"
+        slug:
+          type: string
+          example: "centos-69-x64"
+
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "John Smith"
+        company_name:
+          type: string
+          example: "LetsCloud Company"
+        email:
+          type: string
+          example: "john.smith@letscloud.io"
+        currency:
+          type: string
+          example: "$"
+        balance:
+          type: string
+          example: "100.00"
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Server not found"
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: "Invalid parameters provided"
+
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: "Invalid API key"
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: "Internal server error"
+
+    ServiceUnavailable:
+      description: Service unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: "Service temporarily unavailable"
+
 paths:
   /instances:
     get:
@@ -986,340 +1319,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-
-components:
-  schemas:
-    Instance:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: A unique identifier for each instance
-          example: "your-instance-identifier"
-        booted:
-          type: boolean
-          description: Whether the instance has been booted
-          example: false
-        built:
-          type: boolean
-          description: Whether the instance has been built
-          example: false
-        locked:
-          type: boolean
-          description: Whether the instance has been locked, preventing actions by users
-          example: true
-        suspended:
-          type: boolean
-          description: Whether the instance has been suspended
-          example: false
-        memory:
-          type: integer
-          description: Memory of the instance in megabytes
-          example: 1024
-        total_disk_size:
-          type: integer
-          description: The size of the instance disk in gigabytes
-          example: 10
-        cpus:
-          type: integer
-          description: The number of virtual CPUs
-          example: 1
-        label:
-          type: string
-          description: The friendly name set for the instance
-          example: "your-instance-label"
-        ip_addresses:
-          type: array
-          description: An array of IP addresses set in the instance
-          items:
-            type: object
-            properties:
-              address:
-                type: string
-                example: "your-instance-ip"
-        template_label:
-          type: string
-          description: The name of the operating system set for the instance
-          example: "CentOS 7.4 x64"
-        hostname:
-          type: string
-          description: The hostname set for the instance
-          example: "your-instance-hostname"
-        location:
-          type: object
-          description: The location information for the instance
-          properties:
-            slug:
-              type: string
-              example: "MIA1"
-            country:
-              type: string
-              example: "United States"
-            city:
-              type: string
-              example: "Miami"
-            available:
-              type: boolean
-              example: true
-
-    Snapshot:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 123
-        name:
-          type: string
-          example: "my-snapshot"
-        slug:
-          type: string
-          example: "my-snapshot-slug"
-        label:
-          type: string
-          example: "My Snapshot"
-        description:
-          type: string
-          nullable: true
-          example: "Backup snapshot"
-        status:
-          type: string
-          enum:
-            - creating
-            - available
-            - error
-            - deleting
-          example: "available"
-        size:
-          type: integer
-          example: 25
-        created_at:
-          type: string
-          format: date-time
-          example: "2024-01-15T10:30:00Z"
-
-    SSHKey:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 123
-        title:
-          type: string
-          example: "My Laptop Key"
-        key:
-          type: string
-          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-        fingerprint:
-          type: string
-          example: "a1:b2:c3:d4:e5:f6:g7:h8:i9:j0:k1:l2:m3:n4:o5"
-        created_at:
-          type: string
-          format: date-time
-          example: "2024-01-15T10:30:00Z"
-
-    SSHKeyResponse:
-      type: object
-      properties:
-        title:
-          type: string
-          example: "My Project 1"
-        slug:
-          type: string
-          example: "my-project-1"
-        public_key:
-          type: string
-          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
-
-    Plan:
-      type: object
-      properties:
-        slug:
-          type: string
-          example: "basic-1gb"
-        name:
-          type: string
-          example: "Basic 1GB"
-        price:
-          type: number
-          example: 5.00
-        currency:
-          type: string
-          example: "USD"
-        specs:
-          type: object
-          properties:
-            cpu:
-              type: integer
-              example: 1
-            ram:
-              type: integer
-              example: 1024
-            disk:
-              type: integer
-              example: 25
-
-    Image:
-      type: object
-      properties:
-        slug:
-          type: string
-          example: "ubuntu-22-04"
-        name:
-          type: string
-          example: "Ubuntu 22.04 LTS"
-        distribution:
-          type: string
-          example: "Ubuntu"
-        version:
-          type: string
-          example: "22.04"
-        architecture:
-          type: string
-          example: "x86_64"
-
-    Location:
-      type: object
-      properties:
-        slug:
-          type: string
-          example: "nyc1"
-        name:
-          type: string
-          example: "New York 1"
-        country:
-          type: string
-          example: "United States"
-        city:
-          type: string
-          example: "New York"
-
-    LocationWithPlans:
-      type: object
-      properties:
-        country:
-          type: string
-          example: "United States"
-        city:
-          type: string
-          example: "Miami"
-        slug:
-          type: string
-          example: "MIA1"
-        plans:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlanByLocation'
-
-    PlanByLocation:
-      type: object
-      properties:
-        currencycode:
-          type: string
-          example: "USD"
-        shortcode:
-          type: string
-          example: "$"
-        slug:
-          type: string
-          example: "1vcpu-1gb-10ssd"
-        core:
-          type: integer
-          example: 1
-        memory:
-          type: integer
-          example: 1024
-        disk:
-          type: integer
-          example: 10
-        bandwidth:
-          type: integer
-          example: 1000
-        monthly_value:
-          type: string
-          example: "5.00"
-
-    ImageByLocation:
-      type: object
-      properties:
-        distro:
-          type: string
-          example: "CentOS 6.9 x64"
-        os:
-          type: string
-          example: "linux"
-        slug:
-          type: string
-          example: "centos-69-x64"
-
-    Profile:
-      type: object
-      properties:
-        name:
-          type: string
-          example: "John Smith"
-        company_name:
-          type: string
-          example: "LetsCloud Company"
-        email:
-          type: string
-          example: "john.smith@letscloud.io"
-        currency:
-          type: string
-          example: "$"
-        balance:
-          type: string
-          example: "100.00"
-
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        message:
-          type: string
-          example: "Server not found"
-
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Invalid parameters provided"
-
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Invalid API key"
-
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Internal server error"
-
-    ServiceUnavailable:
-      description: Service unavailable
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Service temporarily unavailable"
 
 tags:
   - name: Instances
