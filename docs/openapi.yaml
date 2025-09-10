@@ -838,13 +838,9 @@ paths:
     put:
       summary: Change instance plan
       description: |
-        Change the plan of an existing instance. This operation may take some time to complete.
-        
-        **Note**: For large instances or complex plan changes, the operation may return a 202 (Accepted) 
-        status indicating the change has been initiated and will be processed asynchronously.
-        
-        **Response Size**: If you encounter ResponseTooLargeError, the operation is likely processing 
-        asynchronously. Check the instance status separately to confirm the plan change completion.
+        Change the plan of an existing instance. This operation may be asynchronous for large instances.
+        If you encounter ResponseTooLargeError, the operation is processing asynchronously - check 
+        the instance status separately to confirm completion.
       operationId: changeInstancePlan
       tags:
         - Instances
