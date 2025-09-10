@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: LetsCould API
+  title: LetsCloud
   description: |
-    The LetsCould API allows you to manage your cloud resources programmatically.
+    The LetsCloud API allows you to manage your cloud resources programmatically.
     All requests must be made over HTTPS for encryption and security.
     
     ## Authentication
@@ -16,13 +16,18 @@ info:
     - **Daily limit**: 120,000 requests per day per API token
   version: 1.0.0
   contact:
-    name: LetsCould Support
+    name: LetsCloud Support
     url: https://letscloud.io/support
 
 servers:
   - url: https://api.letscloud.io
     description: Production API server
-
+components:
+  securitySchemes:
+    ApiTokenAuth:
+      type: apiKey
+      in: header
+      name: api-token
 paths:
   /instances:
     get:
@@ -31,6 +36,24 @@ paths:
       operationId: listInstances
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
       responses:
         '200':
           description: List of instances retrieved successfully
@@ -62,7 +85,6 @@ paths:
                       - address: "your-instance-ip"
                     template_label: "CentOS 7.4 x64"
                     hostname: "your-instance-hostname"
-                    initial_root_password: "?0IZepT67(2x"
                     location:
                       slug: "MIA1"
                       country: "United States"
@@ -83,6 +105,8 @@ paths:
       operationId: createInstance
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       requestBody:
         required: true
         content:
@@ -121,14 +145,14 @@ paths:
                   type: string
                   description: The root password for the instance
                   example: "SecurePassword123!"
-                ssh_slug:
+                ssh_key_slugs:
                   type: array
                   items:
                     type: string
                   description: Array of SSH key slugs to add to the instance
                   example: ["my-project-1"]
       responses:
-        '200':
+        '201':
           description: Instance created successfully
           content:
             application/json:
@@ -157,6 +181,8 @@ paths:
       operationId: getInstanceDetails
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -199,6 +225,8 @@ paths:
       operationId: deleteInstance
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -243,6 +271,8 @@ paths:
       operationId: powerOnInstance
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -252,7 +282,7 @@ paths:
             type: string
           example: "your-instance-identifier"
       responses:
-        '200':
+        '202':
           description: Instance is turning on
           content:
             application/json:
@@ -287,6 +317,8 @@ paths:
       operationId: powerOffInstance
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -296,7 +328,7 @@ paths:
             type: string
           example: "your-instance-identifier"
       responses:
-        '200':
+        '202':
           description: Instance is turning off
           content:
             application/json:
@@ -331,6 +363,8 @@ paths:
       operationId: rebootInstance
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -340,7 +374,7 @@ paths:
             type: string
           example: "your-instance-identifier"
       responses:
-        '200':
+        '202':
           description: Instance is rebooting
           content:
             application/json:
@@ -369,12 +403,14 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 
   /instances/{identifier}/reset-password:
-    post:
+    put:
       summary: Reset instance password
       description: Change the root password of a specific instance
       operationId: resetInstancePassword
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -386,20 +422,16 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               required:
                 - password
-                - _method
               properties:
                 password:
                   type: string
                   description: The new root password for the instance
                   example: "NewSecurePassword123!"
-                _method:
-                  type: string
-                  example: "PUT"
       responses:
         '200':
           description: Password changed successfully
@@ -436,6 +468,8 @@ paths:
       operationId: shutdownInstance
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -468,12 +502,14 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 
   /instances/{identifier}/change-plan:
-    post:
+    put:
       summary: Change instance plan
       description: Change the plan of an existing instance
       operationId: changeInstancePlan
       tags:
         - Instances
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: identifier
           in: path
@@ -485,16 +521,12 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               required:
-                - _method
                 - plan_slug
               properties:
-                _method:
-                  type: string
-                  example: "PUT"
                 plan_slug:
                   type: string
                   example: "1vcpu-2gb-20ssd"
@@ -528,6 +560,8 @@ paths:
       operationId: getSnapshotStatus
       tags:
         - Snapshots
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: image_slug
           in: path
@@ -557,12 +591,14 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 
   /snapshots/{image_slug}:
-    post:
+    put:
       summary: Update snapshot label
       description: Update the label of an existing snapshot
       operationId: updateSnapshotLabel
       tags:
         - Snapshots
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: image_slug
           in: path
@@ -574,16 +610,12 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               required:
-                - _method
                 - label
               properties:
-                _method:
-                  type: string
-                  example: "PUT"
                 label:
                   type: string
                   example: "Your new label"
@@ -616,6 +648,8 @@ paths:
       operationId: deleteSnapshot
       tags:
         - Snapshots
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: image_slug
           in: path
@@ -624,18 +658,6 @@ paths:
           schema:
             type: string
           example: "your-snapshot-slug"
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              required:
-                - _method
-              properties:
-                _method:
-                  type: string
-                  example: "DELETE"
       responses:
         '200':
           description: Snapshot deleted successfully
@@ -666,6 +688,8 @@ paths:
       operationId: storeOrGenerateSSHKey
       tags:
         - SSH Keys
+      security:
+        - ApiTokenAuth: []
       requestBody:
         required: true
         content:
@@ -709,22 +733,16 @@ paths:
       operationId: deleteSSHKeyBySlug
       tags:
         - SSH Keys
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - slug
-                - _method
-              properties:
-                slug:
-                  type: string
-                  example: "my-project-1"
-                _method:
-                  type: string
-                  example: "DELETE"
+      security:
+        - ApiTokenAuth: []
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: The slug of the SSH key to delete
+          schema:
+            type: string
+          example: "my-project-1"
       responses:
         '200':
           description: SSH key deleted successfully
@@ -755,6 +773,24 @@ paths:
       operationId: listPlans
       tags:
         - Resources
+      security:
+        - ApiTokenAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
       responses:
         '200':
           description: List of plans retrieved successfully
@@ -789,6 +825,24 @@ paths:
       operationId: listImages
       tags:
         - Resources
+      security:
+        - ApiTokenAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
       responses:
         '200':
           description: List of images retrieved successfully
@@ -823,6 +877,24 @@ paths:
       operationId: listLocations
       tags:
         - Resources
+      security:
+        - ApiTokenAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
       responses:
         '200':
           description: List of locations retrieved successfully
@@ -857,6 +929,8 @@ paths:
       operationId: listPlansByLocation
       tags:
         - Resources
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: location_slug
           in: path
@@ -896,6 +970,8 @@ paths:
       operationId: listImagesByLocation
       tags:
         - Resources
+      security:
+        - ApiTokenAuth: []
       parameters:
         - name: location_slug
           in: path
@@ -935,6 +1011,8 @@ paths:
       operationId: getProfileInfo
       tags:
         - Account
+      security:
+        - ApiTokenAuth: []
       responses:
         '200':
           description: Profile information retrieved successfully
@@ -1015,10 +1093,6 @@ components:
           type: string
           description: The hostname set for the instance
           example: "your-instance-hostname"
-        initial_root_password:
-          type: string
-          description: The initial root password for the instance
-          example: "?0IZepT67(2x"
         location:
           type: object
           description: The location information for the instance
