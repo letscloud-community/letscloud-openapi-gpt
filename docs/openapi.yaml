@@ -837,7 +837,14 @@ paths:
   /instances/{identifier}/change-plan:
     put:
       summary: Change instance plan
-      description: Change the plan of an existing instance
+      description: |
+        Change the plan of an existing instance. This operation may take some time to complete.
+        
+        **Note**: For large instances or complex plan changes, the operation may return a 202 (Accepted) 
+        status indicating the change has been initiated and will be processed asynchronously.
+        
+        **Response Size**: If you encounter ResponseTooLargeError, the operation is likely processing 
+        asynchronously. Check the instance status separately to confirm the plan change completion.
       operationId: changeInstancePlan
       tags:
         - Instances
@@ -877,10 +884,108 @@ paths:
                   message:
                     type: string
                     example: "Instance plan changed successfully"
+              example:
+                success: true
+                message: "Instance plan changed successfully"
+        '202':
+          description: Instance plan change accepted (asynchronous operation)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Instance plan change initiated"
+              example:
+                success: true
+                message: "Instance plan change initiated"
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '413':
+          description: Request entity too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                success: false
+                message: "Request entity too large"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /instances/{identifier}/status:
+    get:
+      summary: Get instance status
+      description: |
+        Get the current status of an instance, including any pending operations like plan changes.
+        This endpoint provides a lightweight way to check if asynchronous operations have completed.
+      operationId: getInstanceStatus
+      tags:
+        - Instances
+      security:
+        - ApiTokenAuth: []
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          description: The identifier of the instance
+          schema:
+            type: string
+          example: "elRQ4UEiyLfRq55j"
+      responses:
+        '200':
+          description: Instance status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      identifier:
+                        type: string
+                        example: "elRQ4UEiyLfRq55j"
+                      status:
+                        type: string
+                        enum: ["active", "pending", "changing_plan", "error"]
+                        example: "active"
+                      current_plan:
+                        type: string
+                        example: "2vcpu-4gb-30ssd"
+                      pending_operations:
+                        type: array
+                        items:
+                          type: string
+                        example: []
+              example:
+                success: true
+                data:
+                  identifier: "elRQ4UEiyLfRq55j"
+                  status: "active"
+                  current_plan: "2vcpu-4gb-30ssd"
+                  pending_operations: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '503':
