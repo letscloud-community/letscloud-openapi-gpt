@@ -22,6 +22,10 @@ info:
 servers:
   - url: https://api.letscloud.io
     description: Production API server
+
+security:
+  - ApiTokenAuth: []
+
 components:
   securitySchemes:
     ApiTokenAuth:
@@ -443,7 +447,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               required:
@@ -1160,7 +1164,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-    
+
+  /sshkeys/{slug}:
     delete:
       summary: Delete SSH key by slug
       description: Delete an SSH key from your account using its slug
