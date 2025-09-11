@@ -2,212 +2,250 @@ openapi: 3.1.0
 info:
   title: LetsCloud API
   description: |
-    The LetsCloud API allows you to manage your cloud resources programmatically.
-    All requests must be made over HTTPS for encryption and security.
+    Complete API for managing LetsCloud cloud infrastructure through ChatGPT Actions.
     
-    ## Authentication
-    All API requests require authentication using an API token in the request headers.
+    This API allows you to:
+    - Manage cloud instances (create, delete, start, stop, reboot)
+    - Handle SSH keys for secure access
+    - Create and manage snapshots
+    - Check account information and balance
+    - Discover available plans, images, and locations
     
-    ## Response Format
-    All API responses are returned in JSON format with two main properties: `success` and either `data` or `message`.
-    
-    ## Rate Limits
-    - **Hourly limit**: 5,000 requests per hour
-    - **Daily limit**: 120,000 requests per day per API token
+    All requests are made through a secure proxy server that handles authentication.
   version: 1.0.0
   contact:
     name: LetsCloud Support
-    url: https://letscloud.io/support
+    email: support@letscloud.io
+    url: https://letscloud.io/help
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 
 servers:
-  - url: https://api.letscloud.io
-    description: Production API server
+  - url: https://action.letscloud.io
+    description: LetsCloud API Proxy Server
 
 security:
-  - ApiTokenAuth: []
+  - ApiKeyAuth: []
+
+paths:
+  /set-apikey:
+    post:
+      summary: Configure API Key
+      description: |
+        Configure your LetsCloud API key for authentication.
+        This endpoint stores your API key securely and associates it with your user ID.
+      operationId: setApiKey
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - apiKey
+              properties:
+                userId:
+                  type: string
+                  description: Unique identifier for the user
+                  example: "user-123"
+                apiKey:
+                  type: string
+                  description: Your LetsCloud API key
+                  example: "lets_abc123xyz789"
+      responses:
+        '200':
+          description: API key configured successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "API Key configured successfully for user"
+                  userId:
+                    type: string
+                    example: "user-123"
+        '400':
+          description: Invalid request
+        '500':
+          description: Server error
+
+  /proxy:
+    post:
+      summary: Proxy Request
+      description: |
+        Forward requests to the LetsCloud API with automatic authentication.
+        The proxy server will inject your API key and forward the request to the appropriate LetsCloud endpoint.
+      operationId: proxyRequest
+      tags:
+        - Proxy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - path
+                - method
+              properties:
+                userId:
+                  type: string
+                  description: User identifier for authentication
+                  example: "user-123"
+                path:
+                  type: string
+                  description: API endpoint path (without base URL)
+                  example: "/v2/instances"
+                method:
+                  type: string
+                  enum: [GET, POST, PUT, DELETE]
+                  description: HTTP method
+                  example: "GET"
+                body:
+                  type: object
+                  description: Request body (for POST/PUT requests)
+                  example:
+                    location_slug: "us-east"
+                    plan_slug: "2vcpu-4gb-30ssd"
+                    hostname: "my-server"
+                    label: "My Server"
+                    image_slug: "ubuntu-22.04"
+                    password: "SecurePassword123!"
+      responses:
+        '200':
+          description: Successful response from LetsCloud API
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response from LetsCloud API
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized - API key not configured
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+
+  /apikey-status:
+    get:
+      summary: Check API Key Status
+      description: Check if your API key is properly configured
+      operationId: checkApiKeyStatus
+      tags:
+        - Authentication
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: User identifier
+          example: "user-123"
+      responses:
+        '200':
+          description: API key status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  configured:
+                    type: boolean
+                    example: true
+                  userId:
+                    type: string
+                    example: "user-123"
+        '404':
+          description: API key not configured
 
 components:
   securitySchemes:
-    ApiTokenAuth:
+    ApiKeyAuth:
       type: apiKey
       in: header
       name: api-token
+      description: |
+        API token for authentication. 
+        For the proxy server, this is handled automatically using the configured API key.
+
   schemas:
     Instance:
       type: object
       properties:
-        identifier:
+        id:
           type: string
-          description: A unique identifier for each instance
-          example: "your-instance-identifier"
-        booted:
-          type: boolean
-          description: Whether the instance has been booted
-          example: false
-        built:
-          type: boolean
-          description: Whether the instance has been built
-          example: false
-        locked:
-          type: boolean
-          description: Whether the instance has been locked, preventing actions by users
-          example: true
-        suspended:
-          type: boolean
-          description: Whether the instance has been suspended
-          example: false
-        memory:
-          type: integer
-          description: Memory of the instance in megabytes
-          example: 1024
-        total_disk_size:
-          type: integer
-          description: The size of the instance disk in gigabytes
-          example: 10
-        cpus:
-          type: integer
-          description: The number of virtual CPUs
-          example: 1
-        label:
-          type: string
-          description: The friendly name set for the instance
-          example: "your-instance-label"
-        ip_addresses:
-          type: array
-          description: An array of IP addresses set in the instance
-          items:
-            type: object
-            properties:
-              address:
-                type: string
-                example: "your-instance-ip"
-        template_label:
-          type: string
-          description: The name of the operating system set for the instance
-          example: "CentOS 7.4 x64"
+          example: "server-123"
         hostname:
           type: string
-          description: The hostname set for the instance
-          example: "your-instance-hostname"
-        location:
-          type: object
-          description: The location information for the instance
-          properties:
-            slug:
-              type: string
-              example: "MIA1"
-            country:
-              type: string
-              example: "United States"
-            city:
-              type: string
-              example: "Miami"
-            available:
-              type: boolean
-              example: true
-
-    Snapshot:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 123
-        name:
-          type: string
-          example: "my-snapshot"
-        slug:
-          type: string
-          example: "my-snapshot-slug"
+          example: "my-server"
         label:
           type: string
-          example: "My Snapshot"
-        description:
-          type: string
-          nullable: true
-          example: "Backup snapshot"
+          example: "My Web Server"
         status:
           type: string
-          enum:
-            - creating
-            - available
-            - error
-            - deleting
-          example: "available"
-        size:
-          type: integer
-          example: 25
+          enum: [running, stopped, starting, stopping, rebooting]
+          example: "running"
+        location:
+          type: string
+          example: "us-east"
+        plan:
+          type: string
+          example: "2vcpu-4gb-30ssd"
+        image:
+          type: string
+          example: "ubuntu-22.04"
+        ip_address:
+          type: string
+          example: "192.168.1.100"
         created_at:
           type: string
           format: date-time
           example: "2024-01-15T10:30:00Z"
-
-    SSHKey:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 123
-        title:
-          type: string
-          example: "My Laptop Key"
-        key:
-          type: string
-          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-        fingerprint:
-          type: string
-          example: "a1:b2:c3:d4:e5:f6:g7:h8:i9:j0:k1:l2:m3:n4:o5"
-        created_at:
-          type: string
-          format: date-time
-          example: "2024-01-15T10:30:00Z"
-
-    SSHKeyResponse:
-      type: object
-      properties:
-        title:
-          type: string
-          example: "My Project 1"
-        slug:
-          type: string
-          example: "my-project-1"
-        public_key:
-          type: string
-          example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
 
     Plan:
       type: object
       properties:
         slug:
           type: string
-          example: "basic-1gb"
+          example: "2vcpu-4gb-30ssd"
         name:
           type: string
-          example: "Basic 1GB"
+          example: "2 vCPU, 4GB RAM, 30GB SSD"
         price:
           type: number
-          example: 5.00
-        currency:
-          type: string
-          example: "USD"
+          format: float
+          example: 12.00
         specs:
           type: object
           properties:
             cpu:
               type: integer
-              example: 1
+              example: 2
             ram:
               type: integer
-              example: 1024
+              example: 4096
             disk:
               type: integer
-              example: 25
+              example: 30
 
     Image:
       type: object
       properties:
         slug:
           type: string
-          example: "ubuntu-22-04"
+          example: "ubuntu-22.04"
         name:
           type: string
           example: "Ubuntu 22.04 LTS"
@@ -217,19 +255,16 @@ components:
         version:
           type: string
           example: "22.04"
-        architecture:
-          type: string
-          example: "x86_64"
 
     Location:
       type: object
       properties:
         slug:
           type: string
-          example: "nyc1"
+          example: "us-east"
         name:
           type: string
-          example: "New York 1"
+          example: "US East"
         country:
           type: string
           example: "United States"
@@ -237,1203 +272,84 @@ components:
           type: string
           example: "New York"
 
-    LocationWithPlans:
+    SSHKey:
       type: object
       properties:
-        country:
-          type: string
-          example: "United States"
-        city:
-          type: string
-          example: "Miami"
-        slug:
-          type: string
-          example: "MIA1"
-        plans:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlanByLocation'
-
-    PlanByLocation:
-      type: object
-      properties:
-        currencycode:
-          type: string
-          example: "USD"
-        shortcode:
-          type: string
-          example: "$"
-        slug:
-          type: string
-          example: "1vcpu-1gb-10ssd"
-        core:
+        id:
           type: integer
           example: 1
-        memory:
-          type: integer
-          example: 1024
-        disk:
-          type: integer
-          example: 10
-        bandwidth:
-          type: integer
-          example: 1000
-        monthly_value:
+        title:
           type: string
-          example: "5.00"
+          example: "My Laptop Key"
+        fingerprint:
+          type: string
+          example: "SHA256:abc123..."
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
 
-    ImageByLocation:
+    Snapshot:
       type: object
       properties:
-        distro:
+        image_slug:
           type: string
-          example: "CentOS 6.9 x64"
-        os:
+          example: "snap-123"
+        label:
           type: string
-          example: "linux"
-        slug:
+          example: "Backup before update"
+        status:
           type: string
-          example: "centos-69-x64"
+          enum: [building, completed, failed]
+          example: "completed"
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
 
-    Profile:
+    AccountInfo:
       type: object
       properties:
-        name:
-          type: string
-          example: "John Smith"
-        company_name:
-          type: string
-          example: "LetsCloud Company"
         email:
           type: string
-          example: "john.smith@letscloud.io"
+          example: "user@example.com"
+        balance:
+          type: number
+          format: float
+          example: 25.50
         currency:
           type: string
-          example: "$"
-        balance:
+          example: "USD"
+        created_at:
           type: string
-          example: "100.00"
+          format: date-time
+          example: "2024-01-01T00:00:00Z"
 
     Error:
       type: object
       properties:
-        success:
-          type: boolean
-          example: false
+        error:
+          type: string
+          example: "UNAUTHORIZED"
         message:
           type: string
-          example: "Server not found"
-
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Invalid parameters provided"
-
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Invalid API key"
-
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Internal server error"
-
-    ServiceUnavailable:
-      description: Service unavailable
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            success: false
-            message: "Service temporarily unavailable"
-
-paths:
-  /instances:
-    get:
-      summary: List all instances
-      description: Retrieve information about all your instances
-      operationId: listInstances
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: page
-          in: query
-          description: Page number for pagination
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-        - name: per_page
-          in: query
-          description: Number of items per page
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 200
-            default: 50
-      responses:
-        '200':
-          description: List of instances retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Instance'
-              example:
-                success: true
-                data:
-                  - identifier: "your-instance-identifier"
-                    booted: false
-                    built: false
-                    locked: true
-                    suspended: false
-                    memory: 1024
-                    total_disk_size: 10
-                    cpus: 1
-                    label: "your-instance-label"
-                    ip_addresses:
-                      - address: "your-instance-ip"
-                    template_label: "CentOS 7.4 x64"
-                    hostname: "your-instance-hostname"
-                    location:
-                      slug: "MIA1"
-                      country: "United States"
-                      city: "Miami"
-                      available: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-    post:
-      summary: Create a new instance
-      description: Create a new instance with specified configuration
-      operationId: createInstance
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - location_slug
-                - plan_slug
-                - hostname
-                - label
-                - image_slug
-                - password
-              properties:
-                location_slug:
-                  type: string
-                  description: The slug of the location where the instance will be created
-                  example: "MIA1"
-                plan_slug:
-                  type: string
-                  description: The slug of the plan for the instance
-                  example: "1vcpu-1gb-10ssd"
-                hostname:
-                  type: string
-                  description: The hostname for the instance
-                  example: "my-server"
-                label:
-                  type: string
-                  description: A friendly name for the instance
-                  example: "My Web Server"
-                image_slug:
-                  type: string
-                  description: The slug of the OS image to use
-                  example: "centos-74-x64"
-                password:
-                  type: string
-                  description: The root password for the instance
-                  example: "SecurePassword123!"
-                ssh_key_slugs:
-                  type: array
-                  items:
-                    type: string
-                  description: Array of SSH key slugs to add to the instance
-                  example: ["my-project-1"]
-      responses:
-        '201':
-          description: Instance created successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Instance successfully created"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}:
-    get:
-      summary: Show instance details
-      description: Retrieve detailed information about a specific instance
-      operationId: getInstanceDetails
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-instance-identifier"
-      responses:
-        '200':
-          description: Instance details retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Instance'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-    delete:
-      summary: Delete an instance
-      description: Delete an instance from your account
-      operationId: deleteInstance
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-instance-identifier"
-      responses:
-        '200':
-          description: Instance deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Instance successfully deleted"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/power-on:
-    put:
-      summary: Power on instance
-      description: Turn on a specific instance
-      operationId: powerOnInstance
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-instance-identifier"
-      responses:
-        '202':
-          description: Instance is turning on
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "The instance is turning ON"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/power-off:
-    put:
-      summary: Power off instance
-      description: Turn off a specific instance
-      operationId: powerOffInstance
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-instance-identifier"
-      responses:
-        '202':
-          description: Instance is turning off
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "The instance is turning OFF."
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/reboot:
-    put:
-      summary: Reboot instance
-      description: Reboot a specific instance
-      operationId: rebootInstance
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-instance-identifier"
-      responses:
-        '202':
-          description: Instance is rebooting
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "The instance is rebooting"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/reset-password:
-    put:
-      summary: Reset instance password
-      description: Change the root password of a specific instance
-      operationId: resetInstancePassword
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-instance-identifier"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - password
-              properties:
-                password:
-                  type: string
-                  description: The new root password for the instance
-                  example: "NewSecurePassword123!"
-      responses:
-        '200':
-          description: Password changed successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "The password was changed successfully."
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/shutdown:
-    post:
-      summary: Shutdown instance
-      description: Shutdown a running instance
-      operationId: shutdownInstance
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "your-identifier-here"
-      responses:
-        '200':
-          description: Instance shutdown successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Instance shutdown successfully"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/change-plan:
-    put:
-      summary: Change instance plan
-      description: |
-        Change the plan of an existing instance. This operation may be asynchronous for large instances.
-        If you encounter ResponseTooLargeError, the operation is processing asynchronously - check 
-        the instance status separately to confirm completion.
-      operationId: changeInstancePlan
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "Mq5VF63YAdCqXt4U"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - plan_slug
-              properties:
-                plan_slug:
-                  type: string
-                  example: "1vcpu-2gb-20ssd"
-      responses:
-        '200':
-          description: Instance plan changed successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Instance plan changed successfully"
-              example:
-                success: true
-                message: "Instance plan changed successfully"
-        '202':
-          description: Instance plan change accepted (asynchronous operation)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Instance plan change initiated"
-              example:
-                success: true
-                message: "Instance plan change initiated"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '413':
-          description: Request entity too large
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-              example:
-                success: false
-                message: "Request entity too large"
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /instances/{identifier}/status:
-    get:
-      summary: Get instance status
-      description: |
-        Get the current status of an instance, including any pending operations like plan changes.
-        This endpoint provides a lightweight way to check if asynchronous operations have completed.
-      operationId: getInstanceStatus
-      tags:
-        - Instances
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: identifier
-          in: path
-          required: true
-          description: The identifier of the instance
-          schema:
-            type: string
-          example: "elRQ4UEiyLfRq55j"
-      responses:
-        '200':
-          description: Instance status retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      identifier:
-                        type: string
-                        example: "elRQ4UEiyLfRq55j"
-                      status:
-                        type: string
-                        enum: ["active", "pending", "changing_plan", "error"]
-                        example: "active"
-                      current_plan:
-                        type: string
-                        example: "2vcpu-4gb-30ssd"
-                      pending_operations:
-                        type: array
-                        items:
-                          type: string
-                        example: []
-              example:
-                success: true
-                data:
-                  identifier: "elRQ4UEiyLfRq55j"
-                  status: "active"
-                  current_plan: "2vcpu-4gb-30ssd"
-                  pending_operations: []
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Instance not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /snapshots/status/{image_slug}:
-    get:
-      summary: Get snapshot status
-      description: Get the current build status of a snapshot. To find out the slug, you can List All Snapshots.
-      operationId: getSnapshotStatus
-      tags:
-        - Snapshots
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: image_slug
-          in: path
-          required: true
-          description: The slug of the snapshot
-          schema:
-            type: string
-          example: "your-image-slug-here"
-      responses:
-        '200':
-          description: Snapshot status retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /snapshots/{image_slug}:
-    put:
-      summary: Update snapshot label
-      description: Update the label of an existing snapshot
-      operationId: updateSnapshotLabel
-      tags:
-        - Snapshots
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: image_slug
-          in: path
-          required: true
-          description: The slug of the snapshot
-          schema:
-            type: string
-          example: "your-snapshot-slug"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - label
-              properties:
-                label:
-                  type: string
-                  example: "Your new label"
-      responses:
-        '200':
-          description: Snapshot label updated successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Snapshot successfully updated"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-    
-    delete:
-      summary: Delete snapshot
-      description: Delete a snapshot from your account. To find out the slug, you can List All Snapshots.
-      operationId: deleteSnapshot
-      tags:
-        - Snapshots
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: image_slug
-          in: path
-          required: true
-          description: The slug of the snapshot
-          schema:
-            type: string
-          example: "your-snapshot-slug"
-      responses:
-        '200':
-          description: Snapshot deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Snapshot successfully deleted!"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /sshkeys:
-    post:
-      summary: Store or generate SSH key
-      description: Store your current SSH key or generate a new one. If you want to update or recreate a new SSH key, use the same title that will be updating the key. After creating a new key, save the private key as it will not be stored and cannot be retrieved later.
-      operationId: storeOrGenerateSSHKey
-      tags:
-        - SSH Keys
-      security:
-        - ApiTokenAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - title
-              properties:
-                title:
-                  type: string
-                  example: "My Project 1"
-                key:
-                  type: string
-                  example: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDR1FmANsdfdsMmMSKMSDMKDMSKDMSIODM=="
-      responses:
-        '200':
-          description: SSH key stored or generated successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/SSHKeyResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /sshkeys/{slug}:
-    delete:
-      summary: Delete SSH key by slug
-      description: Delete an SSH key from your account using its slug
-      operationId: deleteSSHKeyBySlug
-      tags:
-        - SSH Keys
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: slug
-          in: path
-          required: true
-          description: The slug of the SSH key to delete
-          schema:
-            type: string
-          example: "my-project-1"
-      responses:
-        '200':
-          description: SSH key deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "SSH Key was successfully deleted!"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /plans:
-    get:
-      summary: List all plans
-      description: Retrieve a list of all available server plans
-      operationId: listPlans
-      tags:
-        - Resources
-      security:
-        - ApiTokenAuth: []
-      responses:
-        '200':
-          description: List of plans retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      plans:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Plan'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /images:
-    get:
-      summary: List all images
-      description: Retrieve a list of all available OS images
-      operationId: listImages
-      tags:
-        - Resources
-      security:
-        - ApiTokenAuth: []
-      responses:
-        '200':
-          description: List of images retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      images:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Image'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /locations:
-    get:
-      summary: List all locations
-      description: Retrieve a list of all available server locations
-      operationId: listLocations
-      tags:
-        - Resources
-      security:
-        - ApiTokenAuth: []
-      responses:
-        '200':
-          description: List of locations retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      locations:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Location'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /locations/{location_slug}/plans:
-    get:
-      summary: List plans by location
-      description: Retrieve all available plans for a specific location in your desired currency
-      operationId: listPlansByLocation
-      tags:
-        - Resources
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: location_slug
-          in: path
-          required: true
-          description: The slug of the location
-          schema:
-            type: string
-          example: "MIA1"
-      responses:
-        '200':
-          description: Plans by location retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/LocationWithPlans'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /locations/{location_slug}/images:
-    get:
-      summary: List images by location
-      description: Retrieve all available images for a specific location
-      operationId: listImagesByLocation
-      tags:
-        - Resources
-      security:
-        - ApiTokenAuth: []
-      parameters:
-        - name: location_slug
-          in: path
-          required: true
-          description: The slug of the location
-          schema:
-            type: string
-          example: "MIA2"
-      responses:
-        '200':
-          description: Images by location retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ImageByLocation'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
-
-  /profile:
-    get:
-      summary: Get profile information
-      description: Retrieve information about your current profile
-      operationId: getProfileInfo
-      tags:
-        - Account
-      security:
-        - ApiTokenAuth: []
-      responses:
-        '200':
-          description: Profile information retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Profile'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '503':
-          $ref: '#/components/responses/ServiceUnavailable'
+          example: "Invalid or missing API key"
+        details:
+          type: string
+          example: "Please configure your API key using /set-apikey endpoint"
 
 tags:
+  - name: Authentication
+    description: API key configuration and management
+  - name: Proxy
+    description: Proxy requests to LetsCloud API
   - name: Instances
-    description: Instance management operations
-  - name: Snapshots
-    description: Snapshot management operations
+    description: Cloud instance management
   - name: SSH Keys
-    description: SSH key management operations
+    description: SSH key management
+  - name: Snapshots
+    description: Snapshot operations
   - name: Resources
-    description: Resource discovery operations
+    description: Resource discovery (plans, images, locations)
   - name: Account
-    description: Account information operations
+    description: Account information and billing

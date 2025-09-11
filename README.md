@@ -16,21 +16,34 @@ Manage your LetsCloud instances, SSH keys, snapshots, and resources with natural
 
 ## 🚀 **Quick Start**
 
+> **Note**: This repository contains the OpenAPI specification and documentation. The proxy server is in a separate private repository.
+
+### **🔧 Proxy Server**
+
+The API uses a proxy server at `https://action.letscloud.io` that:
+- Manages user API keys securely
+- Provides a simplified interface with just 2 endpoints
+- Automatically injects authentication headers
+- Supports all LetsCloud API endpoints
+
+**Proxy Endpoints:**
+- `POST /set-apikey` - Configure user API key
+- `POST /proxy` - Forward requests to LetsCloud API
+
 ### **📋 ChatGPT Actions Configuration**
 
-This project includes the required `ai-plugin.json` configuration files for ChatGPT Actions:
+This project provides a complete OpenAPI specification for ChatGPT Actions integration:
 
-- **Root configuration**: `ai-plugin.json` - Main plugin configuration
-- **Standard location**: `.well-known/ai-plugin.json` - Where ChatGPT automatically looks for plugin config
+- **OpenAPI Specification**: `docs/openapi.yaml` - Complete API specification
+- **Direct Integration**: ChatGPT Actions uses the OpenAPI spec directly
+- **No Additional Config**: No separate configuration files needed
 
-The configuration includes:
-- ✅ Plugin metadata and descriptions
-- ✅ Service HTTP authentication with API key authorization
-- ✅ OpenAI verification tokens for ChatGPT Actions (replace with your token)
-- ✅ OpenAPI specification reference
-- ✅ Contact information and legal links
-
-**⚠️ Important**: Before deploying, replace `"replace-with-your-verification-token"` in both `ai-plugin.json` files with your actual OpenAI verification token.
+The OpenAPI specification includes:
+- ✅ Complete API endpoints and schemas
+- ✅ Authentication configuration
+- ✅ Request/response examples
+- ✅ Error handling documentation
+- ✅ All LetsCloud API operations
 
 ## 📁 **Repository Structure**
 
@@ -48,10 +61,8 @@ letscloud-openapi-gpt/
 │       └── LetsCloud_logo.png          # LetsCloud branding
 ├── examples/
 │   ├── usage-examples.py               # Python client implementation
-│   └── requirements.txt                # Python dependencies
-├── .well-known/
-│   └── ai-plugin.json                  # ChatGPT Actions configuration
-├── ai-plugin.json                      # Main plugin configuration
+│   ├── requirements.txt                # Python dependencies
+│   └── README.md                       # Examples documentation
 ├── gpt-actions-config.yaml             # GPT Actions configuration examples
 ├── verify-plugin-config.py             # Configuration validation script
 ├── README.md                           # This file
@@ -88,6 +99,7 @@ After publishing this repository to GitHub:
 - **[Complete API Documentation](docs/LETSCOULD_API_DOCUMENTATION.md)** - Comprehensive API reference
 - **[OpenAPI Specification](docs/openapi.yaml)** - Machine-readable API specification
 - **[Python Examples](examples/usage-examples.py)** - Complete Python client implementation
+- **[Examples Documentation](examples/README.md)** - Python examples guide and usage
 - **[Setup Guides](QUICK_SETUP.md)** - Quick start and detailed setup instructions
 
 ### **🔒 Secure Setup: Create Your Private GPT**

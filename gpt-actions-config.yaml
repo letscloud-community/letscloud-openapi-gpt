@@ -1,24 +1,24 @@
-# GPT Actions Configuration for LetsCould API
-# This file provides examples and templates for integrating LetsCould API with GPT Actions
+# GPT Actions Configuration for LetsCloud API via Proxy
+# This file provides examples and templates for integrating LetsCloud API with GPT Actions through the proxy
 
 # Basic Configuration
-name: "LetsCould API Integration"
-description: "Manage cloud infrastructure on LetsCould platform through GPT Actions"
+name: "LetsCloud API Integration"
+description: "Manage cloud infrastructure on LetsCloud platform through GPT Actions via proxy"
 version: "1.0.0"
 
-# Authentication Configuration
+# Authentication Configuration (via Proxy)
 auth:
-  type: "api_key"
-  header_name: "api-token"
-  header_value_format: "{api_key}"
-  environment_variable: "LETSCLOUD_API_TOKEN"
+  type: "user_id"
+  header_name: "userId"
+  header_value_format: "{user_id}"
+  setup_endpoint: "/set-apikey"
+  setup_instructions: "Users must first configure their API key via /set-apikey endpoint"
 
-# API Base URLs
+# API Base URLs (via Proxy)
 servers:
-  - url: "https://api.letscloud.io"
-    description: "Production API"
-  - url: "https://api.letscloud.io"
-    description: "Staging API"
+  - url: "https://action.letscloud.io"
+    description: "LetsCloud API Proxy Server"
+
 
 # Available Actions Configuration
 actions:
@@ -256,12 +256,47 @@ error_handling:
       description: "Invalid request parameters"
       solution: "Check required parameters and data types"
 
-# Security Considerations
+# Setup Instructions (via Proxy)
+setup_instructions:
+  step1: "User types '/set-apikey MINHA_CHAVE' in GPT chat"
+  step2: "GPT calls POST /set-apikey with userId and apiKey"
+  step3: "Proxy stores the API key associated with the userId"
+  step4: "GPT uses userId in all subsequent /proxy calls"
+  step5: "Proxy automatically injects Authorization header before calling LetsCloud API"
+  
+  example_setup:
+    user_input: "/set-apikey MINHA_CHAVE"
+    gpt_action: "POST /set-apikey"
+    request_body: '{"userId": "user-123", "apiKey": "MINHA_CHAVE"}'
+    response: '{"success": true, "message": "API Key configured successfully for user", "userId": "user-123"}'
+    
+  example_usage:
+    user_input: "criar servidor Ubuntu"
+    gpt_action: "POST /proxy"
+    request_body: |
+      {
+        "userId": "user-123",
+        "path": "/v2/instances",
+        "method": "POST",
+        "body": {
+          "location_slug": "us-east",
+          "plan_slug": "small",
+          "hostname": "meu-server",
+          "label": "Servidor GPT",
+          "image_slug": "ubuntu-22.04",
+          "password": "senhaSegura123"
+        }
+      }
+    proxy_behavior: "Proxy injects 'Authorization: Bearer MINHA_CHAVE' and forwards to LetsCloud API"
+    result: "Direct response from LetsCloud API returned to GPT"
+
+# Security Considerations (via Proxy)
 security:
-  - "API keys should be stored securely and not exposed in logs"
-  - "Use HTTPS for all API communications"
-  - "Implement proper error handling to avoid exposing sensitive information"
-  - "Consider implementing rate limiting on the client side"
+  - "API keys are stored securely on the proxy server, not exposed to clients"
+  - "Users only need to provide their API key once during setup"
+  - "All subsequent requests use userId instead of direct API key"
+  - "Proxy handles authentication transparently"
+  - "Use HTTPS for all communications with the proxy"
 
 # Best Practices
 best_practices:
@@ -270,3 +305,76 @@ best_practices:
   - "Implement proper backup strategies using snapshots"
   - "Monitor server status before performing state-changing operations"
   - "Keep SSH keys organized with meaningful titles"
+  - "Store userId securely after initial setup"
+  - "Use the proxy's /apikey-status endpoint to verify configuration"
+
+# GPT Actions Usage Examples
+gpt_usage_examples:
+  
+  # Example 1: Initial Setup
+  setup_example:
+    user_message: "/set-apikey sk_live_abc123xyz789"
+    gpt_action:
+      endpoint: "POST /set-apikey"
+      body:
+        userId: "user-123"
+        apiKey: "sk_live_abc123xyz789"
+    expected_response:
+      success: true
+      message: "API Key configured successfully for user"
+      userId: "user-123"
+  
+  # Example 2: List Instances
+  list_instances:
+    user_message: "mostre meus servidores"
+    gpt_action:
+      endpoint: "POST /proxy"
+      body:
+        userId: "user-123"
+        path: "/v2/instances"
+        method: "GET"
+    proxy_behavior: "Adds 'Authorization: Bearer sk_live_abc123xyz789' header"
+    letscloud_call: "GET https://api.letscloud.io/v2/instances"
+  
+  # Example 3: Create Instance
+  create_instance:
+    user_message: "criar um servidor Ubuntu 22.04 com 2GB RAM"
+    gpt_action:
+      endpoint: "POST /proxy"
+      body:
+        userId: "user-123"
+        path: "/v2/instances"
+        method: "POST"
+        body:
+          location_slug: "us-east"
+          plan_slug: "2vcpu-4gb-30ssd"
+          hostname: "ubuntu-server"
+          label: "Servidor Ubuntu GPT"
+          image_slug: "ubuntu-22.04"
+          password: "SecurePass123!"
+    proxy_behavior: "Adds 'Authorization: Bearer sk_live_abc123xyz789' header"
+    letscloud_call: "POST https://api.letscloud.io/v2/instances"
+  
+  # Example 4: Power Operations
+  power_on:
+    user_message: "ligar o servidor ubuntu-server"
+    gpt_action:
+      endpoint: "POST /proxy"
+      body:
+        userId: "user-123"
+        path: "/v2/instances/ubuntu-server/power-on"
+        method: "POST"
+    proxy_behavior: "Adds 'Authorization: Bearer sk_live_abc123xyz789' header"
+    letscloud_call: "POST https://api.letscloud.io/v2/instances/ubuntu-server/power-on"
+  
+  # Example 5: List Plans
+  list_plans:
+    user_message: "quais planos estão disponíveis?"
+    gpt_action:
+      endpoint: "POST /proxy"
+      body:
+        userId: "user-123"
+        path: "/v2/plans"
+        method: "GET"
+    proxy_behavior: "Adds 'Authorization: Bearer sk_live_abc123xyz789' header"
+    letscloud_call: "GET https://api.letscloud.io/v2/plans"
