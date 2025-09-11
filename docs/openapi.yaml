@@ -129,14 +129,43 @@ paths:
               schema:
                 type: object
                 description: Response from LetsCloud API
+                properties:
+                  data:
+                    type: object
+                    description: Response data from the LetsCloud API
+                  message:
+                    type: string
+                    description: Response message
+                    example: "Success"
+                  status:
+                    type: string
+                    description: Response status
+                    example: "success"
+                additionalProperties: true
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized - API key not configured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '500':
           description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /apikey-status:
     get:
@@ -163,12 +192,21 @@ paths:
                 properties:
                   configured:
                     type: boolean
+                    description: Whether the API key is configured
                     example: true
                   userId:
                     type: string
+                    description: User identifier
                     example: "user-123"
+                required:
+                  - configured
+                  - userId
         '404':
           description: API key not configured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
   securitySchemes:
@@ -327,15 +365,21 @@ components:
 
     Error:
       type: object
+      required:
+        - error
+        - message
       properties:
         error:
           type: string
+          description: Error code
           example: "UNAUTHORIZED"
         message:
           type: string
+          description: Error message
           example: "Invalid or missing API key"
         details:
           type: string
+          description: Additional error details
           example: "Please configure your API key using /set-apikey endpoint"
 
 tags:
